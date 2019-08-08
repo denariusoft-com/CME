@@ -21,7 +21,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::group(['middleware' => ['auth']], function() {
+    Route::post('/settings/companysetting', 'SettingController@saveCompanysetting');
+    Route::get('settings/themesettings', 'SettingController@themesettings');
     Route::resource('settings','SettingController');
+   
+  //  Route::resource('settings/themesettings', 'SettingController@themesettings');
+   
     Route::resource('roles','RoleController');
     Route::resource('users','UserController');
   

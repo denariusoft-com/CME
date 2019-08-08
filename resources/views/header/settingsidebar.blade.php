@@ -10,12 +10,13 @@
 							<li> 
 								<a href="{{ url('settings')}}"><i class="la la-building"></i> <span>Company Settings</span></a>
 							</li>
+							<li> 
+								<a href="{{ action('SettingController@themesettings') }}"><i class="la la-photo"></i> <span>Theme Settings</span></a>
+							</li>
 							<!--<li> 
 								<a href="localization.html"><i class="la la-clock-o"></i> <span>Localization</span></a>
 							</li>
-							<li> 
-								<a href="theme-settings.html"><i class="la la-photo"></i> <span>Theme Settings</span></a>
-							</li>-->
+							-->
 							<li> 
 								<a href="{{ url('roles')}}"><i class="la la-key"></i> <span>Roles & Permissions</span></a>
 							</li>

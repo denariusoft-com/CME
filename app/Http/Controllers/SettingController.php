@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use DB;
+use App\Model\Companysetting;
 
 
 class SettingController extends Controller
@@ -24,17 +25,50 @@ class SettingController extends Controller
          $this->middleware('permission:role-create', ['only' => ['create','store']]);
          $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+         $this->Companysetting = new Companysetting;
     }
-
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    /*                   company setting                 */
     public function index(Request $request)
     {
-       return view('settings.companysettings');
+        $companyset = DB::table('companysetting')->where('status', '1')->latest()->first();
+        $companyrecord = isset($companyset) ? $companyset : "";     
+        //dd($companyrecord);   
+        return view('settings.companysettings')->with('cmpyrec', $companyrecord);
     }
-   
+    public function saveCompanysetting(Request $request)
+    {    
+     $data = $request->all();     
+     $request->validate([
+        'company_name' => 'required',
+            ], [
+        'company_name.required' => 'please enter Company name',
+    ]);   
+    $saveCmpy_set = $this->Companysetting->save_companysetting($data);
+    if ($saveCmpy_set == true) {
+        
+        if(!empty($request->id))
+        {
+            $message = 'Company Name Updated Succesfully';
+        }
+        else{
+            $message = 'Company Name Added Succesfully';
+        }        
+        return redirect('/settings')->with('success', $message);
+    }
+    }
+    /*               end company set */
+    /*      theme setting           */
+    public function themesettings()
+    {
+        return view('settings.themesettings');
+    }
+    /*          end theme       */
+   public function show(){
+
+   }
 }

@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
 		@include('header.head-script')
+		@include('header.datatable-header')
     </head>
     <body>
 		<!-- Main Wrapper -->
@@ -14,10 +15,12 @@
             <!-- /Sidebar -->
 			
 			<!-- Page Wrapper -->
-            <div class="page-wrapper">			
+            <div class="page-wrapper">
+			
 				<!-- Page Content -->
-				@include('content.roles')
+				@include('content.settings.theme')
                 <!-- /Page Content -->
+
             </div>
 			<!-- /Page Wrapper -->
 			
@@ -25,6 +28,8 @@
 		<!-- /Main Wrapper -->
 		
 		<!-- Sidebar Overlay -->
+		
 		@include('footer.footer')
+		@include('footer.datatable-footer')
     </body>
 </html>
