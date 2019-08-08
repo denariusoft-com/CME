@@ -14,6 +14,9 @@
 						<li><a href="{{ route('clients.index') }}">Client</a></li>
 					</ul>
 				</li>
+				<li> 
+					<a href="{{ route('users.index') }}"><i class="la la-user-plus"></i> <span>User</span></a>
+				</li>
 				
 			</ul>
 		</div>

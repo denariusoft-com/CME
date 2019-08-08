@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
 		@include('header.head-script')
+		@include('header.datatable-header')
     </head>
     <body>
 		<!-- Main Wrapper -->
@@ -28,5 +29,6 @@
 		
 		<!-- Sidebar Overlay -->
 		@include('footer.footer')
+		@include('footer.datatable-footer')
     </body>
 </html>
