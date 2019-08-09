@@ -15,7 +15,20 @@
 	<!-- Logo -->
 	<div class="header-left">
 		<a href="" class="logo">
-			<img src="{{ asset('public/assets/img/logo.png') }}" width="100" height="40" alt="">
+		@php
+		if(!empty(CommonHelper::theme_setting())){
+			$themerec = CommonHelper::theme_setting();
+		}
+		else{
+			$themerec="";
+		}
+		@endphp
+		@if(!empty($themerec->logo))
+		<img src="{{ URL::to('/') }}/storage/app/public/images/{{ $themerec->logo }}" width="70" height="40" alt="">
+		@else
+		<img src="{{ asset('public/assets/img/logo.png') }}" width="100" height="40" alt="">
+		@endif
+			
 		</a>
 	</div>
 	<!-- /Logo -->

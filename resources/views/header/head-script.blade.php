@@ -6,7 +6,19 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Mooringsts</title>
 <!-- Favicon -->
+@php
+if(!empty(CommonHelper::theme_setting())){
+	$themerec = CommonHelper::theme_setting();
+}
+else{
+	$themerec="";
+}
+@endphp
+@if(!empty($themerec->favicon))
+<link rel="shortcut icon" type="image/x-icon" href="{{ URL::to('/') }}/storage/app/public/images/{{ $themerec->favicon }}">
+@else
 <link rel="shortcut icon" type="image/x-icon" href="{{ asset('public/assets/img/favicon.png') }}">
+@endif
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="{{ asset('public/assets/css/bootstrap.min.css') }}">

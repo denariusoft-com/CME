@@ -3,7 +3,7 @@
 		<div id="sidebar-menu" class="sidebar-menu">
 			<ul>
 				<li class="active"> 
-					<a href="index.html"><i class="la la-dashboard"></i> <span>Dashboard</span></a>
+					<a href="{{ url('home') }}"><i class="la la-dashboard"></i> <span>Dashboard</span></a>
 				</li>
 				<!--li> 
 					<a href="employee-dashboard.html"><i class="la la-tachometer"></i> <span>Employee Dashboard</span></a>

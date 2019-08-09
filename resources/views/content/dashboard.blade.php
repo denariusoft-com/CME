@@ -1,6 +1,6 @@
 <div class="content container-fluid">
 	<div class="row">
-		<div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+		<!--<div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
 			<div class="dash-widget clearfix card-box">
 				<span class="dash-widget-icon"><i class="fa fa-cubes"></i></span>
 				<div class="dash-widget-info">
@@ -8,17 +8,28 @@
 					<span>Projects</span>
 				</div>
 			</div>
-		</div>
+		</div>-->
 		<div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
 			<div class="dash-widget clearfix card-box">
 				<span class="dash-widget-icon"><i class="fa fa-usd"></i></span>
 				<div class="dash-widget-info">
-					<h3>44</h3>
+					<h3>
+					@php
+					if(!empty(CommonHelper::client_count())){
+						$client_tot = CommonHelper::client_count();
+					}
+					else{
+						$client_tot="0";
+						
+					}
+					echo $client_tot;
+					@endphp
+					</h3>
 					<span>Clients</span>
 				</div>
 			</div>
 		</div>
-		<div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+		<!--<div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
 			<div class="dash-widget clearfix card-box">
 				<span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
 				<div class="dash-widget-info">
@@ -26,13 +37,22 @@
 					<span>Tasks</span>
 				</div>
 			</div>
-		</div>
-		<div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+		</div>-->
+		<div class="col-md-6 col-sm-6 col-lg-6 col-xl-4">
 			<div class="dash-widget clearfix card-box">
 				<span class="dash-widget-icon"><i class="fa fa-user"></i></span>
 				<div class="dash-widget-info">
-					<h3>218</h3>
-					<span>Employees</span>
+					<h3>@php
+					if(!empty(CommonHelper::mooring_count())){
+						$moor_tot = CommonHelper::mooring_count();
+					}
+					else{
+						$moor_tot="0";
+						
+					}
+					echo $moor_tot;
+					@endphp</h3>
+					<span>Mooring Masters</span>
 				</div>
 			</div>
 		</div>
