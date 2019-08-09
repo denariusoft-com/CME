@@ -65,3 +65,11 @@ Route::resource('ratemasters', 'RatemasterController')->except([
 Route::post('get_ratemaster_list', 'RatemasterController@get_ratemaster_list');
 Route::get('get_ratemaster_detail', 'RatemasterController@get_ratemaster_detail');
 Route::get('findRatemasterNameExists', 'RatemasterController@findNameExists');
+
+Route::resource('mooring_masters', 'MooringMasterController')->except([
+    'show', 'edit', 'update'
+]);
+Route::post('get_mooringmaster_list', 'MooringMasterController@get_mooringmaster_list');
+Route::get('get_mooringmaster_detail', 'MooringMasterController@get_mooringmaster_detail');
+Route::get('findMooringMasterNameExists', 'MooringMasterController@findNameExists');
+Route::get('get-rate-list', 'MooringMasterController@getRateList');

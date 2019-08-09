@@ -19,5 +19,6 @@ class Rate extends Model
         }
         return $savedata;
     }
+	
 }
 
