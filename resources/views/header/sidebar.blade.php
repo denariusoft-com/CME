@@ -11,7 +11,11 @@
 				<li class="submenu">
 					<a href="#" class="noti-dot"><i class="la la-user"></i> <span> Master</span> <span class="menu-arrow"></span></a>
 					<ul style="display: none;">
-						<li><a href="{{ route('clients.index') }}">Client</a></li>
+						<li><a href="{{ route('clients.index') }}">Client List</a></li>
+						<li><a href="{{ route('statuses.index') }}">Status List</a></li>
+						<li><a href="{{ route('categories.index') }}">Category List</a></li>
+						<li><a href="{{ route('rates.index') }}">Rate List</a></li>
+						<li><a href="{{ route('ratemasters.index') }}">Rate Master List</a></li>
 					</ul>
 				</li>
 				<li> 
