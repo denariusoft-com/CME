@@ -16,6 +16,7 @@
 						<li><a href="{{ route('categories.index') }}">Category List</a></li>
 						<li><a href="{{ route('rates.index') }}">Rate List</a></li>
 						<li><a href="{{ route('ratemasters.index') }}">Rate Master List</a></li>
+						<li><a href="{{ route('mooring_masters.index') }}">Mooring Master List</a></li>
 					</ul>
 				</li>
 				<li> 
