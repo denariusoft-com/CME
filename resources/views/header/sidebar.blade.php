@@ -19,6 +19,13 @@
 						<li><a href="{{ route('mooring_masters.index') }}">Mooring Master List</a></li>
 					</ul>
 				</li>
+				<li class="submenu">
+					<a href="#" class="noti-dot"><i class="la la-pie-chart"></i> <span> Report</span> <span class="menu-arrow"></span></a>
+					<ul style="display: none;">
+						<li><a href="{{ url('reports')}}">Summary Report</a></li>
+						
+					</ul>
+				</li>
 				<li> 
 					<a href="{{ route('users.index') }}"><i class="la la-user-plus"></i> <span>User</span></a>
 				</li>
