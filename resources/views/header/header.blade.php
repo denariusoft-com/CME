@@ -16,12 +16,13 @@
 	<div class="header-left">
 		<a href="" class="logo">
 		@php
-		if(!empty(CommonHelper::theme_setting())){
+		$themerec ="";
+		/*if(!empty(CommonHelper::theme_setting())){
 			$themerec = CommonHelper::theme_setting();
 		}
 		else{
 			$themerec="";
-		}
+		}*/
 		@endphp
 		@if(!empty($themerec->logo))
 		<img src="{{ URL::to('/') }}/storage/app/public/images/{{ $themerec->logo }}" width="70" height="40" alt="">

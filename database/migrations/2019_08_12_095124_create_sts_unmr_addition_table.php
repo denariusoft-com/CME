@@ -16,6 +16,9 @@ class CreateStsUnmrAdditionTable extends Migration
         Schema::create('sts_unmr_addition', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('ts_id');
+            $table->dateTime('unmooring_firstline')->nullable();
+            $table->dateTime('unmooring_allfast')->nullable();
+            $table->dateTime('unmooring_noraccepted')->nullable();
             $table->dateTime('unfendering_fl')->nullable();
             $table->dateTime('unfendering_af')->nullable();
             $table->dateTime('unfendering_na')->nullable();

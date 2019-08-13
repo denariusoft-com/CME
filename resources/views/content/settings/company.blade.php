@@ -17,14 +17,14 @@
 									</div>
 								@endif
 						
-								@csrf
-										@php
-										if(!empty(CommonHelper::cmpy_setting())){
+								@csrf							@php
+									/*	if(!empty(CommonHelper::cmpy_setting())){
 											$cmpyrec = CommonHelper::cmpy_setting();
 										}
 										else{
 											$cmpyrec="";
-										}
+										}*/
+										$cmpyrec="";
 										@endphp
 								@isset($cmpyrec->id)
 								<input type="hidden" name="id" value="@isset($cmpyrec){{$cmpyrec->id}}@endisset">

@@ -26,9 +26,9 @@
 								<table class="table table-striped custom-table mb-0 datatable" id="statusmaster_datatable_list">
 									<thead>
 										<tr>
-											<th>S.No</th>
 											<th>Name</th>
 											<th>Status</th>
+											<th>Action</th>
 										</tr>
 									</thead>
 									<tbody>

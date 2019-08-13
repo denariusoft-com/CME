@@ -74,13 +74,14 @@ $(document).ready(function() {
 				<div class="dash-widget-info">
 					<h3>
 					@php
-					if(!empty(CommonHelper::client_count())){
+					$client_tot="0";
+					/*if(!empty(CommonHelper::client_count())){
 						$client_tot = CommonHelper::client_count();
 					}
 					else{
 						$client_tot="0";
 						
-					}
+					}*/
 					echo $client_tot;
 					@endphp
 					</h3>
@@ -102,13 +103,15 @@ $(document).ready(function() {
 				<span class="dash-widget-icon"><i class="fa fa-user"></i></span>
 				<div class="dash-widget-info">
 					<h3>@php
-					if(!empty(CommonHelper::mooring_count())){
+					$moor_tot="0";
+						
+					/*if(!empty(CommonHelper::mooring_count())){
 						$moor_tot = CommonHelper::mooring_count();
 					}
 					else{
 						$moor_tot="0";
 						
-					}
+					}*/
 					echo $moor_tot;
 					@endphp</h3>
 					<span>Mooring Masters</span>

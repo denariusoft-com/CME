@@ -24,8 +24,9 @@
 											<div class="col-md-12">
 												<div class="form-group">
 													<label>Mooring Master Name <span class="text-danger">*</span></label>
-													<select name="user_id" id="category_id" class="form-control">
-														 <option value="">Select name</option>
+
+													<select name="user_id" id="user_id" class="form-control">
+													 <option value="">Select name</option>
 														 @foreach($data['user_view'] as $row)
 														 <option value="{{ $row->id}}" @if((isset($data['master_rate']->user_id) == $row->id)){{ "selected" }} @endif>{{ $row->name }}</option>
 														 @endforeach
@@ -114,6 +115,7 @@ $(function () {
 		$('#comments_remove').remove();
 		var rowsLength = document.getElementById(table_id).getElementsByTagName("tbody")[0].getElementsByTagName("tr").length+1;
 		var cancat = ""; 
+<<<<<<< HEAD
 		cancat = '<td><select name="category_id[]" id="category_id" class="form-control"><option value="">Select Category</option>';
 		@foreach($data['category_view'] as $row) 
 		cancat +='<option value="{{ $row->id }}">{{ $row->category_name }}</option>';
@@ -123,6 +125,17 @@ $(function () {
 		cancat +='<option value="{{ $row->id }}">{{ $row->rate_name }}</option>';
 		@endforeach 
 		cancat +='</select></td><td><input type="text" name = "timing[]" class="form-control" value = "" ></td><td><input type="text" name = "price[]" class="form-control" value = "" ></td>' + '<td><button type="button" class="btn btn-danger" id="comments_remove"><i class="fa fa-trash-o"></i></button></td>';
+=======
+		cancat = '<td><select name="category_id" id="category_id" class="form-control"><option value="">Select Category</option>';
+		@foreach($data['category_view'] as $row)
+		cancat +='<option value="{{$row->id }}">'"{{ $row->category_name }}" '</option>';
+		@endforeach
+		cancat +='</select></td><td><select class="form-control" name="rate_id" id="rate_id"><option label="select rate name" value=""></option>';
+		@foreach($data['rate_view'] as $row)
+		cancat +='<option value="{{$row->id }}">'"{{ $row->rate_name }}" '</option>';
+		@endforeach
+		cancat +='</select></td><td><input type="text" name = "DynamicTextBox" class="form-control" value = "" ></td><td><input type="text" name = "DynamicTextBox" class="form-control" value = "" ></td>' + '<td><button type="button" class="btn btn-danger" id="comments_remove"><i class="fa fa-trash-o"></i></button></td>';
+>>>>>>> 6f8c09f99888628c5b1918e30772b401753ba29d
 		return cancat
 	}
 });

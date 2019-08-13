@@ -20,6 +20,8 @@ class CreateStsTimesheetTable extends Migration
             $table->string('job_ref_id', 350)->nullable();
             $table->string('mother_vessel', 350)->nullable();
             $table->string('maneuvring_vessel', 350)->nullable();
+            $table->string('maneuvring_max_draft_in', 350)->nullable();
+            $table->string('maneuvring_max_draft_out', 350)->nullable();
             $table->string('mother_sdwt', 350)->nullable();
             $table->string('manoeuvring_sdwt', 350)->nullable();
             $table->string('mother_loa', 350)->nullable();

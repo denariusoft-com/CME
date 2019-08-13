@@ -7,12 +7,13 @@
 <title>Mooringsts</title>
 <!-- Favicon -->
 @php
-if(!empty(CommonHelper::theme_setting())){
+$themerec="";
+/*if(!empty(CommonHelper::theme_setting())){
 	$themerec = CommonHelper::theme_setting();
 }
 else{
 	$themerec="";
-}
+}*/
 @endphp
 @if(!empty($themerec->favicon))
 <link rel="shortcut icon" type="image/x-icon" href="{{ URL::to('/') }}/storage/app/public/images/{{ $themerec->favicon }}">
@@ -21,8 +22,14 @@ else{
 @endif
 
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="{{ asset('public/assets/css/bootstrap.min.css') }}">
 
+<link rel="stylesheet" href="{{ asset('public/assets/css/bootstrap.min.css') }}">
+<!-- Datetimepicker CSS -->
+<link rel="stylesheet" href="{{ asset('public/assets/build/css/bootstrap-datetimepicker.min.css') }}">
+		
+<!-- Datetimepicker JS -->
+<script src="{{ asset('public/assets/js/moment.min.js') }}"></script>
+<script src="{{ asset('public/assets/build/js/bootstrap-datetimepicker.min.js') }}"></script>	
 <!-- Fontawesome CSS -->
 <link rel="stylesheet" href="{{ asset('public/assets/css/font-awesome.min.css') }}">
 
@@ -39,10 +46,23 @@ else{
 
 <script src="{{ asset('public/assets/jquery.validate.js') }}"></script>
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-	<script src="assets/js/html5shiv.min.js"></script>
-	<script src="assets/js/respond.min.js"></script>
-<![endif]-->
+
+<!-- Bootstrap Core JS -->
+<script src="{{ asset('public/assets/js/popper.min.js') }}"></script>
+<script src="{{ asset('public/assets/js/bootstrap.min.js') }}"></script>
+
+<!-- Slimscroll JS -->
+<script src="{{ asset('public/assets/js/jquery.slimscroll.min.js') }}"></script>
+
+<!-- Chart JS -->
+<script src="{{ asset('public/assets/plugins/morris/morris.min.js') }}"></script>
+<script src="{{ asset('public/assets/plugins/raphael/raphael.min.js') }}"></script>
+<script src="{{ asset('public/assets/js/chart.js') }}"></script>
+
+
+		
+<!-- Custom JS -->
+<script src="{{ asset('public/assets/js/app.js') }}"></script>
 
 <style>
 .error {
