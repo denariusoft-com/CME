@@ -25,9 +25,6 @@ class CreateMooringMastersTable extends Migration
 			$table->string('resume');
 			$table->integer('status_id');
 			$table->date('date_recruit');
-			$table->integer('category_id');
-			$table->integer('rate_id');
-			$table->integer('mooring_rate_id');
 			$table->tinyInteger('status')->default('1');
 			$table->integer('created_by');
             $table->integer('updated_by');

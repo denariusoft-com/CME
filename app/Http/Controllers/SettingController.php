@@ -39,6 +39,7 @@ class SettingController extends Controller
         $companyrecord = isset($companyset) ? $companyset : "";     
         //dd($companyrecord);   
         return view('settings.companysettings')->with('cmpyrec', $companyrecord);
+		
     }
     public function saveCompanysetting(Request $request)
     {    
@@ -58,7 +59,7 @@ class SettingController extends Controller
         else{
             $message = 'Company Name Added Succesfully';
         }        
-        return redirect('/settings')->with('success', $message);
+        return redirect('/settings')->with('type', 'Success!')->with('message', $message)->with('alertClass', 'alert alert-success');
     }
     }
     /*               end company set */

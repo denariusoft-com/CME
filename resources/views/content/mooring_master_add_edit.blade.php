@@ -14,12 +14,28 @@
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-body">
-									<form method="post" action="{{ route('mooring_masters.store') }}">
+									<form method="post" id="mooring_master_validation" action="{{ route('mooring_masters.store') }}" enctype="multipart/form-data">
+										@csrf
+                                        <input type="hidden" name="auto_id" id="auto_id">
+                                        @php
+	                                    	$created_by = Auth::user()->id;
+	                                    	$updated_by = Auth::user()->id;
+	                                    @endphp
+	                                    <input type="hidden" name="created_by" id="created_by" value="{{ $created_by }}">
+	                                    <input type="hidden" name="updated_by" id="updated_by" value="{{ $updated_by }}">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label>Name <span class="text-danger">*</span></label>
+													<input class="form-control" type="text" name="user_id" id="user_id">
+												</div>
+											</div>
+										</div>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
 													<label>Address <span class="text-danger">*</span></label>
-													<textarea rows="4" class="form-control"></textarea>
+													<textarea rows="4" class="form-control" name="address" id="address"></textarea>
 												</div>
 											</div>
 										</div>
@@ -27,13 +43,13 @@
 											<div class="col-md-6">
 												<div class="form-group">
 													<label>Phone No <span class="text-danger">*</span></label>
-													<input class="form-control" type="text">
+													<input class="form-control" type="text" name="phone_no" id="phone_no">
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
 													<label>Email <span class="text-danger">*</span></label>
-													<input class="form-control" type="text">
+													<input class="form-control" type="text" name="email" id="email">
 												</div>
 											</div>
 										</div>
@@ -41,13 +57,13 @@
 											<div class="col-md-6">
 												<div class="form-group">
 													<label>Company Name <span class="text-danger">*</span></label>
-													<input class="form-control" type="text">
+													<input class="form-control" type="text" name="company_id" id="company_id">
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
 													<label>Account No <span class="text-danger">*</span></label>
-													<input class="form-control" type="text">
+													<input class="form-control" type="text" name="acc_no" id="acc_no">
 												</div>
 											</div>
 										</div>
@@ -55,7 +71,7 @@
 											<div class="col-md-6">
 												<div class="form-group">
 													<label>Salary <span class="text-danger">*</span></label>
-													<input class="form-control" type="text">
+													<input class="form-control" type="text" name="salary" id="salary">
 												</div>
 											</div>
 											<div class="col-md-6">
@@ -71,51 +87,20 @@
 											</div>
 										</div>
 										<div class="row">
-											<div class="col-md-12">
+											<div class="col-md-6">
 												<div class="form-group">
 													<label>Resume</label>
-													<input class="form-control" type="file">
+													<input class="form-control" type="file" name="resume" id="resume">
 												</div>
 											</div>
-										</div>
-										<div class="row">
 											<div class="col-md-6">
 												<div class="form-group">
 													<label>Date Recruit <span class="text-danger">*</span></label>
-													<div class="cal-icon"><input class="form-control datetimepicker" type="text"></div>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label>Category Name<span class="text-danger">*</span></label>
-													<select name="category_id" id="category_id" class="form-control">
-														 <option value="">Select Category</option>
-														 @foreach($data['category_detail'] as $row)
-														 <option value="{{ $row->id}}">{{ $row->category_name }}</option>
-														 @endforeach
-													</select>
+													<div class="cal-icon"><input class="form-control datetimepicker" type="text" name="date_recruit" id="date_recruit"></div>
 												</div>
 											</div>
 										</div>
-										<div class="row">
-											<div class="col-md-6">
-												<div class="form-group">
-													<label>Rate Name <span class="text-danger">*</span></label>
-													<select name="rate_id" id="rate_id" class="form-control">
-														<option value="">Select Rate</option>
-														 @foreach($data['rate_detail'] as $row)
-														 <option value="{{ $row->id}}">{{ $row->rate_name }}</option>
-														 @endforeach
-													</select>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="form-group">
-													<label>Mooring Price (Rate) <span class="text-danger">*</span></label>
-													<input class="form-control" type="text" name="mooring_rate_id" id="mooring_rate_id">
-												</div>
-											</div>
-										</div>	
+											
 										<div class="submit-section">
 											<button class="btn btn-primary submit-btn">Submit</button>
 										</div>
@@ -183,27 +168,111 @@
 <script>
 	$(document).ready(function () {
 
-	  $('#client_list_validation').validate({
+	  $('#mooring_master_validation').validate({
 	    rules: {
-			"client_name": {
+	    	"user_id": {
 				required: true,
 				remote: {
-					url: "{{ url('/findClientNameExists')}}",
+					url: "{{ url('/findMooringMasterNameExists')}}",
 					data: {
-						client_id: function() {
-							return $("#updateid").val();
+						u_id: function() {
+							return $("#auto_id").val();
 						},
 						_token: "{{csrf_token()}}",
-						client_name: $(this).data('client_name')
+						user_id: $(this).data('user_id')
 					},
 					type: "GET",
 				},
 			},
+	    	"address" : {
+	    		required: true,
+	    	},
+	    	"phone_no" : {
+	    		required: true,
+	    		number:true
+	    	},
+	    	"email" : {
+	    		required: true,
+	    		email:true
+	    	},
+	    	"company_id" : {
+	    		required: true,
+	    	},
+	    	"acc_no" : {
+	    		required: true,
+	    	},
+	    	"salary" : {
+	    		required: true,
+	    		number:true
+	    	},
+	    	"resume" : {
+	    		required: true,
+	    		extension: "pdf|docx|doc"
+	    	},
+	    	"status_id" : {
+	    		required: true,
+	    	},
+	    	"date_recruit" : {
+	    		required: true,
+	    		date: true
+	    	},
+	    	"category_id" : {
+	    		required: true,
+	    	},
+	    	"rate_id" : {
+	    		required: true,
+	    	},
+	    	"mooring_rate_id" : {
+	    		required: true,
+	    		number:true
+	    	},
+			
 	    },
 	    messages: {
-			"client_name": {
-				required: "Client name is required",
-				remote: "Already name exist"
+			"user_id": {
+				required: "please enter username.",
+				remote: "already name exist"
+			},
+			"address": {
+				required: "please enter address."
+			},
+			"phone_no": {
+				required: "please enter phone number.",
+				number: "please enter number only"
+			},
+			"email": {
+				required: "please enter email id.",
+				email: "please enter valid format"
+			},
+			"company_id": {
+				required: "please enter company name."
+			},
+			"acc_no": {
+				required: "please enter account number."
+			},
+			"salary": {
+				required: "please enter salary.",
+				number: "please enter number only"
+			},
+			"resume": {
+				required: "please choose resume.",
+				extension: "please select valid format only"
+			},
+			"status_id": {
+				required: "please select status."
+			},
+			"date_recruit": {
+				required: "please select date."
+			},
+			"category_id": {
+				required: "please select category name."
+			},
+			"rate_id": {
+				required: "please select rate name."
+			},
+			"mooring_rate_id": {
+				required: "please enter mooring price.",
+				number:"please enter number only"
 			}
 	    }
 	  });

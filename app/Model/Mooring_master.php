@@ -19,6 +19,9 @@ class Mooring_master extends Model
         }
         return $savedata;
     }
-	
+	public function ratemasters()
+	{
+		return $this->hasMany(Ratemaster::class);
+	}
     
 }

@@ -62,7 +62,7 @@ class RoleController extends Controller
             $message = 'Role created successfully';           
         }
         return redirect()->route('roles.index')
-        ->with('success',$message);
+        ->with('type', 'Success!')->with('message', $message)->with('alertClass', 'alert alert-success');
     }
     public function show(Request $request)
     {
@@ -81,6 +81,6 @@ class RoleController extends Controller
     {
         DB::table("roles")->where('id',$id)->delete();
         return redirect()->route('roles.index')
-                        ->with('success','Role deleted successfully');
+						->with('type', 'Danger!')->with('message', 'Role deleted successfully')->with('alertClass', 'alert alert-danger');
     }
 }
