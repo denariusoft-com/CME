@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Model\Category;
 use App\Model\Rate;
 use App\Model\Ratemaster;
+use App\Model\Mooring_master;
+use App\User;
 use Illuminate\Http\Request;
+use DB;
 
 class RatemasterController extends Controller
 {
@@ -17,13 +20,13 @@ class RatemasterController extends Controller
 	public function __construct() {
 		
         $this->Ratemaster = new Ratemaster;
+        $this->Mooring_master = new Mooring_master;
+        $this->User = new User;
        
     }
     public function index()
     {
-		$data['category_view'] = Category::all();
-        $data['rate_view'] = Rate::all();
-		return view('master.ratemaster.list', compact('data', $data));
+		return view('master.ratemaster.list');
     }
 	public function get_ratemaster_list(Request $request)
 	{
@@ -155,7 +158,14 @@ class RatemasterController extends Controller
      */
     public function create()
     {
-        //
+        $data['category_view'] = Category::all();
+        $data['rate_view'] = Rate::all();
+		$data['user_view'] = DB::table('mooring_masters')
+				->join('users', 'users.id', '=', 'mooring_masters.user_id')
+				->get();
+				
+		//$data['user_view'] = Mooring_master::find(1)->ratemasters()->get();
+		return view('master.ratemaster.add_edit')->with('data',$data);
     }
 
     /**

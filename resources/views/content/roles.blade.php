@@ -16,12 +16,14 @@
             @endcan
 			</div>
 			<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-			@if ($message = Session::get('success'))
-				<div class="alert alert-success fade-out">
-					<p>{{ $message }}</p>
+			@if(session()->has('message'))
+				<div class="{{ session()->get('alertClass') }} alert-dismissible fade show" role="alert" id="msg">
+					<strong>{{ session()->get('type') }}</strong> {{ session()->get('message') }}
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
 				</div>
 			@endif
-
 				<div class="roles-menu">
 				<table class="table table-bordered">
 					<tr>
@@ -113,6 +115,32 @@
 			
 				
 				{!! $roles->render() !!}
+				
+<script>
+	$(document).ready(function () {
+
+	  $('#roleformValidate').validate({
+	    rules: {
+			"name" : {
+				required: true
+			},
+			"permission[]" : {
+				required: true
+			}
+	    },
+	    messages: {
+			"name": {
+				required: "please enter role name"
+			},
+			"permission[]": {
+				required: "permission required"
+			}
+	    }
+	  });
+
+	});
+</script>
+
 <script>
 
 function deleteRole(roleid) { 

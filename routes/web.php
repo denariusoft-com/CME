@@ -63,7 +63,7 @@ Route::get('get_status_detail', 'StatusController@get_status_detail');
 Route::get('findStatusNameExists', 'StatusController@findNameExists');
 
 Route::resource('ratemasters', 'RatemasterController')->except([
-    'create', 'show', 'edit', 'update'
+    'show', 'edit', 'update'
 ]);
 Route::post('get_ratemaster_list', 'RatemasterController@get_ratemaster_list');
 Route::get('get_ratemaster_detail', 'RatemasterController@get_ratemaster_detail');

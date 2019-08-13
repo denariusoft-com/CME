@@ -7,7 +7,10 @@ use App\Model\Status;
 use App\Model\Ratemaster;
 use App\Model\Rate;
 use App\Model\Category;
+use App\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class MooringMasterController extends Controller
 {
@@ -23,6 +26,7 @@ class MooringMasterController extends Controller
         $this->Category = new Category;
         $this->Rate = new Rate;
         $this->Ratemaster = new Ratemaster;
+        $this->User = new User;
        
     }
     public function index()
@@ -160,7 +164,92 @@ class MooringMasterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //$data = $request->all();
+        $auto_id = $request->input('auto_id');
+        $request->validate(
+            [
+                'user_id' => 'required',
+                'address' => 'required',
+                'phone_no' => 'required',
+                'email' => 'required',
+                'company_id' => 'required',
+                'acc_no' => 'required',
+                'salary' => 'required',
+                'resume' => 'required',
+                'status_id' => 'required',
+                'date_recruit' => 'required'
+                //'category_id' => 'required',
+                //'rate_id' => 'required',
+                //'mooring_rate_id' => 'required'
+            ], 
+            [
+                'user_id.required' => 'please enter user name',
+                'address.required' => 'please enter address name',
+                'phone_no.required' => 'please enter phone number',
+                'email.required' => 'please enter email name',
+                'company_id.required' => 'please enter company name',
+                'acc_no.required' => 'please enter account number',
+                'salary.required' => 'please enter salary',
+                'resume.required' => 'please choose resume',
+                'status_id.required' => 'please select status',
+                'date_recruit.required' => 'please select date recruit'
+                //'category_id.required' => 'please select category name',
+                //'rate_id.required' => 'please select rate name',
+                //'mooring_rate_id.required' => 'please enter price name'
+            ]
+        );
+
+        //$data['user_id'] = $request->input('user_id');
+        
+        //$data['category_id'] = $request->input('category_id');
+        //$data['rate_id'] = $request->input('rate_id');
+        //$data['mooring_rate_id'] = $request->input('mooring_rate_id');
+        $files = $request->file('resume');  
+        if(!empty($files))
+        {
+            $resume_name = time().'.'.$files->getClientOriginalExtension();
+            $files->move('public/images/resume/',$resume_name);
+            //$data['resume'] = $resume_name;
+        }
+        $data['address'] = $request->input('address');
+        $data['phone_no'] = $request->input('phone_no');
+        $data['email'] = $request->input('email');
+        $data['company_id'] = $request->input('company_id');
+        $data['acc_no'] = $request->input('acc_no');
+        $data['salary'] = $request->input('salary');
+        $data['status_id'] = $request->input('status_id');
+        $data['created_by'] = $request->input('created_by');
+        $data['updated_by'] = $request->input('updated_by');
+        $data['resume'] = $resume_name;
+        $data['date_recruit'] = date("Y-m-d", strtotime($request->input('date_recruit')));
+        if($auto_id == "")
+        {
+            $random = str_shuffle('abcdefghjklmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ1234567890!$%^&!$%^&');
+            $randompass = substr($random, 0, 10);
+            $user_data = new User();
+            $user_data['name'] = $request->input('user_id');
+            $user_data['email'] = $request->input('email');
+            $user_data['password'] = bcrypt($randompass);
+            $user_data->save();
+            //$user = User::create($user_data);
+            //$user_id = $user->id;
+            $user_data->assignRole('Mooring Master');
+            $data['user_id'] = $user_data->id;
+            $saveData = $this->Mooring_master->saveData($data);
+            if($saveData == true)
+            {
+                return  redirect('/mooring_masters')->with('type', 'Success!')->with('message', 'Mooring master details inserted successfully!')->with('alertClass', 'alert alert-success');
+            }
+        }
+        else
+        {
+            $data['user_id'] = $request->input('auto_id');
+            $updateData = $this->Mooring_master->saveData($data);
+            if($updateData == true)
+            {
+                return  redirect('/mooring_masters')->with('type', 'Update!')->with('message', 'Mooring master details updated successfully!')->with('alertClass', 'alert alert-warning');
+            }
+        }
     }
 
     /**

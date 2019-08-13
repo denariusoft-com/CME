@@ -18,4 +18,12 @@ class Ratemaster extends Model
         }
         return $savedata;
     }
+	public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+	public function mooring_master()
+    {
+        return $this->belongsTo(Mooring_master::class);
+    }
 }
