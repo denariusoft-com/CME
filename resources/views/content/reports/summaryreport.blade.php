@@ -53,7 +53,6 @@
 						</div>     
                     </div>
 					<!-- /Search Filter -->
-					
 					<div class="row">
 						<div class="col-md-12">
 							<div class="table-responsive">
@@ -72,17 +71,37 @@
 										</tr>
 									</thead>
 									<tbody>
+								    @php $i = 0; @endphp
+									@foreach ($overallsummarylist as $summary)
+									@php 
+									$datecom = strtotime($summary->commence_operation); 
+									$newformat_com = date('d',$datecom);
+									$datecomp = strtotime($summary->complete_operation); 
+									$newformat_datecomp = date('d',$datecomp);
+									$tothours = $datecomp - $datecom;
+									$tothrs = ($datecomp - $datecom)/3600; 
+									if($tothrs>48){
+									$totexcedd = $tothrs-48;
+									}else { $totexcedd =0;  }
+									
+									//echo $tothrs;
+									@endphp
+									
+								
 									<tr>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
+											<td>{{ ++$i }}</td>
+											<td>{{ $newformat_com. " - ". $newformat_datecomp }}
+											</td>
+											<td></br>
+											Total Exceeding Hours: {{ $totexcedd }}</td>
+											<td>{{ $summary->user_id }}</td>
 											<td></td>
 											<td></td>
 											<td></td>
 											<td></td>
 											<td class="text-center"></td>
 										</tr>
+										@endforeach
 									</tbody>
 								</table>
 							</div>

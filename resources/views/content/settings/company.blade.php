@@ -14,7 +14,7 @@
 									</div>
 								@endif
 								@csrf
-								@php
+										@php
 										if(!empty(CommonHelper::cmpy_setting())){
 											$cmpyrec = CommonHelper::cmpy_setting();
 										}

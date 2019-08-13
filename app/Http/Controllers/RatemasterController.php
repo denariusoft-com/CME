@@ -58,7 +58,7 @@ class RatemasterController extends Controller
 		else {
         $search = $request->input('search.value'); 
         if( $limit == -1){
-            $ratemasters     =  Ratemaster::select('id','cat_id','rate_id','price')
+            $ratemasters =  Ratemaster::select('id','cat_id','rate_id','price')
 						->where('id','LIKE',"%{$search}%")
                         ->orWhere('cat_id', 'LIKE',"%{$search}%")
                         ->orWhere('rate_id', 'LIKE',"%{$search}%")
