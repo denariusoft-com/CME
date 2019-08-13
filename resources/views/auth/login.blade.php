@@ -10,9 +10,20 @@
         <title>Login - Mooring STS</title>
 		
 		<!-- Favicon -->
-        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('public/assets/img/logo.png') }}">
-		
-		<!-- Bootstrap CSS -->
+		@php
+		if(!empty(CommonHelper::theme_setting())){
+			$themerec = CommonHelper::theme_setting();
+		}
+		else{
+			$themerec="";
+		}
+		@endphp
+		@if(!empty($themerec->favicon))
+		<link rel="shortcut icon" type="image/x-icon" href="{{ URL::to('/') }}/storage/app/public/images/{{ $themerec->favicon }}">
+		@else
+		<link rel="shortcut icon" type="image/x-icon" href="{{ asset('public/assets/img/logo.png') }}">
+		@endif
+       <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="{{ asset('public/assets/css/bootstrap.min.css') }}">
 		
 		<!-- Fontawesome CSS -->
@@ -43,7 +54,21 @@
 					<div class="account-box">
 						<div class="account-wrapper">
 							<h3 class="account-title">{{ __('Login') }}</h3>
-							<p class="account-subtitle">STS</p>
+							<p class="account-subtitle">
+							@php
+							if(!empty(CommonHelper::theme_setting())){
+								$themerec = CommonHelper::theme_setting();
+							}
+							else{
+								$themerec="";
+							}
+							@endphp
+							@if(!empty($themerec->logo))
+							<img src="{{ URL::to('/') }}/storage/app/public/images/{{ $themerec->logo }}" width="70" height="40" alt="CME">
+							@else
+							<img src="{{ asset('public/assets/img/logo.png') }}" alt="CME">
+							@endif
+							</p>
 							
 							<!-- Account Form -->
 							 <form method="POST" action="{{ route('login') }}">

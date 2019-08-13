@@ -3,7 +3,7 @@
 		<div id="sidebar-menu" class="sidebar-menu">
 			<ul>
 				<li class="active"> 
-					<a href="index.html"><i class="la la-dashboard"></i> <span>Dashboard</span></a>
+					<a href="{{ url('home') }}"><i class="la la-dashboard"></i> <span>Dashboard</span></a>
 				</li>
 				<!--li> 
 					<a href="employee-dashboard.html"><i class="la la-tachometer"></i> <span>Employee Dashboard</span></a>
@@ -17,6 +17,13 @@
 						<li><a href="{{ route('rates.index') }}">Rate List</a></li>
 						<li><a href="{{ route('ratemasters.index') }}">Rate Master List</a></li>
 						<li><a href="{{ route('mooring_masters.index') }}">Mooring Master List</a></li>
+					</ul>
+				</li>
+				<li class="submenu">
+					<a href="#" class="noti-dot"><i class="la la-pie-chart"></i> <span> Report</span> <span class="menu-arrow"></span></a>
+					<ul style="display: none;">
+						<li><a href="{{ url('reports')}}">Summary Report</a></li>
+						
 					</ul>
 				</li>
 				<li> 
