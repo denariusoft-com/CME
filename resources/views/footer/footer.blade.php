@@ -14,7 +14,7 @@
 <!-- Chart JS -->
 <script src="{{ asset('public/assets/plugins/morris/morris.min.js') }}"></script>
 <script src="{{ asset('public/assets/plugins/raphael/raphael.min.js') }}"></script>
-<script src="{{ asset('public/assets/js/chart.js') }}"></script>
+<!--<script src="{{ asset('public/assets/js/chart.js') }}"></script>-->
 
 <!-- Custom JS -->
 <script src="{{ asset('public/assets/js/app.js') }}"></script>

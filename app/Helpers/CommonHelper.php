@@ -3,7 +3,7 @@ namespace App\Helpers;
 use DB;
 use Carbon\Carbon;
 use App\User;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 
 class CommonHelper
 {
@@ -26,7 +26,13 @@ class CommonHelper
     } 
 	public static function mooring_count()
     {
-        $mooringct = DB::table('mooring_details')->count();
+        $mooringct = DB::table('mooring_masters')->count();
         return $mooringct;
+    } 
+    public static function profile_img($id)
+    {
+        $profset = user::find($id);
+        $userprof = isset($profset) ? $profset : ""; 
+        return $userprof;
     } 
 }

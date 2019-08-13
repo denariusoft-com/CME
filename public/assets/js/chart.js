@@ -72,16 +72,16 @@ $(document).ready(function() {
 	Morris.Donut({
 		element: 'pie-charts',
 		colors: [
-			'#ff9b44',
+			//'#ff9b44',
 			'#fc6075',
 			'#ffc999',
-			'#fd9ba8'
+			//'#fd9ba8'
 		],
 		data: [
-			{label: "Employees", value: 30},
+			{label: "Mooring Master", value: 30},
 			{label: "Clients", value: 15},
-			{label: "Projects", value: 45},
-			{label: "Tasks", value: 10}
+			/*{label: "Projects", value: 45},
+			{label: "Tasks", value: 10}*/
 		],
 		resize: true,
 		redraw: true

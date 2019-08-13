@@ -13,12 +13,16 @@
 							<li> 
 								<a href="{{ action('SettingController@themesettings') }}"><i class="la la-photo"></i> <span>Theme Settings</span></a>
 							</li>
+							
 							<!--<li> 
 								<a href="localization.html"><i class="la la-clock-o"></i> <span>Localization</span></a>
 							</li>
 							-->
 							<li> 
 								<a href="{{ url('roles')}}"><i class="la la-key"></i> <span>Roles & Permissions</span></a>
+							</li>
+							<li> 
+								<a href="{{ route('settings.myprofile') }}"><i class="la la-user"></i> <span>My Profile</span></a>
 							</li>
 							<!--<li> 
 								<a href="email-settings.html"><i class="la la-at"></i> <span>Email Settings</span></a>

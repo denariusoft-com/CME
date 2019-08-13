@@ -23,10 +23,15 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => ['auth']], function() {
     //settings
     Route::post('/settings/companysetting', 'SettingController@saveCompanysetting');
-    Route::get('settings/themesettings', 'SettingController@themesettings');
-    Route::post('/settings/themesettingsave', 'SettingController@themesettingsave');
-    Route::resource('settings','SettingController');
    
+    Route::get('settings/themesettings', 'SettingController@themesettings');
+    Route::post('/settings/profileimg_save', 'SettingController@profileimg_save');
+    Route::post('/settings/themesettingsave', 'SettingController@themesettingsave');
+    Route::get('/settings/myprofile', 'SettingController@myprofile')->name('settings.myprofile');
+    Route::post('/settings/changePassword','SettingController@ChangePassword')->name('settings.changePassword');
+
+    Route::resource('settings','SettingController');
+    //Route::get('ratemasters-edit/{parameter}','RatemasterController@edit')->name('ratemaster.add-edit');
     //Reports
     Route::resource('reports','ReportController');
 
@@ -61,9 +66,11 @@ Route::resource('statuses', 'StatusController')->except([
 Route::post('get_status_list', 'StatusController@get_status_list');
 Route::get('get_status_detail', 'StatusController@get_status_detail');
 Route::get('findStatusNameExists', 'StatusController@findNameExists');
-
+//Route::get('ratemasters/edit/{parameter}','RatemasterController@edit');
+Route::get('ratemasters-edit/{parameter}','RatemasterController@edit')->name('ratemaster.add-edit');
+	
 Route::resource('ratemasters', 'RatemasterController')->except([
-    'show', 'edit', 'update'
+    'show', 'update'
 ]);
 Route::post('get_ratemaster_list', 'RatemasterController@get_ratemaster_list');
 Route::get('get_ratemaster_detail', 'RatemasterController@get_ratemaster_detail');

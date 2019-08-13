@@ -54,12 +54,26 @@
 	
 		<li class="nav-item dropdown has-arrow main-drop">
 			<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-				<span class="user-img"><img src="{{ asset('public/assets/img/profiles/avatar-21.jpg') }}" alt="">
+				<span class="user-img"><!--<img src="{{ asset('public/assets/img/profiles/avatar-21.jpg') }}" alt="">-->
+				@php								
+									$id=Auth::user()->id;
+									if(!empty(CommonHelper::profile_img($id))){
+										$profrec = CommonHelper::profile_img($id);
+									}
+									else{
+										$profrec="";
+									}
+								@endphp
+										@if(!empty($profrec->profile_img))
+										<img src="{{ URL::to('/') }}/storage/app/public/images/{{ $profrec->profile_img }}" alt="" width="60" height="30">
+										@else
+										<img  src="{{ URL::to('/') }}/public/assets\img\profiles\user.jpg" alt="user">
+										@endif	
 				<span class="status online"></span></span>
 				<span>Admin</span>
 			</a>
 			<div class="dropdown-menu">
-				<a class="dropdown-item" href="profile.html">My Profile</a>
+				<a class="dropdown-item" href="{{ route('settings.myprofile') }}">My Profile</a>
 				<a class="dropdown-item" href="{{ url('settings')}}">Settings</a>
 				<a class="dropdown-item" href="{{ route('logout') }}"
 				   onclick="event.preventDefault();
@@ -79,8 +93,8 @@
 	<div class="dropdown mobile-user-menu">
 		<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
 		<div class="dropdown-menu dropdown-menu-right">
-			<a class="dropdown-item" href="profile.html">My Profile</a>
-			<a class="dropdown-item" href="settings.html">Settings</a>
+			<a class="dropdown-item" href="{{ route('settings.myprofile') }}">My Profile</a>
+			<a class="dropdown-item" href="{{ url('settings')}}">Settings</a>
 			<a class="dropdown-item" href="{{ route('logout') }}"
 			onclick="event.preventDefault();
 								 document.getElementById('logout-form').submit();">

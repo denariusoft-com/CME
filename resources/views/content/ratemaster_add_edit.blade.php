@@ -3,7 +3,9 @@
 					<!-- Page Title -->
 					<div class="row">
 						<div class="col">
-							<h4 class="page-title">Rate Master List</h4>
+							<h4 class="page-title">Rate Master List
+						
+							</h4>
 						</div>
 						<div class="col-12 text-right m-b-30">
 							<a href="{{ route('ratemasters.index')}}" class="btn add-btn" ><i class="fa fa-list"></i> List </a>
@@ -14,23 +16,18 @@
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-body">
+								
 									<form method="post" action="{{ route('ratemasters.store') }}" id="ratemaster_list_validation">
-										@csrf
-										<input type="hidden" name="id" id="updateid">
-										@php
-											$created_by = Auth::user()->id;
-											$updated_by = Auth::user()->id;
-										@endphp
-										<input type="hidden" name="created_by" id="created_by" value="{{ $created_by }}">
-										<input type="hidden" name="updated_by" id="updated_by" value="{{ $updated_by }}">
+										@csrf		
+										<input type="hidden" name="id" id="updateid" value="{{ isset($data['master_rate']->id) ? $data['master_rate']->id : '' }}">																				
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
 													<label>Mooring Master Name <span class="text-danger">*</span></label>
-													<select name="category_id" id="category_id" class="form-control">
+													<select name="user_id" id="category_id" class="form-control">
 														 <option value="">Select name</option>
 														 @foreach($data['user_view'] as $row)
-														 <option value="{{ $row->id}}">{{ $row->name }}</option>
+														 <option value="{{ $row->id}}" @if((isset($data['master_rate']->user_id) == $row->id)){{ "selected" }} @endif>{{ $row->name }}</option>
 														 @endforeach
 													</select>
 												</div>
@@ -55,25 +52,25 @@
 														<tbody id="table_achievements_tbody">
 															<tr>
 																<td>
-																	<select name="category_id" id="category_id" class="form-control">
+																	<select name="category_id[]" id="category_id" class="form-control">
 																		 <option value="">Select Category</option>
 																		 @foreach($data['category_view'] as $row)
-																		 <option value="{{ $row->id}}">{{ $row->category_name }}</option>
+																		 <option value="{{ $row->id }}" @if((isset($data['master_rate']->cat_id) == $row->id)){{ "selected" }} @endif>{{ $row->category_name }}</option>
 																		 @endforeach
 																	</select>
 																</td>
 																<td>
-																	<select class="form-control" name="rate_id" id="rate_id">
+																	<select class="form-control" name="rate_id[]" id="rate_id">
 																		<option label="select rate name" value=""></option>
 																		@foreach($data['rate_view'] as $value)
-																		 <option value="{{$value->id}}" >
+																		 <option value="{{$value->id}}"  @if((isset($data['master_rate']->rate_id) == $value->id)){{ "selected" }} @endif>
 																				{{$value->rate_name}}
 																		</option>
 																		@endforeach
 																	</select>
 																</td>
-																<td><input type="text" class="form-control" name="timing" id="timing"></td>
-																<td><input type="text" class="form-control" name="price" id="price"></td>
+																<td><input type="text" class="form-control" name="timing[]" id="timing" value="{{ isset($data['master_rate']->timing) ? $data['master_rate']->timing : '' }}"></td>
+																<td><input type="text" class="form-control" name="price[]" id="price" value="{{ isset($data['master_rate']->price) ? $data['master_rate']->price : '' }}"></td>
 																<td></td>
 															</tr>
 														</tbody>
@@ -117,15 +114,15 @@ $(function () {
 		$('#comments_remove').remove();
 		var rowsLength = document.getElementById(table_id).getElementsByTagName("tbody")[0].getElementsByTagName("tr").length+1;
 		var cancat = ""; 
-		cancat = '<td><select name="category_id" id="category_id" class="form-control"><option value="">Select Category</option>';
-		<?php foreach($data['category_view'] as $row): ?>
-		cancat +='<option value="<?php echo $row->id; ?>">'<?php echo $row->category_name; ?>'</option>';
-		<?php endforeach ?>
-		cancat +='</select></td><td><select class="form-control" name="rate_id" id="rate_id"><option label="select rate name" value=""></option>';
-		<?php foreach($data['rate_view'] as $row): ?>
-		cancat +='<option value="<?php echo $row->id; ?>">'<?php echo $row->rate_name; ?>'</option>';
-		<?php endforeach ?>
-		cancat +='</select></td><td><input type="text" name = "DynamicTextBox" class="form-control" value = "" ></td><td><input type="text" name = "DynamicTextBox" class="form-control" value = "" ></td>' + '<td><button type="button" class="btn btn-danger" id="comments_remove"><i class="fa fa-trash-o"></i></button></td>';
+		cancat = '<td><select name="category_id[]" id="category_id" class="form-control"><option value="">Select Category</option>';
+		@foreach($data['category_view'] as $row) 
+		cancat +='<option value="{{ $row->id }}">{{ $row->category_name }}</option>';
+		@endforeach
+		cancat +='</select></td><td><select class="form-control" name="rate_id[]" id="rate_id"><option label="select rate name" value=""></option>';
+		@foreach($data['rate_view'] as $row)
+		cancat +='<option value="{{ $row->id }}">{{ $row->rate_name }}</option>';
+		@endforeach 
+		cancat +='</select></td><td><input type="text" name = "timing[]" class="form-control" value = "" ></td><td><input type="text" name = "price[]" class="form-control" value = "" ></td>' + '<td><button type="button" class="btn btn-danger" id="comments_remove"><i class="fa fa-trash-o"></i></button></td>';
 		return cancat
 	}
 });

@@ -1,3 +1,62 @@
+@php
+	if(!empty(CommonHelper::client_count())){
+		$client_tot = CommonHelper::client_count();
+	}
+	else{
+		$client_tot="0";
+		
+	}
+//	echo $client_tot;
+if(!empty(CommonHelper::mooring_count())){
+						$moor_tot = CommonHelper::mooring_count();
+					}
+					else{
+						$moor_tot="0";
+						
+					}
+				//	echo $moor_tot;
+	@endphp
+<script>
+$(document).ready(function() {
+	Morris.Donut({
+		element: 'pie-charts',
+		colors: [
+			//'#ff9b44',
+			'#fc6075',
+			'#ffc999',
+			//'#fd9ba8'
+		],
+		data: [
+			{label: "Mooring Master", value: {{ $moor_tot }} },
+			{label: "Clients", value: {{ $client_tot }} },
+			/*{label: "Projects", value: 45},
+			{label: "Tasks", value: 10}*/
+		],
+		resize: true,
+		redraw: true
+	});
+	Morris.Bar({
+		element: 'bar-charts',
+		data: [
+			{ y: '2006', a: 100, b: 90 },
+			{ y: '2007', a: 75,  b: 65 },
+			{ y: '2008', a: 50,  b: 40 },
+			{ y: '2009', a: 75,  b: 65 },
+			{ y: '2010', a: 50,  b: 40 },
+			{ y: '2011', a: 75,  b: 65 },
+			{ y: '2012', a: 100, b: 90 }
+		],
+		xkey: 'y',
+		ykeys: ['a', 'b'],
+		labels: ['Total Income', 'Total Outcome'],
+		lineColors: ['#ff9b44','#fc6075'],
+		lineWidth: '3px',
+		barColors: ['#ff9b44','#fc6075'],
+		resize: true,
+		redraw: true
+	});
+});
+</script>
 <div class="content container-fluid">
 	<div class="row">
 		<!--<div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
@@ -68,6 +127,12 @@
 				</div>
 				<div class="col-md-6 text-center">
 					<div class="card-box">
+						<h3 class="card-title">Overall Status</h3>
+						<div id="pie-charts"></div>
+					</div>
+				</div>
+				<div class="col-md-6 text-center">
+					<div class="card-box">
 						<h3 class="card-title">Sales Overview</h3>
 						<div id="line-charts"></div>
 					</div>
@@ -78,16 +143,11 @@
 						<div id="area-charts"></div>
 					</div>
 				</div>
-				<div class="col-md-6 text-center">
-					<div class="card-box">
-						<h3 class="card-title">Overall Status</h3>
-						<div id="pie-charts"></div>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 	</div>
-	<div class="row">
+	<!--<div class="row">
 		<div class="col-md-6">
 			<div class="card card-table">
 				<div class="card-header">
@@ -515,5 +575,5 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>-->
 </div>

@@ -3,6 +3,7 @@
 namespace App\Model;
 use DB;
 use Illuminate\Database\Eloquent\Model;
+use App\User;
 
 class Themesetting extends Model
 {
@@ -19,5 +20,11 @@ public function save_themesetting($data){
     }
     return $savedata;
     
+}
+public function save_profileimg($data){
+    $update = User::find($data['id']);
+    $update->profile_img = $data['profile_img'];
+    $update->save();
+    return $update;        
 }
 }

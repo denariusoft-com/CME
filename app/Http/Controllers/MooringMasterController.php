@@ -235,7 +235,7 @@ class MooringMasterController extends Controller
             //$user_id = $user->id;
             $user_data->assignRole('Mooring Master');
             $data['user_id'] = $user_data->id;
-            $saveData = $this->Mooring_master->saveData($data);
+             $saveData = $this->Mooring_master->saveData($data);
             if($saveData == true)
             {
                 return  redirect('/mooring_masters')->with('type', 'Success!')->with('message', 'Mooring master details inserted successfully!')->with('alertClass', 'alert alert-success');

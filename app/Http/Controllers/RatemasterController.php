@@ -8,7 +8,9 @@ use App\Model\Ratemaster;
 use App\Model\Mooring_master;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use DB;
+use Auth;
 
 class RatemasterController extends Controller
 {
@@ -95,12 +97,13 @@ class RatemasterController extends Controller
             foreach ($ratemasters as $ratemaster)
             {
                 $delete =  route('ratemasters.destroy',$ratemaster['id']);
-                $edit =  route('ratemasters.store',$ratemaster['id']);
-				$autoid = $ratemaster['id'];
+                $autoid = $ratemaster['id'];
+                $enc_id = Crypt::encrypt($autoid);
+                $edit =  route('ratemaster.add-edit',$enc_id);                
                 $nestedData['cat_id'] = Category::where('id','=', $ratemaster['cat_id'])->first()->category_name;
                 $nestedData['rate_id'] = Rate::where('id','=', $ratemaster['rate_id'])->first()->rate_name;
                 $nestedData['price'] = $ratemaster['price'];
-                $nestedData['options'] = "&emsp;<a style='float: left;' href='{$edit}' title='EDIT' id='#add_edit_modal' data-toggle='modal' class='btn btn-primary' onClick='showeditForm($autoid);'><i class='fa fa-pencil'></i></a>";
+                $nestedData['options'] = "&emsp;<a style='float: left;' href='{$edit}' title='EDIT'  class='btn btn-primary' onClick='showeditForm($autoid);'><i class='fa fa-pencil'></i></a>";
                 $nestedData['options'] .="<form style='float: left;margin-left: 10px;' action='{$delete}' method='POST'>".method_field('DELETE').csrf_field();
                 $nestedData['options'] .="<button type='submit' class='btn btn-danger'  onclick='return ConfirmDeletion()'><i class='fa fa-trash'></i></button> </form>
 										";
@@ -179,16 +182,28 @@ class RatemasterController extends Controller
         $data = $request->all();
         $request->validate(
             [
-                'cat_id' => 'required',
+                'user_id' => 'required',
+                'category_id' => 'required',
                 'rate_id' => 'required',
                 'price' => 'required'
             ], 
             [
-                'cat_id.required' => 'please enter category name',
+                'user_id' => 'please enter Mooring master name',
+                'category_id.required' => 'please enter category name',
                 'rate_id.required' => 'please enter rate name',
                 'price.required' => 'please enter price name'
             ]
         );
+        // $created_by = Auth::user()->id;
+       // dd(Auth::user());
+          if(!empty($data['id'])){
+            $data['updated_by'] = Auth::user()->id;
+          }   
+          else{
+            $data['created_by'] = Auth::user()->id;
+            $data['updated_by'] = Auth::user()->id;
+          }
+
 		$saveData = $this->Ratemaster->saveData($data);
 		if($saveData == true)
 		{
@@ -213,9 +228,19 @@ class RatemasterController extends Controller
      * @param  \App\Mooring_ratemaster  $mooring_ratemaster
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ratemaster $ratemaster)
+    public function edit($id)
     {
-        //
+        //dd($request);
+         $data['category_view'] = Category::all();
+        $data['rate_view'] = Rate::all();
+		$data['user_view'] = DB::table('mooring_masters')
+				->join('users', 'users.id', '=', 'mooring_masters.user_id')
+                ->get();
+        $id = Crypt::decrypt($id);
+        $data['master_rate'] = RateMaster::find($id);		
+       //dd($data['master_rate']);
+		//$data['user_view'] = Mooring_master::find(1)->ratemasters()->get();
+		return view('master.ratemaster.add_edit')->with('data',$data);
     }
 
     /**
