@@ -76,3 +76,7 @@ Route::post('get_mooringmaster_list', 'MooringMasterController@get_mooringmaster
 Route::get('get_mooringmaster_detail', 'MooringMasterController@get_mooringmaster_detail');
 Route::get('findMooringMasterNameExists', 'MooringMasterController@findNameExists');
 Route::get('get-rate-list', 'MooringMasterController@getRateList');
+
+
+Route::resource('timesheet', 'TimesheetController');
+

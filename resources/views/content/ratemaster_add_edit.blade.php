@@ -27,7 +27,7 @@
 											<div class="col-md-12">
 												<div class="form-group">
 													<label>Mooring Master Name <span class="text-danger">*</span></label>
-													<select name="category_id" id="category_id" class="form-control">
+													<select name="user_id" id="user_id" class="form-control">
 														 <option value="">Select name</option>
 														 @foreach($data['user_view'] as $row)
 														 <option value="{{ $row->id}}">{{ $row->name }}</option>
@@ -118,13 +118,13 @@ $(function () {
 		var rowsLength = document.getElementById(table_id).getElementsByTagName("tbody")[0].getElementsByTagName("tr").length+1;
 		var cancat = ""; 
 		cancat = '<td><select name="category_id" id="category_id" class="form-control"><option value="">Select Category</option>';
-		<?php foreach($data['category_view'] as $row): ?>
-		cancat +='<option value="<?php echo $row->id; ?>">'<?php echo $row->category_name; ?>'</option>';
-		<?php endforeach ?>
+		@foreach($data['category_view'] as $row)
+		cancat +='<option value="{{$row->id }}">'"{{ $row->category_name }}" '</option>';
+		@endforeach
 		cancat +='</select></td><td><select class="form-control" name="rate_id" id="rate_id"><option label="select rate name" value=""></option>';
-		<?php foreach($data['rate_view'] as $row): ?>
-		cancat +='<option value="<?php echo $row->id; ?>">'<?php echo $row->rate_name; ?>'</option>';
-		<?php endforeach ?>
+		@foreach($data['rate_view'] as $row)
+		cancat +='<option value="{{$row->id }}">'"{{ $row->rate_name }}" '</option>';
+		@endforeach
 		cancat +='</select></td><td><input type="text" name = "DynamicTextBox" class="form-control" value = "" ></td><td><input type="text" name = "DynamicTextBox" class="form-control" value = "" ></td>' + '<td><button type="button" class="btn btn-danger" id="comments_remove"><i class="fa fa-trash-o"></i></button></td>';
 		return cancat
 	}

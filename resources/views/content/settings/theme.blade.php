@@ -7,12 +7,13 @@
                                     action="{{ URL::to('settings/themesettingsave') }}"  enctype="multipart/form-data">
 									@csrf
 									@php
-										if(!empty(CommonHelper::theme_setting())){
+									$themerec="";
+									/*	if(!empty(CommonHelper::theme_setting())){
 											$themerec = CommonHelper::theme_setting();
 										}
 										else{
 											$themerec="";
-										}
+										}*/
 										@endphp
 									@isset($themerec->id)
 									<input type="hidden" name="id" value="@isset($themerec){{$themerec->id}}@endisset">
