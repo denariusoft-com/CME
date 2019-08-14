@@ -76,6 +76,7 @@
 									@php 
 									$datecom = strtotime($summary->commence_operation); 
 									$newformat_com = date('d',$datecom);
+									
 									$datecomp = strtotime($summary->complete_operation); 
 									$newformat_datecomp = date('d',$datecomp);
 									$tothours = $datecomp - $datecom;
@@ -105,7 +106,12 @@
 											<td>{{ ++$i }}</td>
 											<td>{{ $newformat_com. " - ". $newformat_datecomp }}
 											</td>
-											<td></br>
+											<td style="text-transform:uppercase" >{{ $summary->mother_vessel }} / {{ $summary->maneuvring_vessel }}
+											</br>
+											Commence Operation :{{ date('d',strtotime($summary->commence_operation))."/".date('Hi',strtotime($summary->commence_operation)) }}
+											</br>
+											Complete Operation :{{ date('d',strtotime($summary->complete_operation))."/".date('Hi',strtotime($summary->complete_operation)) }}
+											</br>
 											Total Exceeding Hours: {{ $totexcedd }}</td>
 											<td>@isset($profrec->name){{$profrec->name}}@endisset</td>
 											<td>@isset($clientrec->client_name){{$clientrec->client_name}}@endisset</td>

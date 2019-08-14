@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\StsTimesheet;
+use Auth;
+use App\User;
+use DB;
+use App\Model\Client;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class HomeController extends Controller
 {
@@ -24,6 +30,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $user = Auth::user()->getRoleNames();
+        foreach($user as $v)
+       // dd($v);
+        if($v=="Admin")
+        {
         $where = array();
         $or_where = array();
         $join =array(); 
@@ -34,6 +45,14 @@ class HomeController extends Controller
         $summarylist = new StsTimesheet();
         $overallsummarylist = $summarylist->getTimesheet_data($select="", $where, $or_where, $join);
         return view('dashboard/dashboard', compact('overallsummarylist'));
+        }
+        else{
+            $data['user_view'] = DB::table('mooring_masters')
+            ->join('users', 'users.id', '=', 'mooring_masters.user_id')
+            ->get();
+            $data['client'] =Client::where('status','=','1')->get();
+             return view('timesheet.add_edit')->with('data',$data);
+        }
        
     }
 }

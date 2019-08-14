@@ -11,7 +11,7 @@
 	</div>
 	<!-- /Loader -->
 <div class="header">
-			
+@php $user = Auth::user()->getRoleNames(); @endphp
 	<!-- Logo -->
 	<div class="header-left">
 		<a href="" class="logo">
@@ -71,11 +71,20 @@
 										<img  src="{{ URL::to('/') }}/public/assets\img\profiles\user.jpg" alt="user">
 										@endif	
 				<span class="status online"></span></span>
-				<span>Admin</span>
+				<span>{{ Auth::user()->name }}
+				</span>
 			</a>
 			<div class="dropdown-menu">
 				<a class="dropdown-item" href="{{ route('settings.myprofile') }}">My Profile</a>
+				@foreach($user as $v)
+				@php
+				if($v=="Admin"){
+				@endphp
 				<a class="dropdown-item" href="{{ url('settings')}}">Settings</a>
+				@php
+				}
+				@endphp
+			    @endforeach
 				<a class="dropdown-item" href="{{ route('logout') }}"
 				   onclick="event.preventDefault();
 								 document.getElementById('logout-form').submit();">
@@ -95,7 +104,15 @@
 		<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
 		<div class="dropdown-menu dropdown-menu-right">
 			<a class="dropdown-item" href="{{ route('settings.myprofile') }}">My Profile</a>
-			<a class="dropdown-item" href="{{ url('settings')}}">Settings</a>
+			@foreach($user as $v)
+				@php
+				if($v=="Admin"){
+				@endphp
+				<a class="dropdown-item" href="{{ url('settings')}}">Settings</a>
+				@php
+				}
+				@endphp
+			    @endforeach
 			<a class="dropdown-item" href="{{ route('logout') }}"
 			onclick="event.preventDefault();
 								 document.getElementById('logout-form').submit();">

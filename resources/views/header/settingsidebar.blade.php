@@ -1,4 +1,5 @@
 <!-- Sidebar -->
+@php $user = Auth::user()->getRoleNames(); @endphp
 <div class="sidebar" id="sidebar">
                 <div class="sidebar-inner slimscroll">
 					<div class="sidebar-menu">
@@ -7,6 +8,10 @@
 								<a href="{{ url('home')}}"><i class="la la-home"></i> <span>Back to Home</span></a>
 							</li>
 							<li class="menu-title">Settings</li>
+							@foreach($user as $v)
+							@php
+							if($v=="Admin"){
+							@endphp
 							<li> 
 								<a href="{{ url('settings')}}"><i class="la la-building"></i> <span>Company Settings</span></a>
 							</li>
@@ -21,6 +26,10 @@
 							<li> 
 								<a href="{{ url('roles')}}"><i class="la la-key"></i> <span>Roles & Permissions</span></a>
 							</li>
+							@php
+							}
+							@endphp
+							@endforeach
 							<li> 
 								<a href="{{ route('settings.myprofile') }}"><i class="la la-user"></i> <span>My Profile</span></a>
 							</li>
