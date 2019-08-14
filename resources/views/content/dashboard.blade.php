@@ -39,9 +39,9 @@ if(!empty(CommonHelper::mooring_count())){
 	$datecomp = strtotime($summary->complete_operation); 
 	$newformat_datecomp = date('d',$datecomp);
 	$tothours = $datecomp - $datecom;
-	$tothrs = ($datecomp - $datecom)/3600; 
+	$tothrs = round(($datecomp - $datecom)/3600,2); 
 	if($tothrs>48){
-	$totexcedd = $tothrs-48;
+	$totexcedd = round($tothrs-48,2);
 	}else { $totexcedd =0;  }
 
 	$result[] = "{ y : '".$name."'".","." a : ".$tothrs.","." b : ".$totexcedd." }";

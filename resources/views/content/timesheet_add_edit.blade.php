@@ -1,8 +1,8 @@
 <!-- Plugin Custom Stylesheet -->
 <link rel="stylesheet" href="{{ asset('public/assets/form-wizard-blue.css') }}">
+<link href="{{ asset('public/assets/css/inputmask.css') }}" rel="stylesheet" type="text/css">
 <!-- Plugin Custom JS -->
 <script src="{{ asset('public/assets/form-wizard.js') }}"></script>	
-
 
 <style type="text/css" media="screen">
 	.header-button-group, .body-button-group {
@@ -113,15 +113,44 @@
 								</div>
 								<!-- Progress Bar -->
                     		    <h4>General Information: <span>Step 1 - 4</span></h4>
-                    			<div class="form-group">
-                    			    <label>STS Superintendent: <span>*</span></label>
-                                    <select name="general[user_id]" id="user_id" class="form-control required">
+                    			<div class="form-group col-md-4">
+                    			    <label></label>                                 
+									
+                                </div>    
+								<div class="form-group col-md-4">
+                    			   <!-- <label>Client Name: <span>*</span></label>
+                                    <select name="general[client_id]" id="client_id" class="form-control required">
 										 <option value="">Select name</option>
 										 @foreach($data['user_view'] as $row)
 										 <option value="{{ $row->id}}">{{ $row->name }}</option>
 										 @endforeach
 									</select>
-                                </div>                       
+									-->
+                                </div>     
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+										<label>STS Superintendent: <span>*</span></label>
+										<select name="general[user_id]" id="user_id" class="form-control required">
+										 <option value="">Select name</option>
+										 @foreach($data['user_view'] as $row)
+										 <option value="{{ $row->id}}">{{ $row->name }}</option>
+										 @endforeach
+									</select>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+										<label>Client Name: <span>*</span></label>
+										<select name="general[client_id]" id="client_id" class="form-control required">
+										 <option value="">Select Client Name</option>
+										 @foreach($data['client'] as $row)
+										 <option value="{{ $row->id}}">{{ $row->client_name }}</option>
+										 @endforeach
+									</select>
+											</div>
+									</div>
+								</div>                    
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
@@ -188,7 +217,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Arrival / NORT: <span>*</span></label>
-											<input type="text" name="general[arrival_nort]" id="arrival_nort" placeholder="Enter Arrival NORT" class="form-control ">
+											<input type="text" name="general[arrival_nort]" id="arrival_nort" placeholder="Enter Arrival NORT" class="form-control dt-masktext">
 										</div>
 									</div>
 								</div>
@@ -210,13 +239,13 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Date / Time Onboard (IN): <span>*</span></label>
-											<input type="datetime-local" name="general[dt_onboard_in]" id="dt_onboard_in" placeholder="Choose Onboard" class="form-control required">
+											<input type="text" name="general[dt_onboard_in]" id="dt_onboard_in" placeholder="Choose Onboard" class="form-control required dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Date / Time Disembark (OUT): <span>*</span></label>
-											<input type="datetime-local" name="general[dt_disembark_out]" id="dt_disembark_out" placeholder="Choose Disembark" class="form-control required">
+											<input type="text" name="general[dt_disembark_out]" id="dt_disembark_out" placeholder="Choose Disembark" class="form-control required  dt-masktext">
 										</div>
 									</div>
 								</div>
@@ -254,20 +283,20 @@
 								<div class="row">
 									<div class="col-md-4">
 										<div class="form-group">
-											<label>SCT Start: <span>*</span></label>
-											<input type="datetime-local" name="oper['support_craft_transit_start']" id="support_craft_transit_start" placeholder="Support Craft Transit Start" class="form-control ">
+											<label>Support Craft Transit Start: <span>*</span></label>
+											<input type="text" name="oper[support_craft_transit_start]" id="support_craft_transit_start" placeholder="Support Craft Transit Start" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
-											<label>SCT Finish: <span>*</span></label>
-											<input type="datetime-local" name="oper['support_craft_transit_finish']" id="support_craft_transit_finish" placeholder="Support Craft Transit Finish" class="form-control ">
+											<label>Support Craft Transit Finish: <span>*</span></label>
+											<input type="text" name="oper[support_craft_transit_finish]" id="support_craft_transit_finish" placeholder="Support Craft Transit Finish" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
-											<label>SCT Notes: <span>*</span></label>
-											<input type="datetime-local" name="oper['support_craft_transit_notes']" id="support_craft_transit_notes" placeholder="Support Craft Transit Notes" class="form-control ">
+											<label>Support Craft Transit Notes: <span>*</span></label>
+											<input type="text" name="oper[support_craft_transit_notes]" id="support_craft_transit_notes" placeholder="Support Craft Transit Notes" class="form-control dt-masktext">
 										</div>
 									</div>
 								</div>
@@ -275,19 +304,19 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Fendering Start: <span>*</span></label>
-											<input type="datetime-local" name="oper['fendering_start']" id="fendering_start" placeholder="Fendering Start" class="form-control ">
+											<input type="text" name="oper[fendering_start]" id="fendering_start" placeholder="Fendering Start" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Fendering Finish: <span>*</span></label>
-											<input type="datetime-local" name="oper['fendering_finish']" id="fendering_finish" placeholder="Fendering Finish" class="form-control ">
+											<input type="text" name="oper[fendering_finish]" id="fendering_finish" placeholder="Fendering Finish" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Fendering Notes: <span>*</span></label>
-											<input type="datetime-local" name="oper['fendering_notes']" id="fendering_notes" placeholder="Fendering Notes" class="form-control ">
+											<input type="text" name="oper[fendering_notes]" id="fendering_notes" placeholder="Fendering Notes" class="form-control dt-masktext">
 										</div>
 									</div>
 								</div>
@@ -295,19 +324,19 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Checklist2 Start: <span>*</span></label>
-											<input type="datetime-local" name="oper['checklist2_start']" id="checklist2_start" placeholder="Checklist2 Start" class="form-control ">
+											<input type="text" name="oper[checklist2_start]" id="checklist2_start" placeholder="Checklist2 Start" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Checklist2 Finish: <span>*</span></label>
-											<input type="datetime-local" name="oper['checklist2_finish']" id="checklist2_finish" placeholder="Checklist2 Finish" class="form-control ">
+											<input type="text" name="oper[checklist2_finish]" id="checklist2_finish" placeholder="Checklist2 Finish" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Checklist2 Notes: <span>*</span></label>
-											<input type="datetime-local" name="oper['checklist2_notes']" id="checklist2_notes" placeholder="Checklist2 Notes" class="form-control ">
+											<input type="text" name="oper[checklist2_notes]" id="checklist2_notes" placeholder="Checklist2 Notes" class="form-control dt-masktext">
 										</div>
 									</div>
 								</div>
@@ -315,19 +344,19 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Checklist3 Start: <span>*</span></label>
-											<input type="datetime-local" name="oper['checklist3_start']" id="checklist3_start" placeholder="Checklist3 Start" class="form-control ">
+											<input type="text" name="oper[checklist3_start]" id="checklist3_start" placeholder="Checklist3 Start" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Checklist3 Finish: <span>*</span></label>
-											<input type="datetime-local" name="oper['checklist3_finish']" id="checklist3_finish" placeholder="Checklist3 Finish" class="form-control ">
+											<input type="text" name="oper[checklist3_finish]" id="checklist3_finish" placeholder="Checklist3 Finish" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Checklist3 Notes: <span>*</span></label>
-											<input type="datetime-local" name="oper['checklist3_notes']" id="checklist3_notes" placeholder="Checklist3 Notes" class="form-control ">
+											<input type="text" name="oper[checklist3_notes]" id="checklist3_notes" placeholder="Checklist3 Notes" class="form-control dt-masktext">
 										</div>
 									</div>
 								</div>
@@ -355,19 +384,19 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Mooring First Line: <span>*</span></label>
-											<input type="datetime-local" name="oper['mooring_firstline']" id="mooring_firstline" placeholder="Mooring First Line" class="form-control ">
+											<input type="text" name="oper[mooring_firstline]" id="mooring_firstline" placeholder="Mooring First Line" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Mooring All Fast: <span>*</span></label>
-											<input type="datetime-local" name="oper['mooring_allfast']" id="mooring_allfast" placeholder="Mooring All Fast" class="form-control ">
+											<input type="text" name="oper[mooring_allfast]" id="mooring_allfast" placeholder="Mooring All Fast" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Mooring NOR Accepted: <span>*</span></label>
-											<input type="datetime-local" name="oper['mooring_noraccepted']" id="mooring_noraccepted" placeholder="Mooring NOR Accepted" class="form-control ">
+											<input type="text" name="oper[mooring_noraccepted]" id="mooring_noraccepted" placeholder="Mooring NOR Accepted" class="form-control dt-masktext">
 										</div>
 									</div>
 								</div>
@@ -406,19 +435,19 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Hose Connection First Line: <span>*</span></label>
-											<input type="datetime-local" name="hose_con_fl" id="hose_con_fl" placeholder="Hose Connection First Line" class="form-control ">
+											<input type="text" name="hose_con_fl" id="hose_con_fl" placeholder="Hose Connection First Line" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Hose Connection All Fast: <span>*</span></label>
-											<input type="datetime-local" name="hose_con_af" id="hose_con_af" placeholder="Hose Connection All Fast" class="form-control ">
+											<input type="text" name="hose_con_af" id="hose_con_af" placeholder="Hose Connection All Fast" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Hose Connection NOR Accepted: <span>*</span></label>
-											<input type="datetime-local" name="hose_con_na" id="hose_con_na" placeholder="Hose Connection NOR Accepted" class="form-control ">
+											<input type="text" name="hose_con_na" id="hose_con_na" placeholder="Hose Connection NOR Accepted" class="form-control dt-masktext">
 										</div>
 									</div>
 								</div>
@@ -426,19 +455,19 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Gauging ETC First Line: <span>*</span></label>
-											<input type="datetime-local" name="con_gauge_etc_fl" id="con_gauge_etc_fl" placeholder="Gauging ETC First Line" class="form-control ">
+											<input type="text" name="con_gauge_etc_fl" id="con_gauge_etc_fl" placeholder="Gauging ETC First Line" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Gauging ETC All Fast: <span>*</span></label>
-											<input type="datetime-local" name="con_gauge_etc_af" id="con_gauge_etc_af" placeholder="Gauging ETC All Fast" class="form-control ">
+											<input type="text" name="con_gauge_etc_af" id="con_gauge_etc_af" placeholder="Gauging ETC All Fast" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Gauging ETC NOR Accepted: <span>*</span></label>
-											<input type="datetime-local" name="con_gauge_etc_na" id="con_gauge_etc_na" placeholder="Gauging ETC NOR Accepted" class="form-control ">
+											<input type="text" name="con_gauge_etc_na" id="con_gauge_etc_na" placeholder="Gauging ETC NOR Accepted" class="form-control dt-masktext">
 										</div>
 									</div>
 								</div>
@@ -446,19 +475,19 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Checklist4 First Line: <span>*</span></label>
-											<input type="datetime-local" name="checklist4_fl" id="checklist4_fl" placeholder="Checklist4 First Line" class="form-control ">
+											<input type="text" name="checklist4_fl" id="checklist4_fl" placeholder="Checklist4 First Line" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Checklist4 All Fast: <span>*</span></label>
-											<input type="datetime-local" name="checklist4_af" id="checklist4_af" placeholder="Checklist4 All Fast" class="form-control ">
+											<input type="text" name="checklist4_af" id="checklist4_af" placeholder="Checklist4 All Fast" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Checklist4 NOR Accepted: <span>*</span></label>
-											<input type="datetime-local" name="checklist4_na" id="checklist4_na" placeholder="Checklist4 NOR Accepted" class="form-control ">
+											<input type="text" name="checklist4_na" id="checklist4_na" placeholder="Checklist4 NOR Accepted" class="form-control dt-masktext">
 										</div>
 									</div>
 								</div>
@@ -466,19 +495,19 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Cargo Operations First Line: <span>*</span></label>
-											<input type="datetime-local" name="cargo_oper_fl" id="cargo_oper_fl" placeholder="Cargo Operations First Line" class="form-control ">
+											<input type="text" name="cargo_oper_fl" id="cargo_oper_fl" placeholder="Cargo Operations First Line" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Cargo Operations All Fast: <span>*</span></label>
-											<input type="datetime-local" name="cargo_oper_af" id="cargo_oper_af" placeholder="Cargo Operations All Fast" class="form-control ">
+											<input type="text" name="cargo_oper_af" id="cargo_oper_af" placeholder="Cargo Operations All Fast" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Cargo Operations NOR Accepted: <span>*</span></label>
-											<input type="datetime-local" name="cargo_oper_na" id="cargo_oper_na" placeholder="Cargo Operations NOR Accepted" class="form-control ">
+											<input type="text" name="cargo_oper_na" id="cargo_oper_na" placeholder="Cargo Operations NOR Accepted" class="form-control dt-masktext">
 										</div>
 									</div>
 								</div>
@@ -486,19 +515,19 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Hose Disconnection First Line: <span>*</span></label>
-											<input type="datetime-local" name="hose_discon_fl" id="hose_discon_fl" placeholder="Hose Disconnection First Line" class="form-control ">
+											<input type="text" name="hose_discon_fl" id="hose_discon_fl" placeholder="Hose Disconnection First Line" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Hose Disconnection All Fast: <span>*</span></label>
-											<input type="datetime-local" name="hose_discon_af" id="hose_discon_af" placeholder="Hose Disconnection All Fast" class="form-control ">
+											<input type="text" name="hose_discon_af" id="hose_discon_af" placeholder="Hose Disconnection All Fast" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Hose Disconnection NOR Accepted: <span>*</span></label>
-											<input type="datetime-local" name="hose_discon_na" id="hose_discon_na" placeholder="Hose Disconnection NOR Accepted" class="form-control ">
+											<input type="text" name="hose_discon_na" id="hose_discon_na" placeholder="Hose Disconnection NOR Accepted" class="form-control dt-masktext">
 										</div>
 									</div>
 								</div>
@@ -506,19 +535,19 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Gauging ETC First Line: <span>*</span></label>
-											<input type="datetime-local" name="discon_gauge_etc_fl" id="discon_gauge_etc_fl" placeholder="Disconnection Gauging ETC First Line" class="form-control ">
+											<input type="text" name="discon_gauge_etc_fl" id="discon_gauge_etc_fl" placeholder="Disconnection Gauging ETC First Line" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Gauging ETC All Fast: <span>*</span></label>
-											<input type="datetime-local" name="discon_gauge_etc_af" id="discon_gauge_etc_af" placeholder="Disconnection Gauging ETC All Fast" class="form-control ">
+											<input type="text" name="discon_gauge_etc_af" id="discon_gauge_etc_af" placeholder="Disconnection Gauging ETC All Fast" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Gauging ETC NOR Accepted: <span>*</span></label>
-											<input type="datetime-local" name="discon_gauge_etc_na" id="discon_gauge_etc_na" placeholder="Disconnection Gauging ETC NOR Accepted" class="form-control ">
+											<input type="text" name="discon_gauge_etc_na" id="discon_gauge_etc_na" placeholder="Disconnection Gauging ETC NOR Accepted" class="form-control dt-masktext">
 										</div>
 									</div>
 								</div>
@@ -526,19 +555,19 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Checklist5 First Line: <span>*</span></label>
-											<input type="datetime-local" name="checklist5_fl" id="checklist5_fl" placeholder="Checklist5 First Line" class="form-control ">
+											<input type="text" name="checklist5_fl" id="checklist5_fl" placeholder="Checklist5 First Line" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Checklist5 All Fast: <span>*</span></label>
-											<input type="datetime-local" name="checklist5_af" id="checklist5_af" placeholder="Checklist5 All Fast" class="form-control ">
+											<input type="text" name="checklist5_af" id="checklist5_af" placeholder="Checklist5 All Fast" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Checklist5 NOR Accepted: <span>*</span></label>
-											<input type="datetime-local" name="checklist5_na" id="checklist5_na" placeholder="Checklist5 NOR Accepted" class="form-control ">
+											<input type="text" name="checklist5_na" id="checklist5_na" placeholder="Checklist5 NOR Accepted" class="form-control dt-masktext">
 										</div>
 									</div>
 								</div>
@@ -565,19 +594,19 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Unmooring First Line: <span>*</span></label>
-											<input type="datetime-local" name="oper['mooring_firstline']" id="mooring_firstline" placeholder="Unmooring First Line" class="form-control ">
+											<input type="text" name="oper['mooring_firstline']" id="mooring_firstline" placeholder="Unmooring First Line" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Unmooring All Fast: <span>*</span></label>
-											<input type="datetime-local" name="oper['mooring_allfast']" id="mooring_allfast" placeholder="Unmooring All Fast" class="form-control ">
+											<input type="text" name="oper['mooring_allfast']" id="mooring_allfast" placeholder="Unmooring All Fast" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Unmooring NOR Accepted: <span>*</span></label>
-											<input type="datetime-local" name="oper['mooring_noraccepted']" id="mooring_noraccepted" placeholder="Unmooring NOR Accepted" class="form-control ">
+											<input type="text" name="oper['mooring_noraccepted']" id="mooring_noraccepted" placeholder="Unmooring NOR Accepted" class="form-control dt-masktext">
 										</div>
 									</div>
 								</div>
@@ -615,19 +644,19 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Unfendering First Line: <span>*</span></label>
-											<input type="datetime-local" name="unfendering_fl" id="unfendering_fl" placeholder="Unfendering First Line" class="form-control ">
+											<input type="text" name="unfendering_fl" id="unfendering_fl" placeholder="Unfendering First Line" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Unfendering All Fast: <span>*</span></label>
-											<input type="datetime-local" name="unfendering_af" id="unfendering_af" placeholder="Unfendering All Fast" class="form-control ">
+											<input type="text" name="unfendering_af" id="unfendering_af" placeholder="Unfendering All Fast" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Unfendering NOR Accepted: <span>*</span></label>
-											<input type="datetime-local" name="unfendering_na" id="unfendering_na" placeholder="Unfendering NOR Accepted" class="form-control ">
+											<input type="text" name="unfendering_na" id="unfendering_na" placeholder="Unfendering NOR Accepted" class="form-control dt-masktext">
 										</div>
 									</div>
 								</div>
@@ -635,19 +664,19 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>SCT First Line: <span>*</span></label>
-											<input type="datetime-local" name="unmr_support_craft_fl" id="unmr_support_craft_fl" placeholder="Support Craft Transit First Line" class="form-control ">
+											<input type="text" name="unmr_support_craft_fl" id="unmr_support_craft_fl" placeholder="Support Craft Transit First Line" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>SCT All Fast: <span>*</span></label>
-											<input type="datetime-local" name="unmr_support_craft_af" id="unmr_support_craft_af" placeholder="Support Craft Transit All Fast" class="form-control ">
+											<input type="text" name="unmr_support_craft_af" id="unmr_support_craft_af" placeholder="Support Craft Transit All Fast" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>SCT NOR Accepted: <span>*</span></label>
-											<input type="datetime-local" name="unmr_support_craft_na" id="unmr_support_craft_na" placeholder="Support Craft Transit NOR Accepted" class="form-control ">
+											<input type="text" name="unmr_support_craft_na" id="unmr_support_craft_na" placeholder="Support Craft Transit NOR Accepted" class="form-control dt-masktext">
 										</div>
 									</div>
 								</div>
@@ -655,19 +684,19 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Rigging Ashore First Line: <span>*</span></label>
-											<input type="datetime-local" name="rigging_ashore_fl" id="rigging_ashore_fl" placeholder="Rigging Ashore First Line" class="form-control ">
+											<input type="text" name="rigging_ashore_fl" id="rigging_ashore_fl" placeholder="Rigging Ashore First Line" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Rigging Ashore All Fast: <span>*</span></label>
-											<input type="datetime-local" name="rigging_ashore_af" id="rigging_ashore_af" placeholder="Rigging Ashore All Fast" class="form-control ">
+											<input type="text" name="rigging_ashore_af" id="rigging_ashore_af" placeholder="Rigging Ashore All Fast" class="form-control dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Rigging Ashore NOR Accepted: <span>*</span></label>
-											<input type="datetime-local" name="rigging_ashore_na" id="rigging_ashore_na" placeholder="Rigging Ashore NOR Accepted" class="form-control ">
+											<input type="text" name="rigging_ashore_na" id="rigging_ashore_na" placeholder="Rigging Ashore NOR Accepted" class="form-control dt-masktext">
 										</div>
 									</div>
 								</div>
@@ -766,19 +795,19 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Commence Operation: <span>*</span></label>
-											<input type="text" name="additional[commence_operation]" id="commence_operation" placeholder="Commence Operation" class="form-control required">
+											<input type="text" name="additional[commence_operation]" id="commence_operation" placeholder="Commence Operation" class="form-control required dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Complete Operation: <span>*</span></label>
-											<input type="text" name="additional[complete_operation]" id="complete_operation" placeholder="Complete Operation" class="form-control required">
+											<input type="text" name="additional[complete_operation]" id="complete_operation" placeholder="Complete Operation" class="form-control required dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Total Exceeding Hours: <span>*</span></label>
-											<input type="text" name="additional[total_exceed_hrs]" id="total_exceed_hrs" placeholder="Total Exceeding Hours" class="form-control ">
+											<input type="text" name="additional[total_exceed_hrs]" id="total_exceed_hrs" diabled placeholder="Total Exceeding Hours" class="form-control ">
 										</div>
 									</div>
 								</div>
@@ -858,16 +887,17 @@ $(function () {
 	$(document).ready(function () {
 
 	  $('#timesheet_add_edit_validation').validate({
-	    rules: {
-			"user_id" : {
-				required: true
-			},
+	    rules: {			
 			"rate_id" : {
 				required: true
-			}
+			},
+			'general[user_id]':{
+				required: true
+				},
+
 	    },
 	    messages: {
-			"user_id": {
+			'general[user_id]': {
 				required: "please select mooring master name"
 			},
 			"rate_id": {
@@ -878,8 +908,70 @@ $(function () {
 				remote: "Already name exist",
 				number: "This field can only contain numbers"
 			}
-	    }
+	    },
+		highlight: function (input) {
+            $(input).parents('.form-control').addClass('error');
+        },
+        unhighlight: function (input) {
+            $(input).parents('.form-control').removeClass('error');
+        },
+        errorPlacement: function (error, element) {
+            $(element).parents('.form-control').append(error);
+        },
 	  });
+	$('#complete_operation').keyup(function()
+	{
+	 var complete = $('#complete_operation').val();
+	 var date_array = complete.split('/');
+	 var time = [];
+        length = date_array[1].length;
+		time[0] =date_array[1].substr(0, 2);
+		time[1] =date_array[1].substr(0, 2, length);
+       //commence
+	   var commence = $('#commence_operation').val();
+	 	var date_arrayc = commence.split('/');
+		 var timec = [];
+        lengthc = date_arrayc[1].length;
+		timec[0] =date_arrayc[1].substr(0, 2);
+		timec[1] =date_arrayc[1].substr(0, 2, lengthc);
+        var currentYear = (new Date).getFullYear();
+		var currentMonth = (new Date).getMonth() + 1;
+        //date_format =currentYear+"-"+currentMonth+"-"+date_array[0]+" "+time[0]+":"+ time[1];       							
+		
+		var commence = currentMonth+"/"+date_arrayc[0]+"/"+ currentYear +" "+timec[0]+":"+ timec[1];   
+		var complete = currentMonth+"/"+date_array[0]+"/"+ currentYear +" "+time[0]+":"+ time[1];   
+		
+		var start_actual_time  =  commence;
+		var end_actual_time    =  complete;
 
+		start_actual_time = new Date(start_actual_time);
+		end_actual_time = new Date(end_actual_time);
+
+		var diff = end_actual_time - start_actual_time;
+
+		var diffSeconds = diff/1000;
+		var HH = Math.floor(diffSeconds/3600);
+		var MM = Math.floor(diffSeconds%3600)/60;
+
+		var formatted = ((HH < 10)?("0" + HH):HH) + ":" + ((MM < 10)?("0" + MM):MM);
+		if(formatted > 48){
+		var toth = parseInt(formatted)-48 ;
+		$('#total_exceed_hrs').val(toth);
+		}
+		$('#total_exceed_hrs').val("0");
+	});
 	});
 </script>		
+<script type="text/javascript" src="{{ asset('public/assets/dist/jquery.inputmask.js') }}" charset="utf-8"></script>
+<script>
+	//console.log(navigator.userAgent);
+	var $input = $('.dt-masktext');
+	$input.inputmask("datetime", {
+        inputFormat: "dd/HHMM",
+        outputFormat: "mm-yyyy-dd",
+        inputEventOnly: true		
+    });
+	//var text = $input.inputmask('setvalue', outputFormat);
+	//var text = $input.val('Value');
+	//console.log(text);
+</script>
