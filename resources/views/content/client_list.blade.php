@@ -27,6 +27,7 @@
 									<thead>
 										<tr>
 											<th>Client Name</th>
+											<th>Short Code</th>
 											<th>Status</th>
 											<th>Action</th>
 										</tr>
@@ -65,6 +66,10 @@
 										<label>Client Name <span class="text-danger">*</span></label>
 										<input type="text" name="client_name" id="client_name" class="form-control">
 									</div>
+									<div class="form-group">
+										<label>Short Code (client) <span class="text-danger">*</span></label>
+										<input type="text" name="client_shortcode" id="client_shortcode" class="form-control">
+									</div>
 									<div class="submit-section">
 										<button class="btn btn-warning submit-btn edit_hide_btn "
 											type="submit" name="action">Update
@@ -98,11 +103,17 @@
 					type: "GET",
 				},
 			},
+			"client_shortcode": {
+				required: true,
+			}
 	    },
 	    messages: {
 			"client_name": {
 				required: "Client name is required",
 				remote: "Already name exist"
+			},
+			"client_shortcode": {
+				required: "Client short code is required"
 			}
 	    }
 	  });
@@ -132,6 +143,9 @@ $(document).ready(function() {
 			columns: [
 				{
 					"data": "client_name"
+				},
+				{
+					"data": "client_shortcode"
 				},
 				{
 					"data": "status"

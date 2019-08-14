@@ -26,8 +26,9 @@ class ClientController extends Controller
 	{
 		$columns = array( 
             0 => 'client_name', 
-            1 => 'status', 
-            2 => 'options'
+            1 => 'client_shortcode', 
+            2 => 'status', 
+            3 => 'options'
         );
         $totalData = Client::where('status','=','1')
         ->count();
@@ -40,11 +41,11 @@ class ClientController extends Controller
 		if(empty($request->input('search.value')))
         {            
             if( $limit == -1){
-                $clients = Client::select('id','client_name','status')->orderBy($order,$dir)
+                $clients = Client::select('id','client_name','client_shortcode','status')->orderBy($order,$dir)
                 ->where('status','=','1')
                 ->get()->toArray();
             }else{
-                $clients = Client::select('id','client_name','status')->offset($start)
+                $clients = Client::select('id','client_name','client_shortcode','status')->offset($start)
                 ->limit($limit)
                 ->orderBy($order,$dir)
                 ->where('status','=','1')
@@ -54,17 +55,19 @@ class ClientController extends Controller
 		else {
         $search = $request->input('search.value'); 
         if( $limit == -1){
-            $clients     =  Client::select('id','client_name','status')
+            $clients     =  Client::select('id','client_name','client_shortcode','status')
 						->where('id','LIKE',"%{$search}%")
                         ->orWhere('client_name', 'LIKE',"%{$search}%")
+                        ->orWhere('client_shortcode', 'LIKE',"%{$search}%")
                         ->orWhere('status', 'LIKE',"%{$search}%")
                         ->where('status','=','1')
                         ->orderBy($order,$dir)
                         ->get()->toArray();
         }else{
-            $clients      = Client::select('id','client_name','status')
+            $clients      = Client::select('id','client_name','client_shortcode','status')
 						->where('id','LIKE',"%{$search}%")
                         ->orWhere('client_name', 'LIKE',"%{$search}%")
+                        ->orWhere('client_shortcode', 'LIKE',"%{$search}%")
                         ->orWhere('status', 'LIKE',"%{$search}%")
                         ->offset($start)
                         ->limit($limit)
@@ -74,6 +77,7 @@ class ClientController extends Controller
         }
         $totalFiltered = Client::where('id','LIKE',"%{$search}%")
                     ->orWhere('client_name', 'LIKE',"%{$search}%")
+                    ->orWhere('client_shortcode', 'LIKE',"%{$search}%")
                     ->orWhere('status', 'LIKE',"%{$search}%")
                     ->where('status','=','1')
                     ->count();
@@ -88,6 +92,7 @@ class ClientController extends Controller
                 $edit =  route('clients.store',$client['id']);
 				$autoid = $client['id'];
                 $nestedData['client_name'] = $client['client_name'];
+                $nestedData['client_shortcode'] = $client['client_shortcode'];
                 $nestedData['status'] = $client['status'] ? '<span class="text-success text-bold text-center">Active</span>' : '<span class="text-danger text-bold text-center">Deactive</span>';
                 $nestedData['options'] = "&emsp;<a style='float: left;' href='{$edit}' title='EDIT' id='#add_edit_modal' data-toggle='modal' class='btn btn-primary' onClick='showeditForm($autoid);'><i class='fa fa-pencil'></i></a>";
                 $nestedData['options'] .="<form style='float: left;margin-left: 10px;' action='{$delete}' method='POST'>".method_field('DELETE').csrf_field();
@@ -166,10 +171,12 @@ class ClientController extends Controller
 
         $request->validate(
             [
-                'client_name' => 'required'
+                'client_name' => 'required',
+                'client_shortcode' => 'required'
             ], 
             [
-                'client_name.required' => 'please enter client name'
+                'client_name.required' => 'please enter client name',
+                'client_shortcode.required' => 'please enter client short code'
             ]
         );
 

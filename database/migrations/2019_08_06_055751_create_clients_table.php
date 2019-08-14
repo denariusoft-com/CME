@@ -16,6 +16,7 @@ class CreateClientsTable extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('client_name', 350);
+            $table->string('client_shortcode', 50);
             $table->tinyInteger('status')->default('1');
             $table->integer('created_by');
             $table->integer('updated_by');

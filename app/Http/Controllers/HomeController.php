@@ -10,6 +10,7 @@ use DB;
 use App\Model\Client;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Helpers\CommonHelper;
 
 class HomeController extends Controller
 {

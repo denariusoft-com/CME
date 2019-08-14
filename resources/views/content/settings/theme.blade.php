@@ -1,8 +1,8 @@
 <!-- Page Content -->
-<div class="content container-fluid">
+			<div class="content container-fluid">
 					<div class="row">
 
-						<div class="col-md-8 offset-md-2">
+						<div class="col-md-12">
 						<form class="themesetValidate" id="themesetformValidate" method="POST"
                                     action="{{ URL::to('settings/themesettingsave') }}"  enctype="multipart/form-data">
 									@csrf
@@ -32,8 +32,8 @@
 									<!--div class="col-lg-2">
 										<div class="settings-image img-thumbnail float-right"><img src="assets\img\logo.png" class="img-fluid" width="16" height="16" alt=""></div>
 									</div-->
-
-									<div class="col-lg-7">
+									<label class="col-lg-1 col-form-label">Logo</label>
+									<div class="col-lg-9">
 										<input type="file" class="form-control" name="logo" id="logo"  value="@isset($themerec->logo){{$themerec->logo}}@endisset">
 										<span class="form-text text-muted">Recommended image size is 40px x 40px</span>
 									</div>
@@ -47,9 +47,9 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group row">
-									<label class="col-lg-3 col-form-label">Favicon</label>
-									<div class="col-lg-7">
+									<div class="form-group row">
+									<label class="col-lg-1 col-form-label">Favicon</label>
+									<div class="col-lg-9">
 										<input type="file" class="form-control"  name="favicon"   id="favicon" value="@isset($themerec->favicon){{$themerec->favicon}}@endisset">
 										<span class="form-text text-muted">Recommended image size is 16px x 16px</span>
 									</div>
@@ -77,7 +77,7 @@
 
 								</div>
 								@endisset
-								<div class="submit-section">
+								<div class="submit-section" style="float:right">
 									<button class="btn btn-primary submit-btn" type="submit">Save</button>
 								</div>
 							</form>
@@ -88,11 +88,8 @@
 <script>
 	$(document).ready(function () {
 
-	  $('#themeformValidate').validate({
+	  $('#themesetformValidate').validate({
 	    rules: {
-			"website_name" : {
-				required: true
-			},
 			"logo" : {
 				required: true
 			},
@@ -101,9 +98,6 @@
 			},
 	    },
 	    messages: {
-			"website_name": {
-				required: "website name is required"
-			},
 			"logo": {
 				required: "logo required"
 			},

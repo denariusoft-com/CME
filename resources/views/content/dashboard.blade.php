@@ -1,4 +1,5 @@
 @php
+$result="";
 	if(!empty(CommonHelper::client_count())){
 		$client_tot = CommonHelper::client_count();
 	}
