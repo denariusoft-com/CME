@@ -24,12 +24,12 @@ class CreateStsTsAdditionalTable extends Migration
             $table->float('tonnes_loading', 14, 3)->nullable();
             $table->float('barrels_discharge', 14, 3)->nullable();
             $table->float('barrels_loading', 14, 3)->nullable();
-            $table->longText('incident_occured');
-            $table->longText('overtime_remarks');
+            $table->longText('incident_occured')->nullable();
+            $table->longText('overtime_remarks')->nullable();
             $table->dateTime('commence_operation')->nullable();
             $table->dateTime('complete_operation')->nullable();
             $table->float('total_exceed_hrs', 14, 3)->nullable();
-            $table->longText('delays_remark');
+            $table->longText('delays_remark')->nullable();
             $table->timestamps();
         });
     }
