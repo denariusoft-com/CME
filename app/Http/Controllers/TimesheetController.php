@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Model\Timesheet;
 use Illuminate\Http\Request;
 use DB;
+use Auth;
+use App\Model\StsTimesheet;
+use App\Model\StsAdditional;
 class TimesheetController extends Controller
 {
     /**
@@ -12,6 +15,11 @@ class TimesheetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct() {
+        $this->StsTimesheet = new StsTimesheet;
+        $this->StsAdditional = new StsAdditional;
+    }
+    
     public function index()
     {
 		$data['user_view'] = DB::table('mooring_masters')
@@ -38,7 +46,25 @@ class TimesheetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->input->all());
+    }
+    public function timesheet_save(Request $request)
+    {
+        $data = $request->all();   
+        if(!empty($data['id'])){
+            $data['updated_by'] = Auth::user()->id;
+          }   
+          else{
+            $data['created_by'] = Auth::user()->id;
+            $data['updated_by'] = Auth::user()->id;
+          }
+          //$StsTimesheet = new StsTimesheet();
+         // $tsgneral_data =  $data['general'];
+          //dd($tsgneral_data);        
+         $savedata = StsTimesheet::create($data['general']);
+         $data['additional']['ts_id'] = $savedata->id;
+         $savedataadd = StsAdditional::create($data['additional']);
+         return back();
     }
 
     /**
@@ -85,4 +111,5 @@ class TimesheetController extends Controller
     {
         //
     }
+   
 }

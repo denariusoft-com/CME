@@ -37,7 +37,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::resource('roles','RoleController');
     Route::resource('users','UserController');
-  
+  //Timesheet
+  Route::post('/timesheet/timesheet_save', 'TimesheetController@timesheet_save');
 });
 Route::resource('clients', 'ClientController')->except([
     'create', 'show', 'edit', 'update'

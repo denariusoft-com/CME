@@ -15,7 +15,50 @@ if(!empty(CommonHelper::mooring_count())){
 						
 					}
 				//	echo $moor_tot;
+	if(isset($overallsummarylist)){			
 	@endphp
+
+	@foreach ($overallsummarylist as $summary)
+	@php
+	$uid=$summary->user_id;
+	if(!empty(CommonHelper::profile_img($uid))){
+		$profrec = CommonHelper::profile_img($uid);
+	}
+	else{
+		$profrec="";
+	}
+	if(!empty($profrec->name)){
+	$name = $profrec->name;
+	}
+	else{
+	$name ="";
+	}
+
+	$datecom = strtotime($summary->commence_operation); 
+	$newformat_com = date('d',$datecom);
+	$datecomp = strtotime($summary->complete_operation); 
+	$newformat_datecomp = date('d',$datecomp);
+	$tothours = $datecomp - $datecom;
+	$tothrs = ($datecomp - $datecom)/3600; 
+	if($tothrs>48){
+	$totexcedd = $tothrs-48;
+	}else { $totexcedd =0;  }
+
+	$result[] = "{ y : '".$name."'".","." a : ".$tothrs.","." b : ".$totexcedd." }";
+	@endphp
+	@endforeach
+
+	@php
+	
+	$arrayelm = json_encode($result);
+	}
+	else{
+
+	}
+	$arrayelm = str_replace('"', '', $arrayelm);
+	//echo $arrayelm;
+	@endphp
+	
 <script>
 $(document).ready(function() {
 	Morris.Donut({
@@ -36,19 +79,13 @@ $(document).ready(function() {
 		redraw: true
 	});
 	Morris.Bar({
-		element: 'bar-charts',
-		data: [
-			{ y: '2006', a: 100, b: 90 },
-			{ y: '2007', a: 75,  b: 65 },
-			{ y: '2008', a: 50,  b: 40 },
-			{ y: '2009', a: 75,  b: 65 },
-			{ y: '2010', a: 50,  b: 40 },
-			{ y: '2011', a: 75,  b: 65 },
-			{ y: '2012', a: 100, b: 90 }
-		],
+		element: 'bar-charts',		
+	
+		data: @php echo $arrayelm; @endphp,
+		//data:{{ $arrayelm }},
 		xkey: 'y',
 		ykeys: ['a', 'b'],
-		labels: ['Total Income', 'Total Outcome'],
+		labels: ['Total Working Hours', 'Exceeding Hours'],
 		lineColors: ['#ff9b44','#fc6075'],
 		lineWidth: '3px',
 		barColors: ['#ff9b44','#fc6075'],
@@ -68,20 +105,19 @@ $(document).ready(function() {
 				</div>
 			</div>
 		</div>-->
-		<div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+		<div class="col-md-6 col-sm-6 col-lg-6 col-xl-4">
 			<div class="dash-widget clearfix card-box">
 				<span class="dash-widget-icon"><i class="fa fa-usd"></i></span>
 				<div class="dash-widget-info">
 					<h3>
 					@php
-					$client_tot="0";
-					/*if(!empty(CommonHelper::client_count())){
+					if(!empty(CommonHelper::client_count())){
 						$client_tot = CommonHelper::client_count();
 					}
 					else{
 						$client_tot="0";
 						
-					}*/
+					}
 					echo $client_tot;
 					@endphp
 					</h3>
@@ -103,18 +139,25 @@ $(document).ready(function() {
 				<span class="dash-widget-icon"><i class="fa fa-user"></i></span>
 				<div class="dash-widget-info">
 					<h3>@php
-					$moor_tot="0";
-						
-					/*if(!empty(CommonHelper::mooring_count())){
+					if(!empty(CommonHelper::mooring_count())){
 						$moor_tot = CommonHelper::mooring_count();
 					}
 					else{
 						$moor_tot="0";
 						
-					}*/
+					}
 					echo $moor_tot;
 					@endphp</h3>
 					<span>Mooring Masters</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-sm-6 col-lg-6 col-xl-4">
+			<div class="dash-widget clearfix card-box">
+				<span class="dash-widget-icon"><i class="la la-files-o"></i></span>
+				<div class="dash-widget-info">
+					<h3>0</h3>
+					<span>Current Transcations</span>
 				</div>
 			</div>
 		</div>
@@ -124,7 +167,7 @@ $(document).ready(function() {
 			<div class="row">
 				<div class="col-md-6 text-center">
 					<div class="card-box">
-						<h3 class="card-title">Total Revenue</h3>
+						<h3 class="card-title">Mooring Master Timing</h3>
 						<div id="bar-charts"></div>
 					</div>
 				</div>
@@ -134,18 +177,7 @@ $(document).ready(function() {
 						<div id="pie-charts"></div>
 					</div>
 				</div>
-				<div class="col-md-6 text-center">
-					<div class="card-box">
-						<h3 class="card-title">Sales Overview</h3>
-						<div id="line-charts"></div>
-					</div>
-				</div>
-				<div class="col-md-6 text-center">
-					<div class="card-box">
-						<h3 class="card-title">Invoice Status</h3>
-						<div id="area-charts"></div>
-					</div>
-				</div>
+			
 				
 			</div>
 		</div>

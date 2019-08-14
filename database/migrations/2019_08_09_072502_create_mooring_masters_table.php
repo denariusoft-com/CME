@@ -19,7 +19,7 @@ class CreateMooringMastersTable extends Migration
 			$table->text('address');
 			$table->string('phone_no');
 			$table->string('email', 100);
-			$table->integer('company_id');
+			$table->string('company_id');
 			$table->string('acc_no');
 			$table->decimal('salary', 14,2);
 			$table->string('resume');

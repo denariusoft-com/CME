@@ -12,7 +12,7 @@ class Status extends Model
 	
 	public function saveData($data=array())
     {
-        if (!empty($data['id'])) {
+         if (!empty($data['id'])) {
             $savedata = Status::find($data['id'])->update($data);
         } else {
             $savedata = Status::create($data);

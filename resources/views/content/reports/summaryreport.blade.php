@@ -85,8 +85,14 @@
 									}else { $totexcedd =0;  }
 									
 									//echo $tothrs;
+									$uid=$summary->user_id;
+									if(!empty(CommonHelper::profile_img($uid))){
+										$profrec = CommonHelper::profile_img($uid);
+									}
+									else{
+										$profrec="";
+									}
 									@endphp
-									
 								
 									<tr>
 											<td>{{ ++$i }}</td>
@@ -94,7 +100,7 @@
 											</td>
 											<td></br>
 											Total Exceeding Hours: {{ $totexcedd }}</td>
-											<td>{{ $summary->user_id }}</td>
+											<td>@isset($profrec->name){{$profrec->name}}@endisset</td>
 											<td></td>
 											<td></td>
 											<td></td>

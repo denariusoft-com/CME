@@ -54,8 +54,9 @@
 						<!-- Form Wizard -->
 						<div class="form-wizard form-header-classic form-body-stylist">
 						
-                    	<form role="form" action="" method="post" id="timesheet_add_edit_validation">
-
+                    	<form role="form" action="{{ URL::to('timesheet/timesheet_save') }}" method="post" id="timesheet_add_edit_validation">
+							@csrf
+							<input type="hidden" name="id" />
                     		<!--h3>Sign Up Your Bank Account</h3-->
                     		<p>Fill all field to go next step</p>
 							
@@ -114,7 +115,7 @@
                     		    <h4>General Information: <span>Step 1 - 4</span></h4>
                     			<div class="form-group">
                     			    <label>STS Superintendent: <span>*</span></label>
-                                    <select name="user_id" id="user_id" class="form-control required">
+                                    <select name="general[user_id]" id="user_id" class="form-control required">
 										 <option value="">Select name</option>
 										 @foreach($data['user_view'] as $row)
 										 <option value="{{ $row->id}}">{{ $row->name }}</option>
@@ -125,13 +126,13 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Location: <span>*</span></label>
-											<input type="text" name="location" id="location" placeholder="Enter location" class="form-control ">
+											<input type="text" name="general[location]" id="location" placeholder="Enter location" class="form-control ">
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Job Ref Number: <span>*</span></label>
-											<input type="text" name="job_ref_id" id="job_ref_id" placeholder="Enter job reference number" class="form-control ">
+											<input type="text" name="general[job_ref_id]" id="job_ref_id" placeholder="Enter job reference number" class="form-control ">
 										</div>
 									</div>
 								</div>
@@ -139,13 +140,13 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Mother V/L: <span>*</span></label>
-											<input type="text" name="mother_vessel" id="mother_vessel" placeholder="Enter mother V/L" class="form-control required">
+											<input type="text" name="general[mother_vessel]" id="mother_vessel" placeholder="Enter mother V/L" class="form-control required">
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>SDWT: <span>*</span></label>
-											<input type="text" name="mother_sdwt" id="mother_sdwt" placeholder="Enter SDWT" class="form-control ">
+											<input type="text" name="general[mother_sdwt]" id="mother_sdwt" placeholder="Enter SDWT" class="form-control ">
 										</div>
 									</div>
 								</div>
@@ -153,13 +154,13 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>LOA: <span>*</span></label>
-											<input type="text" name="mother_loa" id="mother_loa" placeholder="Enter LOA" class="form-control ">
+											<input type="text" name="general[mother_loa]" id="mother_loa" placeholder="Enter LOA" class="form-control ">
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Anchored / NORT: <span>*</span></label>
-											<input type="text" name="anchored_nort" id="anchored_nort" placeholder="Enter NORT" class="form-control ">
+											<input type="text" name="general[anchored_nort]" id="anchored_nort" placeholder="Enter NORT" class="form-control ">
 										</div>
 									</div>
 								</div>
@@ -167,13 +168,13 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Manoeuvring V/L: <span>*</span></label>
-											<input type="text" name="maneuvring_vessel" id="maneuvring_vessel" placeholder="Enter Manoeuvring V/L" class="form-control required">
+											<input type="text" name="general[maneuvring_vessel]" id="maneuvring_vessel" placeholder="Enter Manoeuvring V/L" class="form-control required">
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>SDWT: <span>*</span></label>
-											<input type="text" name="manoeuvring_sdwt" id="manoeuvring_sdwt" placeholder="Enter SDWT" class="form-control ">
+											<input type="text" name="general[manoeuvring_sdwt]" id="manoeuvring_sdwt" placeholder="Enter SDWT" class="form-control ">
 										</div>
 									</div>
 								</div>
@@ -181,13 +182,13 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>LOA: <span>*</span></label>
-											<input type="text" name="manoeuvring_loa" id="manoeuvring_loa" placeholder="Enter LOA" class="form-control ">
+											<input type="text" name="general[manoeuvring_loa]" id="manoeuvring_loa" placeholder="Enter LOA" class="form-control ">
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Arrival / NORT: <span>*</span></label>
-											<input type="text" name="arrival_nort" id="arrival_nort" placeholder="Enter Arrival NORT" class="form-control ">
+											<input type="text" name="general[arrival_nort]" id="arrival_nort" placeholder="Enter Arrival NORT" class="form-control ">
 										</div>
 									</div>
 								</div>
@@ -195,13 +196,13 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Max Draft In: <span>*</span></label>
-											<input type="datetime" pattern="(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2}" name="maneuvring_max_draft_in" id="maneuvring_max_draft_in" placeholder="Enter Max Draft In" class="form-control ">
+											<input type="datetime" pattern="(0[0-9]|1[0-9]|2[0-3])(:[0-5][0-9]){2}" name="general[maneuvring_max_draft_in]" id="maneuvring_max_draft_in" placeholder="Enter Max Draft In" class="form-control ">
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Out: <span>*</span></label>
-											<input type="text" name="maneuvring_max_draft_out" id="maneuvring_max_draft_out" placeholder="Enter Max Draft Out" class="form-control ">
+											<input type="text" name="general[maneuvring_max_draft_out]" id="maneuvring_max_draft_out" placeholder="Enter Max Draft Out" class="form-control ">
 										</div>
 									</div>
 								</div>
@@ -209,13 +210,13 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Date / Time Onboard (IN): <span>*</span></label>
-											<input type="datetime-local" name="dt_onboard_in" id="dt_onboard_in" placeholder="Choose Onboard" class="form-control required">
+											<input type="datetime-local" name="general[dt_onboard_in]" id="dt_onboard_in" placeholder="Choose Onboard" class="form-control required">
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Date / Time Disembark (OUT): <span>*</span></label>
-											<input type="datetime-local" name="dt_disembark_out" id="dt_disembark_out" placeholder="Choose Disembark" class="form-control required">
+											<input type="datetime-local" name="general[dt_disembark_out]" id="dt_disembark_out" placeholder="Choose Disembark" class="form-control required">
 										</div>
 									</div>
 								</div>
@@ -223,13 +224,13 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Cargo: <span>*</span></label>
-											<input type="text" name="cargo" id="cargo" placeholder="Enter cargo name" class="form-control ">
+											<input type="text" name="general[cargo]" id="cargo" placeholder="Enter cargo name" class="form-control ">
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>FSU or SPOT: <span>*</span></label>
-											<input type="text" name="client_fsu_spot" id="client_fsu_spot" placeholder="Enter FSU or SPOT" class="form-control ">
+											<input type="text" name="general[client_fsu_spot]" id="client_fsu_spot" placeholder="Enter FSU or SPOT" class="form-control ">
 										</div>
 									</div>
 								</div>
@@ -765,19 +766,19 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Commence Operation: <span>*</span></label>
-											<input type="text" name="commence_operation" id="commence_operation" placeholder="Commence Operation" class="form-control required">
+											<input type="text" name="additional[commence_operation]" id="commence_operation" placeholder="Commence Operation" class="form-control required">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Complete Operation: <span>*</span></label>
-											<input type="text" name="complete_operation" id="complete_operation" placeholder="Complete Operation" class="form-control required">
+											<input type="text" name="additional[complete_operation]" id="complete_operation" placeholder="Complete Operation" class="form-control required">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Total Exceeding Hours: <span>*</span></label>
-											<input type="text" name="total_exceed_hrs" id="total_exceed_hrs" placeholder="Total Exceeding Hours" class="form-control ">
+											<input type="text" name="additional[total_exceed_hrs]" id="total_exceed_hrs" placeholder="Total Exceeding Hours" class="form-control ">
 										</div>
 									</div>
 								</div>
