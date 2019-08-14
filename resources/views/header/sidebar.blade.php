@@ -22,8 +22,9 @@
 						<li class="{{ Request::is('statuses*') ? 'active' : '' }}"><a href="{{ route('statuses.index') }}">Status List</a></li>
 						<li class="{{ Request::is('categories*') ? 'active' : '' }}"><a href="{{ route('categories.index') }}">Category List</a></li>
 						<li class="{{ Request::is('rates*') ? 'active' : '' }}"><a href="{{ route('rates.index') }}">Rate List</a></li>
-						<li class="{{ Request::is('ratemasters*') ? 'active' : '' }}"><a href="{{ route('ratemasters.index') }}">Rate Master List</a></li>
 						<li class="{{ Request::is('mooring_masters*') ? 'active' : '' }}"><a href="{{ route('mooring_masters.index') }}">Mooring Master List</a></li>
+					    <li class="{{ Request::is('ratemasters*') ? 'active' : '' }}"><a href="{{ route('ratemasters.index') }}">Rate Master List</a></li>
+						
 					</ul>
 				</li>
 				@php

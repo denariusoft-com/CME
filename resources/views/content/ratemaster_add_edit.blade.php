@@ -51,7 +51,16 @@
 																<th>Rate Name</th>
 																<th>Timing</th>
 																<th>Price</th>
-																<th style="width: 64px;"><button type="button" class="btn btn-primary btn-add-row"><i class="fa fa-plus"></i></button></th>
+																<th style="width: 64px;">
+																@php
+																if(!isset($data['master_rate']->id)){
+																@endphp
+																<button type="button" class="btn btn-primary btn-add-row"><i class="fa fa-plus"></i></button>
+																
+																@php	
+																}
+																@endphp
+																</th>
 															</tr>
 														</thead>
 														<tbody id="table_achievements_tbody">

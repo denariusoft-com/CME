@@ -131,12 +131,28 @@
 									<div class="col-md-6">
 										<div class="form-group">
 										<label>STS Superintendent: <span>*</span></label>
+										@php $user = Auth::user()->getRoleNames(); @endphp  @foreach($user as $v)
+										@php
+										if($v=="Mooring Master"){
+									     @endphp
+										 <input type="hidden" name="general[user_id]" id="user_id" placeholder="Enter location" class="form-control " value="{{ Auth::user()->id }}">
+										 <input type="text"  placeholder="Enter location" class="form-control " value="{{ Auth::user()->name }}">
+										
+										 @php
+										}
+										else{										
+										@endphp
+										
 										<select name="general[user_id]" id="user_id" class="form-control required">
 										 <option value="">Select name</option>
 										 @foreach($data['user_view'] as $row)
 										 <option value="{{ $row->id}}">{{ $row->name }}</option>
 										 @endforeach
-									</select>
+										</select>
+										@php
+										}
+										@endphp
+										@endforeach
 										</div>
 									</div>
 									<div class="col-md-6">

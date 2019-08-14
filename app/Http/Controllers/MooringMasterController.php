@@ -11,6 +11,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Helpers\CommonHelper;
 
 class MooringMasterController extends Controller
 {
@@ -36,12 +37,13 @@ class MooringMasterController extends Controller
 	public function get_mooringmaster_list(Request $request)
 	{
 		$columns = array( 
-            0 => 'address', 
-            1 => 'phone_no', 
-            2 => 'email', 
-            3 => 'company_id', 
-            4 => 'salary', 
-            5 => 'options'
+            0 => 'user_id', 
+            1 => 'address', 
+            2 => 'phone_no', 
+            3 => 'email', 
+            4 => 'company_id', 
+            5 => 'salary', 
+            6 => 'options'
         );
         $totalData = Mooring_master::where('status','=','1')
         ->count();
@@ -54,11 +56,11 @@ class MooringMasterController extends Controller
 		if(empty($request->input('search.value')))
         {            
             if( $limit == -1){
-                $mooring_masters = Mooring_master::select('id','address','phone_no','email','company_id','salary')->orderBy($order,$dir)
+                $mooring_masters = Mooring_master::select('id','user_id','address','phone_no','email','company_id','salary')->orderBy($order,$dir)
                 ->where('status','=','1')
                 ->get()->toArray();
             }else{
-                $mooring_masters = Mooring_master::select('id','address','phone_no','email','company_id','salary')->offset($start)
+                $mooring_masters = Mooring_master::select('id','user_id','address','phone_no','email','company_id','salary')->offset($start)
                 ->limit($limit)
                 ->orderBy($order,$dir)
                 ->where('status','=','1')
@@ -68,7 +70,7 @@ class MooringMasterController extends Controller
 		else {
         $search = $request->input('search.value'); 
         if( $limit == -1){
-            $mooring_masters     =  Mooring_master::select('id','address','phone_no','email','company_id','salary')
+            $mooring_masters     =  Mooring_master::select('id','user_id','address','phone_no','email','company_id','salary')
 						->where('id','LIKE',"%{$search}%")
                         ->orWhere('address', 'LIKE',"%{$search}%")
                         ->orWhere('phone_no', 'LIKE',"%{$search}%")
@@ -79,7 +81,7 @@ class MooringMasterController extends Controller
                         ->orderBy($order,$dir)
                         ->get()->toArray();
         }else{
-            $mooring_masters      = Mooring_master::select('id','address','phone_no','email','company_id','salary')
+            $mooring_masters      = Mooring_master::select('id','user_id','address','phone_no','email','company_id','salary')
 						->where('id','LIKE',"%{$search}%")
                         ->orWhere('address', 'LIKE',"%{$search}%")
                         ->orWhere('phone_no', 'LIKE',"%{$search}%")
@@ -107,9 +109,28 @@ class MooringMasterController extends Controller
         {
             foreach ($mooring_masters as $mooring_master)
             {
+                
+
+
+                //
+                $uid=$mooring_master['user_id'];
+	            if(!empty(CommonHelper::profile_img($uid))){
+		        $profrec = CommonHelper::profile_img($uid);
+                    }
+                    else{
+                        $profrec="";
+                    }
+                    if(!empty($profrec->name)){
+                    $name = $profrec->name;
+                    }
+                    else{
+                    $name ="";
+                    }
+    //
                 $delete =  route('mooring_masters.destroy',$mooring_master['id']);
                 $edit =  route('mooring_masters.edit',$mooring_master['id']);
-				$autoid = $mooring_master['id'];
+                $autoid = $mooring_master['id'];
+                $nestedData['user_id'] =  $name;
                 $nestedData['address'] = $mooring_master['address'];
                 $nestedData['phone_no'] = $mooring_master['phone_no'];
                 $nestedData['email'] = $mooring_master['email'];

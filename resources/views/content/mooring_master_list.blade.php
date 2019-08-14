@@ -26,6 +26,7 @@
 								<table class="table table-striped custom-table mb-0 datatable" id="mooringmaster_datatable_list" style="width:100%">
 									<thead>
 										<tr>
+											<th>Name</th>
 											<th>Address</th>
 											<th>Phone No</th>
 											<th>Email</th>
@@ -96,6 +97,9 @@ $(document).ready(function() {
 				}
 			},
 			columns: [
+				{
+					"data": "user_id"
+				},
 				{
 					"data": "address"
 				},

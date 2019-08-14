@@ -187,6 +187,7 @@ function showeditForm(dataID) {
             //console.log(result);
             $('#updateid').val(result.id);
             $('#client_name').val(result.client_name);
+			$('#client_shortcode').val(result.client_shortcode);
         }
     });
 }
