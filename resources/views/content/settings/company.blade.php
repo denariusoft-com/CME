@@ -135,7 +135,7 @@
 									</div>
 								</div>
 								@endisset
-								<div class="submit-section">
+								<div class="submit-section" style="float:right">
 									<button class="btn btn-primary submit-btn" type="submit">Save</button>
 								</div>
 							</form>

@@ -166,7 +166,7 @@ class RatemasterController extends Controller
 		$data['user_view'] = DB::table('mooring_masters')
 				->join('users', 'users.id', '=', 'mooring_masters.user_id')
 				->get();
-				
+		//dd($data['user_view']);		
 		//$data['user_view'] = Mooring_master::find(1)->ratemasters()->get();
 		return view('master.ratemaster.add_edit')->with('data',$data);
     }

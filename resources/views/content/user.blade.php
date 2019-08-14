@@ -31,8 +31,8 @@
                                         <td>{{ ++$i }}</td>
                                         <td>
                                             <h2 class="table-avatar">
-                                                <a href="profile.html" class="avatar"><img src="assets\img\profiles\avatar-21.jpg" alt=""></a>
-                                                <a href="profile.html">{{ $user->name }}</a>
+                                                <a href="{{ route('settings.myprofile') }}" class="avatar"><img src="assets\img\profiles\avatar-21.jpg" alt=""></a>
+                                                <a href="{{ route('settings.myprofile') }}">{{ $user->name }}</a>
                                             </h2>
                                         </td>
                                         <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0460656a6d6168746b7670617644617c65697468612a676b69">[email&#160;protected]</a></td>

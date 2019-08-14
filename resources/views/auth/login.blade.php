@@ -54,7 +54,7 @@
 					
 					<div class="account-box">
 						<div class="account-wrapper">
-							<h3 class="account-title">{{ __('Login') }}</h3>
+							<!--h3 class="account-title">{{ __('Login') }}</h3-->
 							<p class="account-subtitle">
 							@php
 							/*if(!empty(CommonHelper::theme_setting())){
@@ -68,7 +68,7 @@
 							@if(!empty($themerec->logo))
 							<img src="{{ URL::to('/') }}/storage/app/public/images/{{ $themerec->logo }}" width="70" height="40" alt="CME">
 							@else
-							<img src="{{ asset('public/assets/img/logo.png') }}" alt="CME">
+							<img src="{{ asset('public/assets/img/logo.png') }}" alt="CME" style="max-width:150px;">
 							@endif
 							</p>
 							

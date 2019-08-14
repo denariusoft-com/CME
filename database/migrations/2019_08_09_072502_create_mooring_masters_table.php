@@ -16,6 +16,7 @@ class CreateMooringMastersTable extends Migration
         Schema::create('mooring_masters', function (Blueprint $table) {
             $table->bigIncrements('id');
 			$table->integer('user_id');
+			$table->string('short_code', 50);
 			$table->text('address');
 			$table->string('phone_no');
 			$table->string('email', 100);
