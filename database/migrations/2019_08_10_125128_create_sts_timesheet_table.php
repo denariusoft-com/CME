@@ -33,6 +33,7 @@ class CreateStsTimesheetTable extends Migration
             $table->string('cargo', 350)->nullable();
             $table->integer('client_id');
             $table->string('client_fsu_spot', 350)->nullable();
+            $table->tinyInteger('status')->default('0');
             $table->integer('created_by');
             $table->integer('updated_by');
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));

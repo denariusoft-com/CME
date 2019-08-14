@@ -67,7 +67,7 @@
 											<th>FM/FS</th>
 											<th>NO REF</th>
 											<th>STATUS</th>
-											<th class="text-center">Action</th>
+											
 										</tr>
 									</thead>
 									<tbody>
@@ -79,9 +79,9 @@
 									$datecomp = strtotime($summary->complete_operation); 
 									$newformat_datecomp = date('d',$datecomp);
 									$tothours = $datecomp - $datecom;
-									$tothrs = ($datecomp - $datecom)/3600; 
+									$tothrs = round(($datecomp - $datecom)/3600,2); 
 									if($tothrs>48){
-									$totexcedd = $tothrs-48;
+									$totexcedd = round($tothrs-48,2);
 									}else { $totexcedd =0;  }
 									
 									//echo $tothrs;
@@ -92,6 +92,13 @@
 									else{
 										$profrec="";
 									}
+									$clientid=$summary->client_id;
+									if(!empty(CommonHelper::client_detail($clientid))){
+										$clientrec = CommonHelper::client_detail($clientid);
+									}
+									else{
+										$clientrec="";
+									}
 									@endphp
 								
 									<tr>
@@ -101,11 +108,11 @@
 											<td></br>
 											Total Exceeding Hours: {{ $totexcedd }}</td>
 											<td>@isset($profrec->name){{$profrec->name}}@endisset</td>
+											<td>@isset($clientrec->client_name){{$clientrec->client_name}}@endisset</td>
+											<td>{{ $summary->client_fsu_spot }}</td>
 											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td class="text-center"></td>
+											<td><button type="button" class="btn btn-primary btn-sm">Pending</button></td>
+											
 										</tr>
 										@endforeach
 									</tbody>

@@ -4,6 +4,7 @@ use DB;
 use Carbon\Carbon;
 use App\User;
 use Auth;
+use App\Model\Client;
 
 class CommonHelper
 {
@@ -35,4 +36,21 @@ class CommonHelper
         $userprof = isset($profset) ? $profset : ""; 
         return $userprof;
     } 
+    public static function client_detail($id)
+    {
+        $clientset = client::find($id);
+        $clientprof = isset($clientset) ? $clientset : ""; 
+        return $clientprof;
+    } 
+    public static function convert_date_database($date){
+       // $date = "02/2022";
+        $date_array = explode("/",$date);  
+        $length = strlen($date_array[1]);
+        $time[0] = substr($date_array[1], 0, 2);
+        $time[1] = substr($date_array[1], 2, $length );  
+
+        $date_format = date('Y')."-".date('m')."-".$date_array[0]." ".$time[0].":". $time[1];       							
+        //$converted_date = date('Y-m-d H:i', strtotime($date_format));
+        return $date_format;
+     }
 }
