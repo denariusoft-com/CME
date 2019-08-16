@@ -25,7 +25,7 @@ class StsTimesheet extends Model
         
     }*/
    
-    public function getTimesheet_data( $select = "*", $where = array(), $or_where = array(),$join ="",$orderby = array(), $limit="", $offset = 0) {
+    public function getTimesheet_data( $select = "*", $where = array(), $or_where = array(),$or_where_in = array(),$join ="",$orderby = array(), $limit="", $offset = 0) {
           \DB::enableQueryLog();
           $query = StsTimesheet::query();
           if ($select == "") $select = "*";
@@ -43,6 +43,12 @@ class StsTimesheet extends Model
                   $query->orWhere($orw[0], $orw[1], $orw[2]);
                }
           }
+         // dd($bet);
+       
+        if (!empty($or_where_in)) {
+           $query->whereIn($or_where_in[0], $or_where_in[1]);
+         }
+
          if(is_array($join) && !empty($join)) {
             foreach($join as $k=>$v){
                 if(is_array($v)) $query->leftjoin($k, $v[0],'=', $v[1]);
@@ -52,10 +58,12 @@ class StsTimesheet extends Model
          if(is_array($orderby) && !empty($orderby)) {
               $query->orderBy($orderby[0], $orderby[1]);
          }
+         //$query->where('status', '=', '1');
+        
            if((int)$limit != 0) $query->limit($limit, $offset);
           $scrapper = $query->get();
           return $scrapper;
-          //$query = \DB::getQueryLog();
+         // $query = \DB::getQueryLog();
           //return $query;
       }
 }

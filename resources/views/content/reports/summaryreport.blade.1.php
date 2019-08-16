@@ -10,13 +10,10 @@
 					</div>
 					
 					<!-- Search Filter -->
-					<form method="GET" action="{{ route('reports.index') }}">
-						@csrf
 					<div class="row filter-row">
-					
 						<div class="col-sm-6 col-md-3">  
 							<div class="form-group form-focus">
-								<input type="text" class="form-control floating" name="name_moor">
+								<input type="text" class="form-control floating">
 								<label class="focus-label">Mooring Master Name</label>
 							</div>
 						</div>
@@ -31,13 +28,12 @@
 								<label class="focus-label">Status</label>
 							</div>
 						</div>-->
-						
 						<div class="col-sm-12 col-md-4">  
 						   <div class="row">  
 							   <div class="col-md-6 col-sm-6">  
 									<div class="form-group form-focus">
 										<div class="cal-icon">
-											<input class="form-control floating datetimepicker" type="text" name="fromdate">
+											<input class="form-control floating datetimepicker" type="text">
 										</div>
 										<label class="focus-label">From</label>
 									</div>
@@ -45,7 +41,7 @@
 							   <div class="col-md-6 col-sm-6">  
 									<div class="form-group form-focus">
 										<div class="cal-icon">
-											<input class="form-control floating datetimepicker" type="text" name="todate">
+											<input class="form-control floating datetimepicker" type="text">
 										</div>
 										<label class="focus-label">To</label>
 									</div>
@@ -53,16 +49,14 @@
 							</div>
 						</div>
 						<div class="col-sm-6 col-md-2">  
-						<button type="submit" class="btn btn-success">Search</button>
-							<!--<a href="#" class="btn btn-success btn-block" > Search </a>  -->
+							<a href="#" class="btn btn-success btn-block"> Search </a>  
 						</div>     
                     </div>
-					</form>
 					<!-- /Search Filter -->
 					<div class="row">
 						<div class="col-md-12">
 							<div class="table-responsive">
-								<table id="statusmaster_datatable_list" class="table table-striped custom-table mb-0 datatable">
+								<table class="table table-striped custom-table mb-0 datatable">
 									<thead>
 										<tr>
 											<th>SLNO</th>
@@ -94,9 +88,7 @@
 									//echo $tothrs;
 									$uid=$summary->user_id;
 									if(!empty(CommonHelper::profile_img($uid))){
-										$profrec1 = CommonHelper::profile_img($uid);
-										$profrec = CommonHelper::moor_detail($profrec1->id);
-										//dd($profrec->short_code);
+										$profrec = CommonHelper::profile_img($uid);
 									}
 									else{
 										$profrec="";
@@ -114,19 +106,19 @@
 											<td>{{ ++$i }}</td>
 											<td>{{ $newformat_com. " - ". $newformat_datecomp }}
 											</td>
-											<td style="text-transform:capitalize" ><strong>{{ $summary->mother_vessel }} / {{ $summary->maneuvring_vessel }}</strong>
+											<td style="text-transform:uppercase" >{{ $summary->mother_vessel }} / {{ $summary->maneuvring_vessel }}
 											</br>
 											Commence Operation :{{ date('d',strtotime($summary->commence_operation))."/".date('Hi',strtotime($summary->commence_operation)) }}
 											</br>
 											Complete Operation :{{ date('d',strtotime($summary->complete_operation))."/".date('Hi',strtotime($summary->complete_operation)) }}
 											</br>
 											Total Exceeding Hours: {{ $totexcedd }}</td>
-											<td style="text-transform:uppercase">@isset($profrec->short_code){{$profrec->short_code}}@endisset</td>
-											<td>@isset($clientrec->client_shortcode){{$clientrec->client_shortcode}}@endisset</td>
+											<td>@isset($profrec->name){{$profrec->name}}@endisset</td>
+											<td>@isset($clientrec->client_name){{$clientrec->client_name}}@endisset</td>
 											<td>{{ $summary->client_fsu_spot }}</td>
 											<td></td>
 											<td><button type="button" class="btn btn-primary btn-sm">Pending</button></td>
-										
+											
 										</tr>
 										@endforeach
 									</tbody>
@@ -136,10 +128,4 @@
 					</div>
                 </div>
 				<!-- /Page Content -->
-				<script type="text/javascript">
-// Datatable	
-$(document).ready(function() {
-	
-		$('#statusmaster_datatable_list').DataTable();
-});
-</script>			
+			

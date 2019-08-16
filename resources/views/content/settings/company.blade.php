@@ -1,12 +1,14 @@
 
 				<!-- Page Content -->
-                <div class="content container-fluid">
-					<div class="row">
+                <div class="content container-fluid ">
+					<div class="row card p-5">
 						<div class="col-md-12 ">
 						<form class="companysetValidate" id="companysetformValidate" method="POST"
                                     action="{{ URL::to('settings/companysetting/') }}">
 									
-								<h3 class="page-title">Company Settings</h3>
+								<h3 class="page-title pb-5 pt-3">Company Settings
+								<a class="edit-icon" href="#" id="cmpyedit"><i class="fa fa-pencil"></i></a>
+								</h3>
 								<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 								@if(session()->has('message'))
 									<div class="{{ session()->get('alertClass') }} alert-dismissible fade show" role="alert" id="msg">
@@ -17,14 +19,14 @@
 									</div>
 								@endif
 						
-								@csrf							@php
-									/*	if(!empty(CommonHelper::cmpy_setting())){
+										@csrf	
+										@php
+										if(!empty(CommonHelper::cmpy_setting())){
 											$cmpyrec = CommonHelper::cmpy_setting();
 										}
 										else{
 											$cmpyrec="";
-										}*/
-										$cmpyrec="";
+										}
 										@endphp
 								@isset($cmpyrec->id)
 								<input type="hidden" name="id" value="@isset($cmpyrec){{$cmpyrec->id}}@endisset">
@@ -122,7 +124,7 @@
 									</div>
 								</div>
 								@isset($cmpyrec->status)
-								<div class="row">
+								<div class="row" style="display:none;">
 									<div class="col-sm-6">
 										<div class="form-group">
 											<label>Status</label>
@@ -146,7 +148,17 @@
 				
 <script>
 	$(document).ready(function () {
+		@php 
+		if(!empty($cmpyrec)){
+		@endphp
+		$("#companysetformValidate :input").prop("disabled", true);
+		@php
+		}
+		@endphp
 
+	  $('#cmpyedit').click(function(){
+		$("#companysetformValidate :input").prop("disabled", false);
+	  });
 	  $('#companysetformValidate').validate({
 	    rules: {
 			"company_name" : {

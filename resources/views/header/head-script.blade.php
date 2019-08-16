@@ -8,12 +8,12 @@
 <!-- Favicon -->
 @php
 $themerec="";
-/*if(!empty(CommonHelper::theme_setting())){
+if(!empty(CommonHelper::theme_setting())){
 	$themerec = CommonHelper::theme_setting();
 }
 else{
 	$themerec="";
-}*/
+}
 @endphp
 @if(!empty($themerec->favicon))
 <link rel="shortcut icon" type="image/x-icon" href="{{ URL::to('/') }}/storage/app/public/images/{{ $themerec->favicon }}">

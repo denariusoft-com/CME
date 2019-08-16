@@ -1,6 +1,6 @@
 <!-- Page Content -->
 			<div class="content container-fluid">
-					<div class="row">
+					<div class="row card p-5">
 
 						<div class="col-md-12">
 						<form class="themesetValidate" id="themesetformValidate" method="POST"
@@ -8,12 +8,12 @@
 									@csrf
 									@php
 									$themerec="";
-									/*	if(!empty(CommonHelper::theme_setting())){
+										if(!empty(CommonHelper::theme_setting())){
 											$themerec = CommonHelper::theme_setting();
 										}
 										else{
 											$themerec="";
-										}*/
+										}
 										@endphp
 									@isset($themerec->id)
 									<input type="hidden" name="id" value="@isset($themerec){{$themerec->id}}@endisset">
@@ -32,8 +32,8 @@
 									<!--div class="col-lg-2">
 										<div class="settings-image img-thumbnail float-right"><img src="assets\img\logo.png" class="img-fluid" width="16" height="16" alt=""></div>
 									</div-->
-									<label class="col-lg-1 col-form-label">Logo</label>
-									<div class="col-lg-9">
+									<label class="col-lg-2 col-form-label">Logo</label>
+									<div class="col-lg-8">
 										<input type="file" class="form-control" name="logo" id="logo"  value="@isset($themerec->logo){{$themerec->logo}}@endisset">
 										<span class="form-text text-muted">Recommended image size is 40px x 40px</span>
 									</div>
@@ -48,8 +48,8 @@
 									</div>
 								</div>
 									<div class="form-group row">
-									<label class="col-lg-1 col-form-label">Favicon</label>
-									<div class="col-lg-9">
+									<label class="col-lg-2 col-form-label">Favicon</label>
+									<div class="col-lg-8">
 										<input type="file" class="form-control"  name="favicon"   id="favicon" value="@isset($themerec->favicon){{$themerec->favicon}}@endisset">
 										<span class="form-text text-muted">Recommended image size is 16px x 16px</span>
 									</div>

@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table" id="user_datatable_list">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -35,7 +35,7 @@
                                                 <a href="{{ route('settings.myprofile') }}">{{ $user->name }}</a>
                                             </h2>
                                         </td>
-                                        <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0460656a6d6168746b7670617644617c65697468612a676b69">[email&#160;protected]</a></td>
+                                        <td><a href="#" class="__cf_email__" data-cfemail="0460656a6d6168746b7670617644617c65697468612a676b69">[email&#160;protected]</a></td>
                                         <td>
                                             <span class="badge badge-danger-border"> 
                                             @if(!empty($user->getRoleNames()))
@@ -115,4 +115,10 @@
                     </div>
                 </div>
             </div>
-           
+ <script type="text/javascript">
+// Datatable	
+$(document).ready(function() {
+	
+		$('#user_datatable_list').DataTable();
+});
+</script>			

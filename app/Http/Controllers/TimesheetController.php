@@ -62,12 +62,12 @@ class TimesheetController extends Controller
        // $data['general']['arrival_nort'] =  CommonHelper::convert_date_database($data['general']['arrival_nort']);
         // dd($data['general']);general[arrival_nort]
         if(!empty($data['id'])){
-            $data['updated_by'] = Auth::user()->id;
+            $data['general']['updated_by'] = Auth::user()->id;
           }   
-          else{
-            $data['created_by'] = Auth::user()->id;
-            $data['updated_by'] = Auth::user()->id;
-          }
+        else{
+            $data['general']['created_by'] = Auth::user()->id;
+            $data['general']['updated_by'] = Auth::user()->id;
+        }
           //$StsTimesheet = new StsTimesheet();
          // $tsgneral_data =  $data['general'];
           //dd($tsgneral_data);        

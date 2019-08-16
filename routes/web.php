@@ -69,7 +69,8 @@ Route::get('get_status_detail', 'StatusController@get_status_detail');
 Route::get('findStatusNameExists', 'StatusController@findNameExists');
 //Route::get('ratemasters/edit/{parameter}','RatemasterController@edit');
 Route::get('ratemasters-edit/{parameter}','RatemasterController@edit')->name('ratemaster.add-edit');
-	
+Route::get('findRateMasterExists', 'RateMasterController@findRateMasterExists');
+
 Route::resource('ratemasters', 'RatemasterController')->except([
     'show', 'update'
 ]);

@@ -56,11 +56,11 @@ class MooringMasterController extends Controller
 		if(empty($request->input('search.value')))
         {            
             if( $limit == -1){
-                $mooring_masters = Mooring_master::select('id','user_id','address','phone_no','email','company_id','salary')->orderBy($order,$dir)
+                $mooring_masters = Mooring_master::select('id','user_id','short_code','address','phone_no','email','company_id','salary')->orderBy($order,$dir)
                 ->where('status','=','1')
                 ->get()->toArray();
             }else{
-                $mooring_masters = Mooring_master::select('id','user_id','address','phone_no','email','company_id','salary')->offset($start)
+                $mooring_masters = Mooring_master::select('id','user_id','short_code','address','phone_no','email','company_id','salary')->offset($start)
                 ->limit($limit)
                 ->orderBy($order,$dir)
                 ->where('status','=','1')
@@ -70,7 +70,7 @@ class MooringMasterController extends Controller
 		else {
         $search = $request->input('search.value'); 
         if( $limit == -1){
-            $mooring_masters     =  Mooring_master::select('id','user_id','address','phone_no','email','company_id','salary')
+            $mooring_masters     =  Mooring_master::select('id','user_id','short_code','address','phone_no','email','company_id','salary')
 						->where('id','LIKE',"%{$search}%")
                         ->orWhere('address', 'LIKE',"%{$search}%")
                         ->orWhere('phone_no', 'LIKE',"%{$search}%")
@@ -81,7 +81,7 @@ class MooringMasterController extends Controller
                         ->orderBy($order,$dir)
                         ->get()->toArray();
         }else{
-            $mooring_masters      = Mooring_master::select('id','user_id','address','phone_no','email','company_id','salary')
+            $mooring_masters      = Mooring_master::select('id','user_id','short_code','address','phone_no','email','company_id','salary')
 						->where('id','LIKE',"%{$search}%")
                         ->orWhere('address', 'LIKE',"%{$search}%")
                         ->orWhere('phone_no', 'LIKE',"%{$search}%")
@@ -121,7 +121,7 @@ class MooringMasterController extends Controller
                         $profrec="";
                     }
                     if(!empty($profrec->name)){
-                    $name = $profrec->name;
+                    $name = "<label style='text-transform:uppercase'>".$mooring_master['short_code']."</label> - ".$profrec->name;
                     }
                     else{
                     $name ="";

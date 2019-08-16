@@ -32,7 +32,12 @@
 													 <option value="">Select name</option>
 													 
 														 @foreach($data['user_view'] as $row)
-														 <option value="{{ $row->id}}" @if((isset($data['master_rate']->user_id) == $row->id)){{ "selected" }} @endif>{{ $row->name }}</option>
+														 @php 
+														 $profrec = CommonHelper::moor_detail($row->id);
+														 $prec = strtoupper(" ( ".$profrec->short_code." )");
+														 $prr = ucfirst($row->name).$prec;
+														 @endphp
+														 <option value="{{ $row->id}}" @if((isset($data['master_rate']->user_id) == $row->id)){{ "selected" }} @endif>{{ $prr }}</option>
 														 @endforeach
 													</select>
 												</div>
@@ -49,8 +54,8 @@
 															<tr>
 																<th>Category Name</th>
 																<th>Rate Name</th>
-																<th>Timing</th>
-																<th>Price</th>
+																<th>Timing(Hr)</th>
+																<th>Price(RM)</th>
 																<th style="width: 64px;">
 																@php
 																if(!isset($data['master_rate']->id)){
@@ -156,7 +161,24 @@ $(function () {
 				required: true
 			},
 			"rate_id[]" : {
-				required: true
+				required: true,
+				remote: {
+					url: "{{ url('/findRateMasterExists')}}",
+					data: {
+						user_id: function() {
+							return $("#user_id").val();
+						},
+						cat_id: function() {
+							return $("#category_id").val();
+						},
+						rate_id: function() {
+							return $("#rate_id").val();
+						},
+						_token: "{{csrf_token()}}",
+						rate_name: $(this).data('rate_name')
+					},
+					type: "GET",
+				},
 			},
 			"timing[]" : {
 				required: true
@@ -171,9 +193,10 @@ $(function () {
 			},
 			"category_id[]": {
 				required: "category name is required"
-			},
+			},			
 			"rate_id[]": {
-				required: "rate name is required"
+				required: "Rate name is required",
+				remote: "Already Rate Exist for Moor.Master category"
 			},
 			"timing[]": {
 				required: "timing is required"

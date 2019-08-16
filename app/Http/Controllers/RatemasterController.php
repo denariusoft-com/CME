@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use DB;
 use Auth;
+use App\Helpers\CommonHelper;
 
 class RatemasterController extends Controller
 {
@@ -33,10 +34,12 @@ class RatemasterController extends Controller
 	public function get_ratemaster_list(Request $request)
 	{
 		$columns = array( 
-            0 => 'cat_id', 
-            1 => 'rate_id', 
-            2 => 'price', 
-            3 => 'options'
+            0 => 'user_id', 
+            1 => 'cat_id', 
+            2 => 'rate_id', 
+            3 => 'timing', 
+            4 => 'price', 
+            4 => 'options'
         );
         $totalData = Ratemaster::where('status','=','1')
         ->count();
@@ -49,11 +52,11 @@ class RatemasterController extends Controller
 		if(empty($request->input('search.value')))
         {            
             if( $limit == -1){
-                $ratemasters = Ratemaster::select('id','cat_id','rate_id','price')->orderBy($order,$dir)
+                $ratemasters = Ratemaster::select('id','user_id','cat_id','rate_id','timing','price')->orderBy($order,$dir)
 				->where('status','=','1')
                 ->get()->toArray();
             }else{
-                $ratemasters = Ratemaster::select('id','cat_id','rate_id','price')->offset($start)
+                $ratemasters = Ratemaster::select('id','user_id','cat_id','rate_id','timing','price')->offset($start)
                 ->limit($limit)
                 ->orderBy($order,$dir)
 				->where('status','=','1')
@@ -63,7 +66,7 @@ class RatemasterController extends Controller
 		else {
         $search = $request->input('search.value'); 
         if( $limit == -1){
-            $ratemasters =  Ratemaster::select('id','cat_id','rate_id','price')
+            $ratemasters =  Ratemaster::select('id','user_id','cat_id','rate_id','timing','price')
 						->where('id','LIKE',"%{$search}%")
                         ->orWhere('cat_id', 'LIKE',"%{$search}%")
                         ->orWhere('rate_id', 'LIKE',"%{$search}%")
@@ -72,7 +75,7 @@ class RatemasterController extends Controller
 						->where('status','=','1')
                         ->get()->toArray();
         }else{
-            $ratemasters      = Ratemaster::select('id','cat_id','rate_id','price')
+            $ratemasters      = Ratemaster::select('id','user_id','cat_id','rate_id','timing','price')
 						->where('id','LIKE',"%{$search}%")
                         ->orWhere('cat_id', 'LIKE',"%{$search}%")
                         ->orWhere('rate_id', 'LIKE',"%{$search}%")
@@ -99,9 +102,15 @@ class RatemasterController extends Controller
                 $delete =  route('ratemasters.destroy',$ratemaster['id']);
                 $autoid = $ratemaster['id'];
                 $enc_id = Crypt::encrypt($autoid);
-                $edit =  route('ratemaster.add-edit',$enc_id);                
+                $edit =  route('ratemaster.add-edit',$enc_id); 
+                $useriddet = User::where('id','=', $ratemaster['user_id'])->first();
+                $use_id = CommonHelper::moor_detail($useriddet->id); 
+
+                $nestedData['user_id'] =$useriddet->name." ( ".$use_id->short_code." )";
+               // $nestedData['user_id'] = User::where('id','=', $ratemaster['user_id'])->first()->name;               
                 $nestedData['cat_id'] = Category::where('id','=', $ratemaster['cat_id'])->first()->category_name;
                 $nestedData['rate_id'] = Rate::where('id','=', $ratemaster['rate_id'])->first()->rate_name;
+                $nestedData['timing'] = $ratemaster['timing'];
                 $nestedData['price'] = $ratemaster['price'];
                 $nestedData['options'] = "&emsp;<a style='float: left;' href='{$edit}' title='EDIT'  class='btn btn-primary' onClick='showeditForm($autoid);'><i class='fa fa-pencil'></i></a>";
                 $nestedData['options'] .="<form style='float: left;margin-left: 10px;' action='{$delete}' method='POST'>".method_field('DELETE').csrf_field();
@@ -138,6 +147,38 @@ class RatemasterController extends Controller
             $data_exists = Ratemaster::where([
                 ['price','=',$price],
                 ['status','=','1'],
+                ])->count(); 
+        } 
+        if($data_exists > 0)
+        {
+              return "false";
+        }
+        else{
+              return "true";
+        }
+    }
+	public function findRateMasterExists(Request $request)
+    { 
+         $uid =  $request->input('user_id');
+         $catid =  $request->input('cat_id');
+         $rid =  $request->input('rate_id');
+         
+        if(!empty($uid))
+        { 
+            $data_exists = Ratemaster::where([
+                  ['user_id','=',$uid],
+                  ['cat_id','=',$catid],
+                  ['rate_id','=',$rid],
+                  ['status','=','1']
+                  ])->count();
+        }
+        else
+        {   
+            $data_exists = Ratemaster::where([
+                ['user_id','=',$uid],
+                ['cat_id','=',$catid],
+                ['rate_id','=',$rid],
+                ['status','=','1']
                 ])->count(); 
         } 
         if($data_exists > 0)

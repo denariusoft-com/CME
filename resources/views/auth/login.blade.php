@@ -11,13 +11,13 @@
 		
 		<!-- Favicon -->
 		@php
-		/*if(!empty(CommonHelper::theme_setting())){
+		
+		if(!empty(CommonHelper::theme_setting())){
 			$themerec = CommonHelper::theme_setting();
 		}
 		else{
 			$themerec="";
-		}*/
-		$themerec="";
+		}
 		@endphp
 		@if(!empty($themerec->favicon))
 		<link rel="shortcut icon" type="image/x-icon" href="{{ URL::to('/') }}/storage/app/public/images/{{ $themerec->favicon }}">
@@ -39,10 +39,10 @@
 			<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
     </head>
-    <body class="account-page">
+    <body style="xbackground: linear-gradient(to right, #ea7815 0%, #ad8484 100%);" class="account-page">
 	
 		<!-- Main Wrapper -->
-        <div class="main-wrapper">
+        <div style="" class="main-wrapper">
 			<div class="account-content">
 				<div class="container">
 				
@@ -57,13 +57,12 @@
 							<!--h3 class="account-title">{{ __('Login') }}</h3-->
 							<p class="account-subtitle">
 							@php
-							/*if(!empty(CommonHelper::theme_setting())){
+							if(!empty(CommonHelper::theme_setting())){
 								$themerec = CommonHelper::theme_setting();
 							}
 							else{
 								$themerec="";
-							}*/
-							$themerec="";
+							}
 							@endphp
 							@if(!empty($themerec->logo))
 							<img src="{{ URL::to('/') }}/storage/app/public/images/{{ $themerec->logo }}" width="70" height="40" alt="CME">

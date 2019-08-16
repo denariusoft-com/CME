@@ -134,9 +134,12 @@
 										@php $user = Auth::user()->getRoleNames(); @endphp  @foreach($user as $v)
 										@php
 										if($v=="Mooring Master"){
+										$profrec = CommonHelper::moor_detail(Auth::user()->id);
+										$prec = strtoupper(" ( ".$profrec->short_code." )");
+										$prr = ucfirst($row->name).$prec;	
 									     @endphp
 										 <input type="hidden" name="general[user_id]" id="user_id" placeholder="Enter location" class="form-control " value="{{ Auth::user()->id }}">
-										 <input type="text"  placeholder="Enter location" class="form-control " value="{{ Auth::user()->name }}">
+										 <input type="text"  placeholder="Enter location" class="form-control " value="{{ $prr }}">
 										
 										 @php
 										}
@@ -146,7 +149,12 @@
 										<select name="general[user_id]" id="user_id" class="form-control required">
 										 <option value="">Select name</option>
 										 @foreach($data['user_view'] as $row)
-										 <option value="{{ $row->id}}">{{ $row->name }}</option>
+										@php 
+										$profrec = CommonHelper::moor_detail($row->id);
+										$prec = strtoupper(" ( ".$profrec->short_code." )");
+										$prr = ucfirst($row->name).$prec;
+										@endphp
+										 <option value="{{ $row->id}}">{{ $prr }}</option>
 										 @endforeach
 										</select>
 										@php
@@ -161,11 +169,16 @@
 										<select name="general[client_id]" id="client_id" class="form-control required">
 										 <option value="">Select Client Name</option>
 										 @foreach($data['client'] as $row)
-										 <option value="{{ $row->id}}">{{ $row->client_name }}</option>
+										 @php
+										 $clientrec = CommonHelper::client_detail($row->id);
+										 $cli_n =  $clientrec->client_shortcode.' - '.$row->client_name;
+										 @endphp
+										 <option value="{{ $row->id}}">{{ $cli_n }}</option>
 										 @endforeach
-									</select>
-											</div>
+										</select>
+										</div>
 									</div>
+									
 								</div>                    
 								<div class="row">
 									<div class="col-md-6">
@@ -255,13 +268,13 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Date / Time Onboard (IN): <span>*</span></label>
-											<input type="text" name="general[dt_onboard_in]" id="dt_onboard_in" placeholder="Choose Onboard" class="form-control required dt-masktext">
+											<input type="text" name="general[dt_onboard_in]" id="dt_onboard_in" placeholder="Choose Onboard" class="form-control required dt-masktext" required >
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>Date / Time Disembark (OUT): <span>*</span></label>
-											<input type="text" name="general[dt_disembark_out]" id="dt_disembark_out" placeholder="Choose Disembark" class="form-control required  dt-masktext">
+											<input type="text" name="general[dt_disembark_out]" id="dt_disembark_out" placeholder="Choose Disembark" class="form-control required  dt-masktext" required >
 										</div>
 									</div>
 								</div>
@@ -275,7 +288,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>FSU or SPOT: <span>*</span></label>
-											<input type="text" name="general[client_fsu_spot]" id="client_fsu_spot" placeholder="Enter FSU or SPOT" class="form-control ">
+											<input type="text" name="general[client_fsu_spot]" id="client_fsu_spot" placeholder="Enter FSU or SPOT" required class="form-control required"  >
 										</div>
 									</div>
 								</div>
@@ -811,19 +824,19 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Commence Operation: <span>*</span></label>
-											<input type="text" name="additional[commence_operation]" id="commence_operation" placeholder="Commence Operation" class="form-control required dt-masktext">
+											<input type="text" name="additional[commence_operation]" id="commence_operation" readonly placeholder="Commence Operation" class="form-control required dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Complete Operation: <span>*</span></label>
-											<input type="text" name="additional[complete_operation]" id="complete_operation" placeholder="Complete Operation" class="form-control required dt-masktext">
+											<input type="text" name="additional[complete_operation]" id="complete_operation"readonly  placeholder="Complete Operation" class="form-control required dt-masktext">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label>Total Exceeding Hours: <span>*</span></label>
-											<input type="text" name="additional[total_exceed_hrs]" id="total_exceed_hrs" diabled placeholder="Total Exceeding Hours" class="form-control ">
+											<input type="text" name="additional[total_exceed_hrs]" id="total_exceed_hrs"  placeholder="Total Exceeding Hours" class="form-control" readonly />
 										</div>
 									</div>
 								</div>
@@ -904,26 +917,16 @@ $(function () {
 
 	  $('#timesheet_add_edit_validation').validate({
 	    rules: {			
-			"rate_id" : {
+			'general[client_fsu_spot]' : {
 				required: true
-			},
-			'general[user_id]':{
-				required: true
-				},
+			}
 
 	    },
 	    messages: {
-			'general[user_id]': {
+			'general[client_fsu_spot]': {
 				required: "please select mooring master name"
 			},
-			"rate_id": {
-				required: "Rate name is required"
-			},
-			"price": {
-				required: "Price name is required",
-				remote: "Already name exist",
-				number: "This field can only contain numbers"
-			}
+			
 	    },
 		highlight: function (input) {
             $(input).parents('.form-control').addClass('error');
@@ -935,16 +938,18 @@ $(function () {
             $(element).parents('.form-control').append(error);
         },
 	  });
-	$('#complete_operation').keyup(function()
+	$('#dt_disembark_out').keyup(function()
 	{
-	 var complete = $('#complete_operation').val();
+	 var complete = $('#dt_disembark_out').val();
+	 $('#complete_operation').val(complete);
 	 var date_array = complete.split('/');
 	 var time = [];
         length = date_array[1].length;
 		time[0] =date_array[1].substr(0, 2);
 		time[1] =date_array[1].substr(0, 2, length);
        //commence
-	   var commence = $('#commence_operation').val();
+	   var commence = $('#dt_onboard_in').val();
+	   $('#commence_operation').val(commence);
 	 	var date_arrayc = commence.split('/');
 		 var timec = [];
         lengthc = date_arrayc[1].length;
@@ -970,11 +975,19 @@ $(function () {
 		var MM = Math.floor(diffSeconds%3600)/60;
 
 		var formatted = ((HH < 10)?("0" + HH):HH) + ":" + ((MM < 10)?("0" + MM):MM);
-		if(formatted > 48){
-		var toth = parseInt(formatted)-48 ;
+		//var toth = formatted-48;
+		var tot = formatted.split(":");
+		//console.log(tot[0]);
+		if(tot[0] > 48){
+		var toth = tot[0]-48;
+		//console.log(toth);
 		$('#total_exceed_hrs').val(toth);
+		console.log(toth);
 		}
-		$('#total_exceed_hrs').val("0");
+		else{
+			$('#total_exceed_hrs').val("0");	
+		}
+		//$('#total_exceed_hrs').val("0");
 	});
 	});
 </script>		

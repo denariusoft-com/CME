@@ -44,7 +44,9 @@ class HomeController extends Controller
         $join["sts_mr_addition as sts_mradd"] =array("sts.id","sts_mradd.ts_id");
         $select = array('sts.user_id', 'sts.location');
         $summarylist = new StsTimesheet();
-        $overallsummarylist = $summarylist->getTimesheet_data($select="", $where, $or_where, $join);
+        //$overallsummarylist = $summarylist->getTimesheet_data($select="", $where, $or_where, $join);
+        $overallsummarylist = $summarylist->getTimesheet_data($select="", $where, $or_where,$or_where_in, $join);
+       
         return view('dashboard/dashboard', compact('overallsummarylist'));
         }
         else{
