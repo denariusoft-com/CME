@@ -8,6 +8,7 @@ use App\Model\Client;
 use App\Model\Mooring_master;
 use App\Model\StsTimesheet;
 use App\Model\StsMooringTugs;
+use App\Model\StsUnmooringTugs;
 
 class CommonHelper
 {
@@ -79,9 +80,15 @@ class CommonHelper
         $tsrec = isset($ststs_rec) ? $ststs_rec : ""; 
         return $tsrec;
     }
-	public static function sts_tugs($id)
+	public static function sts_mtugs($id)
     {
-        $ststs_rec = StsMooringTugs::where('t_id',$id)->get();
+        $ststs_rec = StsMooringTugs::where('ts_id',$id)->get();
+        $tsrec = isset($ststs_rec) ? $ststs_rec : ""; 
+        return $tsrec;
+    }
+	public static function sts_umtugs($id)
+    {
+        $ststs_rec = StsUnmooringTugs::where('ts_id',$id)->get();
         $tsrec = isset($ststs_rec) ? $ststs_rec : ""; 
         return $tsrec;
     }

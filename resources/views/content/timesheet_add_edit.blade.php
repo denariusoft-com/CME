@@ -906,6 +906,9 @@ $(function () {
 	//$.noConflict();
 	$(document).on("click", '.btn_row_mooring', function () {		
 		var id = $(this).closest("table.table_mooring").attr('id');  // Id of particular table
+		
+		var rowsLength = document.getElementById(id).getElementsByTagName("tbody")[0].getElementsByTagName("tr").length+1;
+		//alert(rowsLength);
 		var div = $("<tr />");
 		div.html(GetDynamicTextBox(id));
 		

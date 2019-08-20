@@ -40,8 +40,8 @@
 					</div>
 					
 					<!-- Search Filter -->
-					<form method="GET" action="{{ route('reports.index') }}">
-						@csrf
+					<form method="GET" action="<?php echo e(route('reports.index')); ?>">
+						<?php echo csrf_field(); ?>
 					<div class="row filter-row">
 					
 						<div class="col-sm-6 col-md-3">  
@@ -108,9 +108,9 @@
 										</tr>
 									</thead>
 									<tbody>
-								    @php $i = 0; @endphp
-									@foreach ($overallsummarylist as $summary)
-									@php 
+								    <?php $i = 0; ?>
+									<?php $__currentLoopData = $overallsummarylist; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $summary): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+									<?php 
 									$datecom = strtotime($summary->commence_operation); 
 									$newformat_com = date('d',$datecom);
 									
@@ -139,28 +139,31 @@
 									else{
 										$clientrec="";
 									}
-									@endphp
+									?>
 								
 									<tr>
-											<td>{{ ++$i }}</td>
-											<td>{{ $newformat_com. " - ". $newformat_datecomp }}
+											<td><?php echo e(++$i); ?></td>
+											<td><?php echo e($newformat_com. " - ". $newformat_datecomp); ?>
+
 											</td>
-											<td style="text-transform:capitalize" ><strong>{{ $summary->mother_vessel }} / {{ $summary->maneuvring_vessel }}</strong>
+											<td style="text-transform:capitalize" ><strong><?php echo e($summary->mother_vessel); ?> / <?php echo e($summary->maneuvring_vessel); ?></strong>
 											</br>
-											Commence Operation :{{ date('d',strtotime($summary->commence_operation))."/".date('Hi',strtotime($summary->commence_operation)) }}
+											Commence Operation :<?php echo e(date('d',strtotime($summary->commence_operation))."/".date('Hi',strtotime($summary->commence_operation))); ?>
+
 											</br>
-											Complete Operation :{{ date('d',strtotime($summary->complete_operation))."/".date('Hi',strtotime($summary->complete_operation)) }}
+											Complete Operation :<?php echo e(date('d',strtotime($summary->complete_operation))."/".date('Hi',strtotime($summary->complete_operation))); ?>
+
 											</br>
-											Total Exceeding Hours: {{ $totexcedd }}</td>
-											<td style="text-transform:uppercase">@isset($profrec->short_code){{$profrec->short_code}}@endisset</td>
-											<td>@isset($clientrec->client_shortcode){{$clientrec->client_shortcode}}@endisset</td>
-											<td>{{ $summary->client_fsu_spot }}</td>
+											Total Exceeding Hours: <?php echo e($totexcedd); ?></td>
+											<td style="text-transform:uppercase"><?php if(isset($profrec->short_code)): ?><?php echo e($profrec->short_code); ?><?php endif; ?></td>
+											<td><?php if(isset($clientrec->client_shortcode)): ?><?php echo e($clientrec->client_shortcode); ?><?php endif; ?></td>
+											<td><?php echo e($summary->client_fsu_spot); ?></td>
 											<td></td>
 											<td><button type="button" class="btn btn-primary btn-sm">Pending</button></td>
-											<td><a href="{{ URL::to('timesheet_pdf/'.$summary->t_id) }}" ><i class="fa fa-file-pdf-o fa-lg" style="font-weight:bold;color:red"></i></a></td>
+											<td><a href="<?php echo e(URL::to('timesheet_pdf/'.$summary->t_id)); ?>" ><i class="fa fa-file-pdf-o fa-lg" style="font-weight:bold;color:red"></i></a></td>
 										
 										</tr>
-										@endforeach
+										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 									</tbody>
 								</table>
 							</div>
@@ -190,4 +193,4 @@
 				} );
 // Datatable	
 
-				</script>			
+				</script>			<?php /**PATH D:\php7\htdocs\laravel\CME\resources\views/content/reports/summaryreport.blade.php ENDPATH**/ ?>
