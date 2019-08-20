@@ -14,10 +14,11 @@ class CreateStsTimesheetTable extends Migration
     public function up()
     {
         Schema::create('sts_timesheet', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('t_id');
             $table->integer('user_id');
             $table->string('location', 350)->nullable();
             $table->string('job_ref_id', 350)->nullable();
+            $table->date('sts_date')->nullable();
             $table->string('mother_vessel', 350)->nullable();
             $table->string('maneuvring_vessel', 350)->nullable();
             $table->string('maneuvring_max_draft_in', 350)->nullable();

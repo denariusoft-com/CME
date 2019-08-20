@@ -14,7 +14,7 @@ class CreateStsMrAdditionTable extends Migration
     public function up()
     {
         Schema::create('sts_mr_addition', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('mra_id');
             $table->integer('ts_id');
             $table->dateTime('hose_con_fl')->nullable();
             $table->dateTime('hose_con_af')->nullable();

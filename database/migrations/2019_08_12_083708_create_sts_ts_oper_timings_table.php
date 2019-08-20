@@ -14,7 +14,7 @@ class CreateStsTsOperTimingsTable extends Migration
     public function up()
     {
         Schema::create('sts_ts_oper_timings', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('stot_id');
             $table->integer('ts_id'); 
             $table->dateTime('support_craft_transit_start')->nullable();
             $table->dateTime('support_craft_transit_finish')->nullable();

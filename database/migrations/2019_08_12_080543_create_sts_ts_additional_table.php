@@ -14,7 +14,7 @@ class CreateStsTsAdditionalTable extends Migration
     public function up()
     {
         Schema::create('sts_ts_additional', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('sta_id');
             $table->integer('ts_id');
             $table->string('wind', 350)->nullable();
             $table->string('sea', 350)->nullable();

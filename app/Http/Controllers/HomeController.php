@@ -40,8 +40,8 @@ class HomeController extends Controller
         $or_where = array();
         $join =array(); 
         $or_where_in = '';
-        $join["sts_ts_additional as sts_add"] =array("sts.id","sts_add.ts_id");
-        $join["sts_mr_addition as sts_mradd"] =array("sts.id","sts_mradd.ts_id");
+        $join["sts_ts_additional as sts_add"] =array("sts.t_id","sts_add.ts_id");
+        $join["sts_mr_addition as sts_mradd"] =array("sts.t_id","sts_mradd.ts_id");
         $select = array('sts.user_id', 'sts.location');
         $summarylist = new StsTimesheet();
         //$overallsummarylist = $summarylist->getTimesheet_data($select="", $where, $or_where, $join);

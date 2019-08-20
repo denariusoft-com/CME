@@ -34,7 +34,7 @@ Route::group(['middleware' => ['auth']], function() {
     //Route::get('ratemasters-edit/{parameter}','RatemasterController@edit')->name('ratemaster.add-edit');
     //Reports
     Route::resource('reports','ReportController');
-
+    
     Route::resource('roles','RoleController');
     Route::resource('users','UserController');
   //Timesheet
@@ -89,3 +89,4 @@ Route::get('get-rate-list', 'MooringMasterController@getRateList');
 
 Route::resource('timesheet', 'TimesheetController');
 
+Route::get('timesheet_pdf/{parameter}','PdfgenerateController@timesheet_pdf');

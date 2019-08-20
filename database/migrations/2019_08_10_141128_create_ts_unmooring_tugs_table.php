@@ -14,7 +14,7 @@ class CreateTsUnmooringTugsTable extends Migration
     public function up()
     {
         Schema::create('ts_unmooring_tugs', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('umt_id');
             $table->integer('ts_id');
             $table->string('unmr_tug_name', 350)->nullable();
             $table->dateTime('unmr_tug_fl');

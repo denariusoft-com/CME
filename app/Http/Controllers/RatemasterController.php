@@ -202,8 +202,8 @@ class RatemasterController extends Controller
      */
     public function create()
     {
-        $data['category_view'] = Category::all();
-        $data['rate_view'] = Rate::all();
+        $data['category_view'] = Category::where('status','=','1')->get();
+        $data['rate_view'] = Rate::where('status','=','1')->get();
 		$data['user_view'] = DB::table('mooring_masters')
 				->join('users', 'users.id', '=', 'mooring_masters.user_id')
 				->get();
@@ -272,8 +272,8 @@ class RatemasterController extends Controller
     public function edit($id)
     {
         //dd($request);
-         $data['category_view'] = Category::all();
-        $data['rate_view'] = Rate::all();
+         $data['category_view'] = Category::where('status','=','1')->get();
+        $data['rate_view'] = Rate::where('status','=','1')->get();
 		$data['user_view'] = DB::table('mooring_masters')
 				->join('users', 'users.id', '=', 'mooring_masters.user_id')
                 ->get();

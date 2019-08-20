@@ -73,6 +73,7 @@
 											<th>FM/FS</th>
 											<th>NO REF</th>
 											<th>STATUS</th>
+											<th>Action</th>
 											
 										</tr>
 									</thead>
@@ -126,6 +127,7 @@
 											<td>{{ $summary->client_fsu_spot }}</td>
 											<td></td>
 											<td><button type="button" class="btn btn-primary btn-sm">Pending</button></td>
+											<td><a href="{{ URL::to('timesheet_pdf/'.$summary->t_id) }}" target="_blank">PDF</a></td>
 										
 										</tr>
 										@endforeach

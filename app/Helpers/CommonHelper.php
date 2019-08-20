@@ -6,6 +6,8 @@ use App\User;
 use Auth;
 use App\Model\Client;
 use App\Model\Mooring_master;
+use App\Model\StsTimesheet;
+use App\Model\StsMooringTugs;
 
 class CommonHelper
 {
@@ -51,6 +53,7 @@ class CommonHelper
     } 
     public static function convert_date_database($date){
        // $date = "02/2022";
+	   if(!empty($date)){
         $date_array = explode("/",$date);  
         $length = strlen($date_array[1]);
         $time[0] = substr($date_array[1], 0, 2);
@@ -58,6 +61,11 @@ class CommonHelper
         $date_format = date('Y')."-".date('m')."-".$date_array[0]." ".$time[0].":". $time[1];       							
         //$converted_date = date('Y-m-d H:i', strtotime($date_format));
         return $date_format;
+	   }
+	   else{
+		   $date_formatemty = NULL;
+		   return $date_formatemty;
+	   }
      }
      public static function convert_databaseformat($datetime){
         $date_array = explode("/",$datetime);           							
@@ -65,4 +73,16 @@ class CommonHelper
         $converted_date = date('Y-m-d', strtotime($date_format));
         return $converted_date;
      }
+    public static function timesheet_id($id)
+    {
+        $ststs_rec = StsTimesheet::where('t_id',$id)->latest()->first();
+        $tsrec = isset($ststs_rec) ? $ststs_rec : ""; 
+        return $tsrec;
+    }
+	public static function sts_tugs($id)
+    {
+        $ststs_rec = StsMooringTugs::where('t_id',$id)->get();
+        $tsrec = isset($ststs_rec) ? $ststs_rec : ""; 
+        return $tsrec;
+    }
 }

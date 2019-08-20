@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class StsTimesheet extends Model
 {
     protected $table = 'sts_timesheet';
-	protected $fillable = ['id','user_id','location','job_ref_id','mother_vessel','maneuvring_vessel','client_id','client_fsu_spot'];
+	protected $fillable = ['t_id','user_id','location','job_ref_id','sts_date','mother_vessel','maneuvring_vessel','maneuvring_max_draft_in','maneuvring_max_draft_out','mother_sdwt','manoeuvring_sdwt','mother_loa','manoeuvring_loa','anchored_nort','arrival_nort','dt_onboard_in','dt_disembark_out','cargo','status','created_by','updated_by','client_id','client_fsu_spot'];
 	public $timestamps = true;
     //
     /*public function save_themesetting($data){
@@ -61,9 +61,9 @@ class StsTimesheet extends Model
          //$query->where('status', '=', '1');
         
            if((int)$limit != 0) $query->limit($limit, $offset);
-          $scrapper = $query->get();
+         $scrapper = $query->get();
           return $scrapper;
-         // $query = \DB::getQueryLog();
-          //return $query;
+       //  $query = \DB::getQueryLog();
+        //  return $query;
       }
 }

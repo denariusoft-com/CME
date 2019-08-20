@@ -14,7 +14,7 @@ class CreateTsMooringTugsTable extends Migration
     public function up()
     {
         Schema::create('ts_mooring_tugs', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('mt_id');
             $table->integer('ts_id');
             $table->string('mr_tug_name', 350)->nullable();
             $table->dateTime('mr_tug_firstline');

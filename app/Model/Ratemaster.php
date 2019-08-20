@@ -15,14 +15,14 @@ class Ratemaster extends Model
         for($i=0; $i< count($data['category_id']); $i++) {            
            // if(empty($data['cat_id'][$i]) || !is_numeric($data['cat_id'][$i])) continue;
          
-          $dataar = [ 
+        $dataar = [ 
             'user_id' => $data['user_id'],
             'cat_id' => $data['category_id'][$i], 
             'rate_id' => $data['rate_id'][$i], 
             'timing' => $data['timing'][$i],
             'price' => $data['price'][$i],
             'updated_by' => $data['updated_by'] 
-         ];
+        ];
             //var_dump($data);
             if (!empty($data['id'])) {
                 $savedata = Ratemaster::find($data['id'])->update($dataar);

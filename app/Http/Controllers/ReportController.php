@@ -21,7 +21,7 @@ use Illuminate\Http\File;
 use App\Helpers\CommonHelper;
 use App\Model\StsTimesheet;
 use App\User;
-
+use PDF;
 
 
 class ReportController extends Controller
@@ -83,27 +83,38 @@ class ReportController extends Controller
         }
         //$or_where1 = array("sts.created_at", ">=", "{$fdate}");
        // $where = array($or_where1, $or_where2);  
-        $join["sts_ts_additional as sts_add"] =array("sts.id","sts_add.ts_id");
-        $join["sts_mr_addition as sts_mradd"] =array("sts.id","sts_mradd.ts_id");
-        $select = array('sts.user_id', 'sts.location');
-       
+	   
+        $join["sts_ts_additional as sts_add"] =array("sts.t_id","sts_add.ts_id");
+        $join["sts_mr_addition as sts_mradd"] =array("sts.t_id","sts_mradd.ts_id");
+        $join["sts_ts_oper_timings as sts_oprtiming"] =array("sts.t_id","sts_oprtiming.ts_id");
+        $join["sts_unmr_addition as sts_unmraddition"] =array("sts.t_id","sts_unmraddition.ts_id");
+      //  $join["ts_mooring_tugs as ts_m_tugs"] =array("sts.t_id","ts_m_tugs.ts_id");
+       // $join["ts_unmooring_tugs as ts_um_tugs"] =array("sts.t_id","ts_um_tugs.ts_id");
+        $select = array('sts.*');
+		
+		//$selectall = $select1.",".$select2.",".$select3.",".$select4.",".$select5.",".$select6;
+       //$select1 = array();
         $summarylist = new StsTimesheet();
         $overallsummarylist = $summarylist->getTimesheet_data($select="", $where, $or_where,$or_where_in, $join);
        
-        //dd($overallsummarylist);
+       // $overallsummarylist;
         //$overallsummaryhead = ;
         //dd($overallsummarylist);
         return view('reports.summaryreport', compact('overallsummarylist'));
     }
   
     /*          end theme       */
-   public function show(){
+    public function show(){
 
-   }
-   public function store(){
+    }
+    public function store(){
 
-} 
-public function destroy(){
+    } 
+    public function destroy(){
 
-} 
+    }
+    
+
+
+
 }
