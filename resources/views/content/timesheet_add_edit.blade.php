@@ -35,7 +35,7 @@
 					<!-- Page Title -->
 					<div class="row">
 						<div class="col">
-							<h4 class="page-title">Time Sheet </h4>
+							<h4 class="page-title">STS Time Sheet </h4>
 						</div>
 						<!--div class="col-12 text-right m-b-30">
 							<a href="{{ route('ratemasters.index')}}" class="btn add-btn" ><i class="fa fa-list"></i> List </a>
@@ -85,7 +85,7 @@
 								<!-- Step 2 -->
                     			<div class="form-wizard-step">
                     				<div class="form-wizard-step-icon"><i class="fa fa-user" aria-hidden="true"></i></div>
-                    				<p>Timings</p>
+                    				<p>Operational Timings</p>
                     			</div>
 								<!-- Step 2 -->
 								
