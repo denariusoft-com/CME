@@ -32,13 +32,22 @@
 <div class="content container-fluid">
 					<div class="row">
 						<div class="col-sm-8 col-6">
-							<h4 class="page-title">Summary Report</h4>
+							<h4 class="page-title">STS Summary Report</h4>
 						</div>
 						<div class="col-sm-4 col-6 text-right m-b-30">
 							<!--<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_asset"><i class="fa fa-plus"></i> Add Asset</a>
 						--></div>
 					</div>
-					
+					<div class="row">
+						@if(session()->has('message'))
+							<div class="{{ session()->get('alertClass') }} alert-dismissible fade show" role="alert" id="msg">
+								<strong>{{ session()->get('type') }}</strong> {{ session()->get('message') }}
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+						@endif
+					</div>
 					<!-- Search Filter -->
 					<form method="GET" action="{{ route('reports.index') }}">
 						@csrf
@@ -103,6 +112,7 @@
 											<th>FM/FS</th>
 											<th>NO REF</th>
 											<th>STATUS</th>
+
 											<th>Action</th>
 											
 										</tr>
@@ -141,7 +151,7 @@
 									}
 									@endphp
 								
-									<tr>
+										<tr>
 											<td>{{ ++$i }}</td>
 											<td>{{ $newformat_com. " - ". $newformat_datecomp }}
 											</td>
@@ -155,11 +165,67 @@
 											<td style="text-transform:uppercase">@isset($profrec->short_code){{$profrec->short_code}}@endisset</td>
 											<td>@isset($clientrec->client_shortcode){{$clientrec->client_shortcode}}@endisset</td>
 											<td>{{ $summary->client_fsu_spot }}</td>
-											<td></td>
-											<td><button type="button" class="btn btn-primary btn-sm">Pending</button></td>
+											<td>{{ $summary->work_ref_no }}</td>
+											<td>
+											@if($summary->status == 3)
+												<a style='padding: 1px 7px;font-size: 14px;' href='#' title='STATUS' data-target='#statusUpdate' data-toggle='modal' class='btn btn-primary' >Pending</a>
+											@endif
+											@if($summary->status == 1)
+												<label style="color: #fff;background: #05b159;padding: 1px 5px;border-radius: 3px;font-size: 14px;">Approved</label>
+											@endif
+											@if($summary->status == 2)
+												<label style="color: #fff;background: #dd1f29;padding: 1px 5px;border-radius: 3px;font-size: 14px;">Rejected</label>
+											@endif
+											@if($summary->status == 0)
+												<a style='padding: 1px 7px;font-size: 14px;' href='#' title='VERIFY' data-target='#statusVERIFY' data-toggle='modal' class='btn btn-primary' >Verify</a>
+											@endif
+											<!--button type="button" class="btn btn-primary btn-sm">Pending</button-->
+											</td>
+											@if($summary->status == 1 || $summary->status == 2)
 											<td><a href="{{ URL::to('timesheet_pdf/'.$summary->t_id) }}" ><i class="fa fa-file-pdf-o fa-lg" style="font-weight:bold;color:red"></i></a></td>
+											@endif
 										
 										</tr>
+										
+										
+										
+										<div id="statusVERIFY" class="modal custom-modal_delete fade"  role="dialog">
+											<div class="modal-dialog modal-md">
+												<form action="{{ route('reports.store_refno')}}" method="POST" style="width: 100%;" id="reference_number_validation">
+													@csrf
+													<input type="hidden" name="timesheet_id" id="timesheet_id" value="{{ isset($summary->t_id) ? $summary->t_id : '' }}">
+													<div class="modal-content" style="border-radius: 1rem;padding: 20px;">
+														<div class="modal-body">
+															<div class="modal-header" style="border-bottom:none;padding:0px;">
+																<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																	<span aria-hidden="true">&times;</span>
+																</button>
+															</div>
+															<div class="form-header">
+																<div class="row">
+																	<div class="col-md-12" style="text-align: left;">
+																			<div class="form-group">
+																			  <label for="Reference" >Reference No:</label>
+																			  <input type="number" class="form-control" id="reference_no" min="0" placeholder="Enter reference no" name="reference_no">
+																			</div>
+																	</div>
+																</div>
+															</div>
+															
+															<div class="modal-btn delete-action">
+																<div class="row">
+																	<div class="col-12">
+																		<input type="submit" name="submit_ref_number" value="Submit" class="btn btn-success">
+																		<input type="reset" name="reset" value="Reset" class="btn btn-danger">
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</form>
+											</div>
+										</div>
+				
 										@endforeach
 									</tbody>
 								</table>
@@ -167,6 +233,70 @@
 						</div>
 					</div>
                 </div>
+
+				<div id="statusUpdate" class="modal custom-modal_delete fade"  role="dialog">
+					<div class="modal-dialog modal-dialog-centered modal-md">
+						<form action="" id="deleteForm" method="post" style="width: 100%;">
+							<div class="modal-content" style="border-radius: 1rem;padding: 20px;">
+								<div class="modal-body">
+									<div class="modal-header" style="border-bottom:none;padding:0px;">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="form-header">
+										<h3>STS Summary</h3>
+										<p>Are you sure want to move?</p>
+									</div>
+									
+									<div class="modal-btn delete-action">
+										<div class="row">
+											<div class="col-6">
+												<!--a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a-->
+												<a href="{{ URL::to('sts_approvedstatusUpdate/'.$summary->t_id) }}" class="btn btn-danger continue-btn" style="width: 100%;background: #05b159;border: 1px solid #05b159;color: #fff;">Approved</a>
+											</div>
+											<div class="col-6">
+												<a href="{{ URL::to('sts_rejectedstatusUpdate/'.$summary->t_id) }}" class="btn btn-primary cancel-btn" style="background: #dd1f29;border: 1px solid #dd1f29;color: #fff;">Rejected</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				
+				<script>
+	$(document).ready(function () {
+
+	  $('#reference_number_validation').validate({
+	    rules: {
+			"reference_no": {
+				required: true,
+				remote: {
+					url: "{{ url('/findReferenceNumberExists')}}",
+					data: {
+						timesheet_id: function() {
+							return $("#timesheet_id").val();
+						},
+						_token: "{{csrf_token()}}",
+						reference_no: $(this).data('reference_no')
+					},
+					type: "GET",
+				},
+			},
+	    },
+	    messages: {
+			"reference_no": {
+				required: "Reference number is required",
+				remote: "Already number exist"
+			}
+	    }
+	  });
+
+	});
+</script>
+
 				<!-- /Page Content -->
 				<script type="text/javascript">
 				$(document).ready(function() {
@@ -176,11 +306,17 @@
 						buttons : [ 
 						{
 							extend : 'excel',
-							text : '<i class="fa fa-file-excel-o" aria-hidden="true" style="color:#fff"> Excel</i>'
+							text : '<i class="fa fa-file-excel-o" aria-hidden="true" style="color:#fff"> Excel</i>',
+							exportOptions: {
+								columns: [ 0, 1, 2, 3, 4, 5 ]
+							}
 						},
 						{
 							extend : 'pdf',
-							text : '<i class="fa fa-file-pdf-o" aria-hidden="true" style="color:#fff"> Pdf</i>'
+							text : '<i class="fa fa-file-pdf-o" aria-hidden="true" style="color:#fff"> Pdf</i>',
+							exportOptions: {
+								columns: [ 0, 1, 2, 3, 4, 5 ]
+							}
 						}
 
 						]
@@ -190,4 +326,5 @@
 				} );
 // Datatable	
 
-				</script>			
+				</script>
+

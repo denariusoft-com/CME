@@ -306,5 +306,46 @@
 			</td>
 		</tr>
 	</table>
+	
+	<table>
+		<tr >
+			<td colspan="6" >
+				&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td colspan="1">
+				<b>STS SUPERINTENDENT <br>(SIGNED) :</b>
+			</td>
+			<td colspan="2">
+			.................................................
+			</td>
+			<td colspan="1">
+				<b>DATE :</b>
+			</td>
+			<td colspan="2">
+			...........................................................
+			</td>
+		</tr>
+		<tr >
+			<td colspan="6" >
+				&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td colspan="1">
+				<b>MASTER (SIGNED) :</b>
+			</td>
+			<td colspan="2">
+			.................................................
+			</td>
+			<td colspan="1">
+				<b>SHIP'S STAMP :</b>
+			</td>
+			<td colspan="2">
+			...........................................................
+			</td>
+		</tr>
+	</table>
 </body>
 </html>

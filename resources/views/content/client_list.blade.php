@@ -44,7 +44,7 @@
 				<!-- Add Today Work Modal -->
 				<div id="add_edit_modal" class="modal custom-modal fade" role="dialog">
 					<div class="modal-dialog modal-dialog-centered modal-md" role="document">
-						<div class="modal-content">
+						<div class="modal-content" >
 							<div class="modal-header">
 								<h5 class="modal-title">Client List</h5>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -81,7 +81,37 @@
 							</div>
 						</div>
 					</div>
-				</div>				
+				</div>	
+					
+				<!-- Delete Holiday Modal -->
+				<div id="delete_data" class="modal custom-modal_delete fade"  role="dialog">
+					<div class="modal-dialog modal-dialog-centered modal-md">
+						<form action="" id="deleteForm" method="post" style="width: 100%;">
+							<div class="modal-content" style="border-radius: 1rem;padding: 20px;">
+								<div class="modal-body">
+									{{ csrf_field() }}
+									{{ method_field('DELETE') }}
+									<div class="form-header">
+										<h3>Client Detail</h3>
+										<p>Are you sure want to delete?</p>
+									</div>
+									<div class="modal-btn delete-action">
+										<div class="row">
+											<div class="col-6">
+												<!--a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a-->
+												<button type="submit" name="" class="btn btn-danger continue-btn" data-dismiss="modal" onclick="formSubmit()" style="width: 100%;background: #F44336;border: 1px solid #f44336;color: #fff;">Yes, Delete</button>
+											</div>
+											<div class="col-6">
+												<a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn" style="background: #ff9b44;color: #fff;">Cancel</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- /Delete Holiday Modal -->
 			
 
 <script>
@@ -158,27 +188,34 @@ $(document).ready(function() {
 });
 
 
-function ConfirmDeletion() {
-    if (confirm("{{ __('Are you sure you want to delete?') }}")) {
-        return true;
-    } else {
-        return false;
-    }
+function ConfirmDeletion(deleteID) {
+	
+    var id = deleteID;
+	var url = '{{ route("clients.destroy", ":id") }}';
+	url = url.replace(':id', id);
+	$("#deleteForm").attr('action', url);
+	$('.custom-modal_delete').modal();
 }
+function formSubmit()
+ {
+	 $("#deleteForm").submit();
+ }
 
 function showaddForm() {
    // $('.edit_hide').show();
     $('.add_hide').show();
     $('.edit_hide_btn').hide();
+    $('#delete_data').hide();
     $('#client_name').val("");
-    $('.modal').modal();
+    $('#client_shortcode').val("");
+    $('.custom-modal_add_edit').modal();
 }
 
 function showeditForm(dataID) {
     //$('.edit_hide').hide();
     $('.add_hide').hide();
     $('.edit_hide_btn').show();
-    $('.modal').modal();
+    $('.custom-modal_add_edit').modal();
     var url = "{{ url('/get_client_detail') }}" + '?id=' + dataID;
     $.ajax({
         url: url,

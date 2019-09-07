@@ -41,17 +41,23 @@
 				<li> 
 
 
-				<li class="<?php echo e(Request::is('timesheet*') ? 'active' : ''); ?>"> 
+				<!--li class="<?php echo e(Request::is('timesheet*') ? 'active' : ''); ?>"> 
 				<a href="<?php echo e(route('timesheet.index')); ?>"><i class="la la-tachometer"></i> <span>Timesheet</span></a>
+				</li-->
+				
+				<li class="<?php echo e(Request::is('add_jobsheet') ? 'active' : ''); ?>"> 
+				<a href="<?php echo e(route('add_jobsheet')); ?>"><i class="la la-tachometer"></i> <span>Jobsheet</span></a>
 				</li>
+				
 				<?php $__currentLoopData = $user; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 							<?php
 							if($v=="Admin"){
 							?>
 				<li class="submenu">
 					<a href="#" class="noti-dot"><i class="la la-pie-chart"></i> <span> Report</span> <span class="menu-arrow"></span></a>
-					<ul style="display:<?php echo e(Request::is(array('reports*')) ? 'block' : ' none'); ?>">
-						<li class="<?php echo e(Request::is('reports*') ? 'active' : ''); ?>"><a href="<?php echo e(url('reports')); ?>">Summary Report</a></li>
+					<ul style="display:<?php echo e(Request::is(array('reports*','pilotage_summary')) ? 'block' : ' none'); ?>">
+						<li class="<?php echo e(Request::is('reports*') ? 'active' : ''); ?>"><a href="<?php echo e(url('reports')); ?>">STS Summary Report</a></li>
+						<li class="<?php echo e(Request::is('pilotage_summary') ? 'active' : ''); ?>"><a href="<?php echo e(route('reports.pilotage_summary')); ?>">Pilotage Summary Report</a></li>
 						
 					</ul>
 				</li>

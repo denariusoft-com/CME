@@ -127,7 +127,7 @@ class MooringMasterController extends Controller
                     $name ="";
                     }
     //
-                $delete =  route('mooring_masters.destroy',$mooring_master['id']);
+                //$delete =  route('mooring_masters.destroy',$mooring_master['id']);
                 $edit =  route('mooring_masters.edit',$mooring_master['id']);
                 $autoid = $mooring_master['id'];
                 $nestedData['user_id'] =  $name;
@@ -136,10 +136,7 @@ class MooringMasterController extends Controller
                 $nestedData['email'] = $mooring_master['email'];
                 $nestedData['company_id'] = $mooring_master['company_id'];
                 $nestedData['salary'] = $mooring_master['salary'];
-                $nestedData['options'] = "&emsp;<a style='float: left;' href='{$edit}' title='EDIT' class='btn btn-primary'><i class='fa fa-pencil'></i></a>";
-                $nestedData['options'] .="<form style='float: left;margin-left: 10px;' action='{$delete}' method='POST'>".method_field('DELETE').csrf_field();
-                $nestedData['options'] .="<button type='submit' class='btn btn-danger'  onclick='return ConfirmDeletion()'><i class='fa fa-trash'></i></button> </form>
-										";
+                $nestedData['options'] = CommonHelper::get_action($edit, $autoid, "page");
                 $data[] = $nestedData;
 
             }

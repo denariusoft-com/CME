@@ -40,7 +40,7 @@ class PdfgenerateController extends Controller
         //dd($data['oper_timings']);
          //exit;
          $pdf = PDF::loadView('content.reports.timesheetpdf', $data);
-         //return  $pdf->stream();
-		 return $pdf->download();
+         return  $pdf->stream();
+		 //return $pdf->download();
     }
 }

@@ -92,4 +92,18 @@ class CommonHelper
         $tsrec = isset($ststs_rec) ? $ststs_rec : ""; 
         return $tsrec;
     }
+	public static function get_action($edit, $autoid, $viewtype)
+    {
+		if($viewtype == "modal")
+		{
+			$options = "&emsp;<a style='float: left;border: none; background: none;' href='{$edit}' title='EDIT' data-target='#add_edit_modal' data-toggle='modal' class=' btn-primary' onClick='showeditForm($autoid);'><i class='fa fa-pencil fa-lg' style='color: #ff851a!important;'></i></a>";
+		}
+		if($viewtype == "page")
+		{
+			$options = "&emsp;<a style='float: left;border: none; background: none;' href='{$edit}' title='EDIT' class='btn-primary'><i class='fa fa-pencil fa-lg' style='color: #ff851a!important;'></i></a>";
+		}
+        
+        $options .="&emsp;<a style='float: left;border: none; background: none;margin-left: 10px;' href='#' title='DELETE' data-target='#delete_data' data-toggle='modal' class=' btn-primary' onClick='ConfirmDeletion($autoid);'><i class='fa fa-trash fa-lg' style='color: #e6294b!important;'></i></a>";
+		return $options;
+    }
 }

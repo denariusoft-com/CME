@@ -14,8 +14,9 @@ use App\Model\StsMooringAdditional;
 use App\Model\StsMooringTugs;
 use App\Model\StsUnmooringAdditional;
 use App\Model\StsUnmooringTugs;
+use App\Model\Transactions;
 use App\Helpers\CommonHelper;
-
+use DateTime;
 
 class TimesheetController extends Controller
 {
@@ -32,6 +33,7 @@ class TimesheetController extends Controller
         $this->StsMooringTugs = new StsMooringTugs;
         $this->StsUnmooringAdditional = new StsUnmooringAdditional;
         $this->StsUnmooringTugs = new StsUnmooringTugs;
+        $this->Transactions = new Transactions;
     }
     
     public function index()
@@ -43,15 +45,16 @@ class TimesheetController extends Controller
         $data['client'] =Client::where('status','=','1')->get();
         return view('timesheet.add_edit')->with('data',$data);
     }
-
+	
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        
+		
+		
         //$pdf->stream("dompdf_out.pdf", array("Attachment" => false));
         //return $pdf->download('timesheet.pdf');
     }
@@ -64,7 +67,22 @@ class TimesheetController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->input->all());
+        //dd($request->all());
+		$data['created_by'] = $request->created_by;
+		$data['updated_by'] = $request->updated_by;
+		$moor_mas_id = $request->moor_mas_id;
+		$data['transaction_type'] = $request->transaction_type;
+		$data['transaction_category'] = $request->transaction_category;
+		$data['rate_amt'] = $request->rate_amt;
+		$data['ratemaster_id'] = $request->ratemaster_id;
+		
+        $data['user_view'] = DB::table('mooring_masters')
+				->join('users', 'users.id', '=', 'mooring_masters.user_id')
+				->where('users.id', '=', $moor_mas_id)
+                ->get();
+        $data['client'] =Client::where('status','=','1')->get();
+		//dd($data);
+        return view('timesheet.add_edit')->with('data',$data);
     }
     public function timesheet_save(Request $request)
     {
@@ -173,7 +191,48 @@ class TimesheetController extends Controller
 		$data['unmr_addition']['rigging_ashore_na'] =  CommonHelper::convert_date_database($data['unmr_addition']['rigging_ashore_na']);
 		$savedata_unmr_addition = StsUnmooringAdditional::create($data['unmr_addition']);
 		
-        return  redirect('/timesheet')->with('type', 'Success!')->with('message', 'Timesheet details inserted successfully!')->with('alertClass', 'alert alert-success');
+		//$data['general']['dt_onboard_in'];
+		//$data['general']['dt_disembark_out'];
+		$date_onboard_in = new DateTime($data['general']['dt_onboard_in']);
+		$date_disembark_out = new DateTime($data['general']['dt_disembark_out']);
+
+		$diff = $date_disembark_out->diff($date_onboard_in);
+
+		$total_hours = $diff->h;
+		$total_hours = $total_hours + ($diff->days*24);
+		$minutes = $diff->i;
+		
+		if($total_hours > 48)
+		{
+			$tot_h_m = $total_hours.".".$minutes;
+			$exceed_hrs = $tot_h_m - 48;
+			$exhrs_amt = $exceed_hrs * 100;
+			$totpay_amt = $request->rate_amt + $exhrs_amt;
+		}
+		else
+		{
+			$exceed_hrs = 0;
+			$exhrs_amt = 0;
+			$totpay_amt = 0;
+		}
+		
+		$t_data['moor_mas_id'] = $data['general']['user_id'];
+		$t_data['ts_id'] = $savedata->id;
+		$t_data['datetime'] = date("Y-m-d h:i:s");
+		$t_data['client_id'] = $data['general']['client_id'];
+		$t_data['ratemas_id'] = $request->ratemaster_id;
+		$t_data['tot_hrs'] = $tot_h_m;
+		$t_data['exceed_hrs'] = $exceed_hrs;
+		$t_data['bas_sal_amt'] = $request->rate_amt;
+		$t_data['exhrs_amt'] = $exhrs_amt;
+		$t_data['totpay_amt'] = $totpay_amt;
+		$t_data['status'] = 3;
+		$t_data['created_by'] = $request->created_by;
+		$t_data['updated_by'] = $request->updated_by;
+		
+		$trans_save_data = Transactions::create($t_data);
+		//return 1;
+        return  redirect('/add_jobsheet')->with('type', 'Success!')->with('message', 'Timesheet details inserted successfully!')->with('alertClass', 'alert alert-success');
 		
 		//return back();
     }

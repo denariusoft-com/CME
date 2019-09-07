@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Client;
 use Illuminate\Http\Request;
+use App\Helpers\CommonHelper;
 
 class ClientController extends Controller
 {
@@ -88,16 +89,13 @@ class ClientController extends Controller
         {
             foreach ($clients as $client)
             {
-                $delete =  route('clients.destroy',$client['id']);
+                //$delete =  route('clients.destroy',$client['id']);
                 $edit =  route('clients.store',$client['id']);
 				$autoid = $client['id'];
                 $nestedData['client_name'] = $client['client_name'];
                 $nestedData['client_shortcode'] = $client['client_shortcode'];
                 $nestedData['status'] = $client['status'] ? '<span class="text-success text-bold text-center">Active</span>' : '<span class="text-danger text-bold text-center">Deactive</span>';
-                $nestedData['options'] = "&emsp;<a style='float: left;' href='{$edit}' title='EDIT' id='#add_edit_modal' data-toggle='modal' class='btn btn-primary' onClick='showeditForm($autoid);'><i class='fa fa-pencil'></i></a>";
-                $nestedData['options'] .="<form style='float: left;margin-left: 10px;' action='{$delete}' method='POST'>".method_field('DELETE').csrf_field();
-                $nestedData['options'] .="<button type='submit' class='btn btn-danger'  onclick='return ConfirmDeletion()'><i class='fa fa-trash'></i></button> </form>
-										";
+                $nestedData['options'] = CommonHelper::get_action($edit, $autoid, "modal");
                 $data[] = $nestedData;
 
             }

@@ -32,7 +32,7 @@
 <div class="content container-fluid">
 					<div class="row">
 						<div class="col-sm-8 col-6">
-							<h4 class="page-title">Summary Report</h4>
+							<h4 class="page-title">Pilotage Summary Report</h4>
 						</div>
 						<div class="col-sm-4 col-6 text-right m-b-30">
 							<!--<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_asset"><i class="fa fa-plus"></i> Add Asset</a>
@@ -40,8 +40,8 @@
 					</div>
 					
 					<!-- Search Filter -->
-					<form method="GET" action="<?php echo e(route('reports.index')); ?>">
-						<?php echo csrf_field(); ?>
+					<form method="GET" action="{{ route('reports.index') }}">
+						@csrf
 					<div class="row filter-row">
 					
 						<div class="col-sm-6 col-md-3">  
@@ -92,15 +92,15 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="table-responsive">
-								<table id="statusmaster_datatable_list" class="table table-striped custom-table mb-0 datatable">
+								<table id="pilotagesummary_datatable_list" class="table table-striped custom-table mb-0 datatable">
 									<thead>
 										<tr>
-											<th>SLNO</th>
+											<th>S. No</th>
 											<th>Date</th>
 											<th>SHIP NAME</th>
-											<th>STS SUPT</th>
-											<th>CLIENT</th>
-											<th>FM/FS</th>
+											<th>JOB DESCRIPTION</th>
+											<th>PILOT</th>
+											<th>RATE (SGD)</th>
 											<th>NO REF</th>
 											<th>STATUS</th>
 											<th>Action</th>
@@ -108,62 +108,17 @@
 										</tr>
 									</thead>
 									<tbody>
-								    <?php $i = 0; ?>
-									<?php $__currentLoopData = $overallsummarylist; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $summary): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-									<?php 
-									$datecom = strtotime($summary->commence_operation); 
-									$newformat_com = date('d',$datecom);
-									
-									$datecomp = strtotime($summary->complete_operation); 
-									$newformat_datecomp = date('d',$datecomp);
-									$tothours = $datecomp - $datecom;
-									$tothrs = round(($datecomp - $datecom)/3600,2); 
-									if($tothrs>48){
-									$totexcedd = round($tothrs-48,2);
-									}else { $totexcedd =0;  }
-									
-									//echo $tothrs;
-									$uid=$summary->user_id;
-									if(!empty(CommonHelper::profile_img($uid))){
-										$profrec1 = CommonHelper::profile_img($uid);
-										$profrec = CommonHelper::moor_detail($profrec1->id);
-										//dd($profrec->short_code);
-									}
-									else{
-										$profrec="";
-									}
-									$clientid=$summary->client_id;
-									if(!empty(CommonHelper::client_detail($clientid))){
-										$clientrec = CommonHelper::client_detail($clientid);
-									}
-									else{
-										$clientrec="";
-									}
-									?>
-								
-									<tr>
-											<td><?php echo e(++$i); ?></td>
-											<td><?php echo e($newformat_com. " - ". $newformat_datecomp); ?>
-
-											</td>
-											<td style="text-transform:capitalize" ><strong><?php echo e($summary->mother_vessel); ?> / <?php echo e($summary->maneuvring_vessel); ?></strong>
-											</br>
-											Commence Operation :<?php echo e(date('d',strtotime($summary->commence_operation))."/".date('Hi',strtotime($summary->commence_operation))); ?>
-
-											</br>
-											Complete Operation :<?php echo e(date('d',strtotime($summary->complete_operation))."/".date('Hi',strtotime($summary->complete_operation))); ?>
-
-											</br>
-											Total Exceeding Hours: <?php echo e($totexcedd); ?></td>
-											<td style="text-transform:uppercase"><?php if(isset($profrec->short_code)): ?><?php echo e($profrec->short_code); ?><?php endif; ?></td>
-											<td><?php if(isset($clientrec->client_shortcode)): ?><?php echo e($clientrec->client_shortcode); ?><?php endif; ?></td>
-											<td><?php echo e($summary->client_fsu_spot); ?></td>
+										<tr>
 											<td></td>
-											<td><button type="button" class="btn btn-primary btn-sm">Pending</button></td>
-											<td><a href="<?php echo e(URL::to('timesheet_pdf/'.$summary->t_id)); ?>" ><i class="fa fa-file-pdf-o fa-lg" style="font-weight:bold;color:red"></i></a></td>
-										
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
 										</tr>
-										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 									</tbody>
 								</table>
 							</div>
@@ -173,24 +128,30 @@
 				<!-- /Page Content -->
 				<script type="text/javascript">
 				$(document).ready(function() {
-					 var table = $('#statusmaster_datatable_list').DataTable( {
+					 var table = $('#pilotagesummary_datatable_list').DataTable( {
 						dom: 'Blfrtip',
 						paging:   false,
 						buttons : [ 
 						{
 							extend : 'excel',
-							text : '<i class="fa fa-file-excel-o" aria-hidden="true" style="color:#fff"> Excel</i>'
+							text : '<i class="fa fa-file-excel-o" aria-hidden="true" style="color:#fff"> Excel</i>',
+							exportOptions: {
+								columns: [ 0, 1, 2, 3, 4, 5 ]
+							}
 						},
 						{
 							extend : 'pdf',
-							text : '<i class="fa fa-file-pdf-o" aria-hidden="true" style="color:#fff"> Pdf</i>'
+							text : '<i class="fa fa-file-pdf-o" aria-hidden="true" style="color:#fff"> Pdf</i>',
+							exportOptions: {
+								columns: [ 0, 1, 2, 3, 4, 5 ]
+							}
 						}
 
 						]
 					} );
 					table.buttons().container()
-					.appendTo( '#statusmaster_datatable_list .col-md-6:eq(0)' );
+					.appendTo( '#pilotagesummary_datatable_list .col-md-6:eq(0)' );
 				} );
 // Datatable	
 
-				</script>			<?php /**PATH D:\php7\htdocs\laravel\CME\resources\views/content/reports/summaryreport.blade.php ENDPATH**/ ?>
+				</script>			

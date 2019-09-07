@@ -11,6 +11,7 @@ use Spatie\Permission\Models\Permission;
 use DB;
 use App\Model\Companysetting;
 use App\Model\Themesetting;
+use App\Model\StsTimesheet;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -19,7 +20,6 @@ use Illuminate\Contracts\Filesystem\Factory as Filesystem;
 use Carbon\Carbon;
 use Illuminate\Http\File;
 use App\Helpers\CommonHelper;
-use App\Model\StsTimesheet;
 use App\User;
 use PDF;
 
@@ -102,7 +102,80 @@ class ReportController extends Controller
         //dd($overallsummarylist);
         return view('reports.summaryreport', compact('overallsummarylist'));
     }
-  
+	public function sts_approvedstatusUpdate($id)
+	{
+		/* $sts_data = StsTimesheet::where('t_id','=',$id)->first();
+		$moor_master_id = User::where('id','=',$sts_data->user_id)->pluck('id');
+		$ts_id = $sts_data->t_id;
+		$client_id = $sts_data->client_id;
+		$datatime = date("Y-m-d h:m:i"); */
+			
+		
+		$updateData = StsTimesheet::where('t_id', $id)->update([
+           'status' => 1
+        ]);
+		if($updateData == true)
+		{
+			return  redirect('/reports')->with('type', 'Success!')->with('message', 'STS timesheet approved successfully!')->with('alertClass', 'alert alert-success');
+		}
+	}
+	public function sts_rejectedstatusUpdate($id)
+	{
+		$updateData = StsTimesheet::where('t_id', $id)->update([
+           'status' => 2
+        ]);
+		if($updateData == true)
+		{
+			return  redirect('/reports')->with('type', 'Danger!')->with('message', 'STS timesheet details rejected!')->with('alertClass', 'alert alert-danger');
+		}
+	}
+	public function pilotage_summary()
+	{
+		return view('reports.pilotage_summaryreport');
+	}
+	
+	public function store_refno(Request $request)
+	{
+		$id = $request->input('timesheet_id');
+		if($request->input('submit_ref_number'))
+		{
+			$updateData = StsTimesheet::where('t_id', $id)->update([
+			   'work_ref_no' => $request->input('reference_no'),
+			   'status' => 3
+			]);
+			if($updateData == true)
+			{
+				return  redirect('/reports')->with('type', 'Success!')->with('message', 'STS timesheet reference number created!')->with('alertClass', 'alert alert-success');
+			}
+		}
+		//echo $request->input('reference_no');
+		
+	}
+	public function findReferenceNumberExists(Request $request)
+    { 
+         $reference_no =  $request->input('reference_no');
+         $timesheet_id = $request->input('timesheet_id');
+        if(!empty($timesheet_id))
+        { 
+            $data_exists = StsTimesheet::where([
+                  ['job_ref_id','=',$reference_no],
+                  ['t_id','!=',$timesheet_id]
+                  ])->count();
+        }
+        else
+        {   
+            $data_exists = StsTimesheet::where([
+                ['job_ref_id','=',$reference_no]
+                ])->count(); 
+        } 
+        if($data_exists > 0)
+        {
+              return "false";
+        }
+        else{
+              return "true";
+        }
+    }
     /*          end theme       */
     public function show(){
 

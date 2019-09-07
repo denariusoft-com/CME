@@ -1,8 +1,8 @@
 <!-- Plugin Custom Stylesheet -->
-<link rel="stylesheet" href="{{ asset('public/assets/form-wizard-blue.css') }}">
-<link href="{{ asset('public/assets/css/inputmask.css') }}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="<?php echo e(asset('public/assets/form-wizard-blue.css')); ?>">
+<link href="<?php echo e(asset('public/assets/css/inputmask.css')); ?>" rel="stylesheet" type="text/css">
 <!-- Plugin Custom JS -->
-<script src="{{ asset('public/assets/form-wizard.js') }}"></script>	
+<script src="<?php echo e(asset('public/assets/form-wizard.js')); ?>"></script>	
 
 <style type="text/css" media="screen">
 	.header-button-group, .body-button-group {
@@ -38,19 +38,20 @@
 							<h4 class="page-title"> STS Time Sheet </h4>
 						</div>
 						<!--div class="col-12 text-right m-b-30">
-							<a href="{{ route('ratemasters.index')}}" class="btn add-btn" ><i class="fa fa-list"></i> List </a>
+							<a href="<?php echo e(route('ratemasters.index')); ?>" class="btn add-btn" ><i class="fa fa-list"></i> List </a>
 						</div-->
 					</div>
 					<!-- /Page Title -->
 					<div class="row">
-						@if(session()->has('message'))
-							<div class="{{ session()->get('alertClass') }} alert-dismissible fade show" role="alert" id="msg">
-								<strong>{{ session()->get('type') }}</strong> {{ session()->get('message') }}
+						<?php if(session()->has('message')): ?>
+							<div class="<?php echo e(session()->get('alertClass')); ?> alert-dismissible fade show" role="alert" id="msg">
+								<strong><?php echo e(session()->get('type')); ?></strong> <?php echo e(session()->get('message')); ?>
+
 								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 									<span aria-hidden="true">×</span>
 								</button>
 							</div>
-						@endif
+						<?php endif; ?>
 					</div>
 					<div class="row">
 						<div class="col-md-12">
@@ -64,8 +65,8 @@
 						<!-- Form Wizard -->
 						<div class="form-wizard form-header-classic form-body-stylist">
 						
-                    	<form role="form" action="{{ URL::to('timesheet/timesheet_save') }}" method="post" id="timesheet_add_edit_validation">
-							@csrf
+                    	<form role="form" action="<?php echo e(URL::to('timesheet/timesheet_save')); ?>" method="post" id="timesheet_add_edit_validation">
+							<?php echo csrf_field(); ?>
 							<input type="hidden" name="id" />
                     		<!--h3>Sign Up Your Bank Account</h3-->
                     		<p>Fill all field to go next step</p>
@@ -131,53 +132,53 @@
                     			   <!-- <label>Client Name: <span>*</span></label>
                                     <select name="general[client_id]" id="client_id" class="form-control required">
 										 <option value="">Select name</option>
-										 @foreach($data['user_view'] as $row)
-										 <option value="{{ $row->id}}">{{ $row->name }}</option>
-										 @endforeach
+										 <?php $__currentLoopData = $data['user_view']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+										 <option value="<?php echo e($row->id); ?>"><?php echo e($row->name); ?></option>
+										 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 									</select>
 									-->
                                 </div>     
 								<div class="row">
-									@php
+									<?php
 									//dd($data);
-									@endphp
-									<input type="hidden" name="created_by" id="created_by" value="@if(isset($data['created_by'])){{ $data['created_by'] }} @endif">
-	                                <input type="hidden" name="updated_by" id="updated_by" value="@if(isset($data['updated_by'])){{ $data['updated_by'] }} @endif">
-	                                <input type="hidden" name="ratemaster_id" id="ratemaster_id" value="@if(isset($data['ratemaster_id'])){{ $data['ratemaster_id'] }} @endif">
-	                                <input type="hidden" name="rate_amt" id="rate_amt" value="@if(isset($data['rate_amt'])){{ $data['rate_amt'] }} @endif">
+									?>
+									<input type="hidden" name="created_by" id="created_by" value="<?php if(isset($data['created_by'])): ?><?php echo e($data['created_by']); ?> <?php endif; ?>">
+	                                <input type="hidden" name="updated_by" id="updated_by" value="<?php if(isset($data['updated_by'])): ?><?php echo e($data['updated_by']); ?> <?php endif; ?>">
+	                                <input type="hidden" name="ratemaster_id" id="ratemaster_id" value="<?php if(isset($data['ratemaster_id'])): ?><?php echo e($data['ratemaster_id']); ?> <?php endif; ?>">
+	                                <input type="hidden" name="rate_amt" id="rate_amt" value="<?php if(isset($data['rate_amt'])): ?><?php echo e($data['rate_amt']); ?> <?php endif; ?>">
 									<div class="col-md-6">
 										<div class="form-group">
 										<label>STS Superintendent: <span>*</span></label>
-										@php $user = Auth::user()->getRoleNames(); @endphp  @foreach($user as $v)
-										@php
+										<?php $user = Auth::user()->getRoleNames(); ?>  <?php $__currentLoopData = $user; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+										<?php
 										if($v=="Mooring Master"){
 										$profrec = CommonHelper::moor_detail(Auth::user()->id);
 										$prec = strtoupper(" ( ".$profrec->short_code." )");
 										$prr = ucfirst($row->name).$prec;	
-									     @endphp
-										 <input type="hidden" name="general[user_id]" id="user_id" placeholder="Enter location" class="form-control " value="{{ Auth::user()->id }}">
-										 <input type="text"  placeholder="Enter location" class="form-control " value="{{ $prr }}">
+									     ?>
+										 <input type="hidden" name="general[user_id]" id="user_id" placeholder="Enter location" class="form-control " value="<?php echo e(Auth::user()->id); ?>">
+										 <input type="text"  placeholder="Enter location" class="form-control " value="<?php echo e($prr); ?>">
 										
-										 @php
+										 <?php
 										}
 										else{										
-										@endphp
+										?>
 										
 										<select name="general[user_id]" id="user_id" class="form-control ">
 										 <!--option value="">Select name</option-->
-										 @foreach($data['user_view'] as $row)
-										@php 
+										 <?php $__currentLoopData = $data['user_view']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+										<?php 
 										$profrec = CommonHelper::moor_detail($row->id);
 										$prec = strtoupper(" ( ".$profrec->short_code." )");
 										$prr = ucfirst($row->name).$prec;
-										@endphp
-										 <option value="{{ $row->id}}" >{{ $prr }}</option>
-										 @endforeach
+										?>
+										 <option value="<?php echo e($row->id); ?>" ><?php echo e($prr); ?></option>
+										 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 										</select>
-										@php
+										<?php
 										}
-										@endphp
-										@endforeach
+										?>
+										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -185,13 +186,13 @@
 										<label>Client Name: <span>*</span></label>
 										<select name="general[client_id]" id="client_id" class="form-control ">
 										 <option value="">Select Client Name</option>
-										 @foreach($data['client'] as $row)
-										 @php
+										 <?php $__currentLoopData = $data['client']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+										 <?php
 										 $clientrec = CommonHelper::client_detail($row->id);
 										 $cli_n =  $clientrec->client_shortcode.' - '.$row->client_name;
-										 @endphp
-										 <option value="{{ $row->id}}">{{ $cli_n }}</option>
-										 @endforeach
+										 ?>
+										 <option value="<?php echo e($row->id); ?>"><?php echo e($cli_n); ?></option>
+										 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 										</select>
 										</div>
 									</div>
@@ -892,7 +893,7 @@
 					</div>
                 </div>
 				<!-- /Page Content -->	
-<script type="text/javascript" src="{{ asset('public/assets/dist/jquery.inputmask.js') }}" ></script>
+<script type="text/javascript" src="<?php echo e(asset('public/assets/dist/jquery.inputmask.js')); ?>" ></script>
 <script>
 
 	//console.log(navigator.userAgent);
@@ -1050,3 +1051,4 @@ $(function () {
 	});
 </script>		
 
+<?php /**PATH D:\php7\htdocs\laravel\CME\resources\views/content/timesheet_add_edit.blade.php ENDPATH**/ ?>

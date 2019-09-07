@@ -6,19 +6,20 @@
 							<h4 class="page-title">Rate Master List</h4>
 						</div>
 						<div class="col-12 text-right m-b-30">
-							<a href="{{ route('ratemasters.create')}}" class="btn add-btn" ><i class="fa fa-plus"></i> Add </a>
+							<a href="<?php echo e(route('ratemasters.create')); ?>" class="btn add-btn" ><i class="fa fa-plus"></i> Add </a>
 						</div>
 					</div>
 					<!-- /Page Title -->
 					<div class="row">
-						@if(session()->has('message'))
-							<div class="{{ session()->get('alertClass') }} alert-dismissible fade show" role="alert" id="msg">
-								<strong>{{ session()->get('type') }}</strong> {{ session()->get('message') }}
+						<?php if(session()->has('message')): ?>
+							<div class="<?php echo e(session()->get('alertClass')); ?> alert-dismissible fade show" role="alert" id="msg">
+								<strong><?php echo e(session()->get('type')); ?></strong> <?php echo e(session()->get('message')); ?>
+
 								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 									<span aria-hidden="true">×</span>
 								</button>
 							</div>
-						@endif
+						<?php endif; ?>
 					</div>
 					<div class="row">
 						<div class="col-md-12">
@@ -49,8 +50,10 @@
 						<form action="" id="deleteForm" method="post" style="width: 100%;">
 							<div class="modal-content" style="border-radius: 1rem;padding: 20px;">
 								<div class="modal-body">
-									{{ csrf_field() }}
-									{{ method_field('DELETE') }}
+									<?php echo e(csrf_field()); ?>
+
+									<?php echo e(method_field('DELETE')); ?>
+
 									<div class="form-header">
 										<h3>Rate Master Detail</h3>
 										<p>Are you sure want to delete?</p>
@@ -113,11 +116,11 @@ $(document).ready(function() {
 	"processing": true,
         "serverSide": true,
         "ajax": {
-            "url": "{{ url('/get_ratemaster_list') }}",
+            "url": "<?php echo e(url('/get_ratemaster_list')); ?>",
             "dataType": "json",
             "type": "POST",
             "data": {
-                _token: "{{csrf_token()}}"
+                _token: "<?php echo e(csrf_token()); ?>"
             }
         },
         "columns": [ 
@@ -149,7 +152,7 @@ $(document).ready(function() {
 function ConfirmDeletion(deleteID) {
 	$('.custom-modal_delete').modal();
     var id = deleteID;
-	var url = '{{ route("ratemasters.destroy", ":id") }}';
+	var url = '<?php echo e(route("ratemasters.destroy", ":id")); ?>';
 	url = url.replace(':id', id);
 	$("#deleteForm").attr('action', url);
 	
@@ -164,7 +167,7 @@ function showeditForm(ratemasterID) {
     $('.add_hide').hide();
     $('.edit_hide_btn').show();
     $('.modal').modal();
-    var url = "{{ url('/get_ratemaster_detail') }}" + '?id=' + ratemasterID;
+    var url = "<?php echo e(url('/get_ratemaster_detail')); ?>" + '?id=' + ratemasterID;
     $.ajax({
         url: url,
         type: "GET",
@@ -179,4 +182,4 @@ function showeditForm(ratemasterID) {
     });
 }
 
-</script>
+</script><?php /**PATH D:\php7\htdocs\laravel\CME\resources\views/content/ratemaster_list.blade.php ENDPATH**/ ?>

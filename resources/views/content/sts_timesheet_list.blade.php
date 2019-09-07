@@ -3,10 +3,10 @@
 					<!-- Page Title -->
 					<div class="row">
 						<div class="col">
-							<h4 class="page-title">Rate Master List</h4>
+							<h4 class="page-title">STS Timesheet List</h4>
 						</div>
 						<div class="col-12 text-right m-b-30">
-							<a href="{{ route('ratemasters.create')}}" class="btn add-btn" ><i class="fa fa-plus"></i> Add </a>
+							<a href="{{ route('mooring_masters.create') }}" class="btn add-btn" ><i class="fa fa-plus"></i> Add </a>
 						</div>
 					</div>
 					<!-- /Page Title -->
@@ -23,15 +23,16 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="table-responsive">
-								<table class="table table-striped custom-table mb-0 datatable" id="ratemaster_datatable_list" style="width:100%">
+								<table class="table table-striped custom-table mb-0 datatable" id="mooringmaster_datatable_list" style="width:100%">
 									<thead>
 										<tr>
-											<th>Mor.Master Name</th>
-											<th>Category Name</th>
-											<th>Rate Name</th>
-											<th>Timing(Hr)</th>
-											<th>Price(RM)</th>
-											<th style="text-align:center">Action</th>
+											<th>Name</th>
+											<th>Address</th>
+											<th>Phone No</th>
+											<th>Email</th>
+											<th>Company</th>
+											<th>Salary</th>
+											<th>Action</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -42,9 +43,8 @@
 						</div>
 					</div>
                 </div>
-				<!-- /Page Content -->
-				
-				<div id="delete_data" class="modal custom-modal_delete fade"  role="dialog">
+				<!-- /Page Content -->			
+			<div id="delete_data" class="modal custom-modal_delete fade"  role="dialog">
 					<div class="modal-dialog modal-dialog-centered modal-md">
 						<form action="" id="deleteForm" method="post" style="width: 100%;">
 							<div class="modal-content" style="border-radius: 1rem;padding: 20px;">
@@ -52,7 +52,7 @@
 									{{ csrf_field() }}
 									{{ method_field('DELETE') }}
 									<div class="form-header">
-										<h3>Rate Master Detail</h3>
+										<h3>Mooring Master Detail</h3>
 										<p>Are you sure want to delete?</p>
 									</div>
 									<div class="modal-btn delete-action">
@@ -72,84 +72,87 @@
 					</div>
 				</div>
 
+<script>
+	$(document).ready(function () {
 
+	  $('#client_list_validation').validate({
+	    rules: {
+			"client_name": {
+				required: true,
+				remote: {
+					url: "{{ url('/findClientNameExists')}}",
+					data: {
+						client_id: function() {
+							return $("#updateid").val();
+						},
+						_token: "{{csrf_token()}}",
+						client_name: $(this).data('client_name')
+					},
+					type: "GET",
+				},
+			},
+	    },
+	    messages: {
+			"client_name": {
+				required: "Client name is required",
+				remote: "Already name exist"
+			}
+	    }
+	  });
+
+	});
+</script>
 <script type="text/javascript">
 // Datatable	
 $(document).ready(function() {
 	
-	
-	$('#ratemaster_datatable_list').DataTable({
-    
-    "columnDefs": [{
-      "visible": false,
-      "targets": 0
-    }],
-    "order": [
-      [0, 'asc']
-    ],
-	"lengthMenu": [
-		[10, 25, 50, 100],
-		[10, 25, 50, 100]
-	],
-    "drawCallback": function (settings) {
-      var api = this.api();
-      var rows = api.rows({
-        page: 'current'
-      }).nodes();
-      var last = null;
-
-      api.column(0, {
-        page: 'current'
-      }).data().each(function (group, i) {
-        if (last !== group) {
-          $(rows).eq(i).before(
-            '<tr style="background:grey;padding:2px !important;color:white;" class="group"><td colspan="5">' + "MM:  <label style='text-transform:uppercase'>"+group + '</label></td></tr>'
-          );
-
-          last = group;
-        }
-      });
-    },
-	"processing": true,
-        "serverSide": true,
-        "ajax": {
-            "url": "{{ url('/get_ratemaster_list') }}",
-            "dataType": "json",
-            "type": "POST",
-            "data": {
-                _token: "{{csrf_token()}}"
-            }
-        },
-        "columns": [ 
-			{
+		$('#mooringmaster_datatable_list').DataTable({
+			responsive: true,
+			processing: true,
+			serverSide: true,
+			lengthMenu: [
+				[10, 25, 50, 100],
+				[10, 25, 50, 100]
+			],
+			ajax: {
+				"url": "{{ url('/get_mooringmaster_list') }}",
+				"dataType": "json",
+				"type": "POST",
+				"data": {
+					_token: "{{csrf_token()}}"
+				}
+			},
+			columns: [
+				{
 					"data": "user_id"
 				},
 				{
-					"data": "cat_id"
+					"data": "address"
 				},
 				{
-					"data": "rate_id"
+					"data": "phone_no"
 				},
 				{
-					"data": "timing"
+					"data": "email"
 				},
 				{
-					"data": "price"
+					"data": "company_id"
+				},
+				{
+					"data": "salary"
 				},
 				{
 					"data": "options"
 				}
-        ]
-  });
-
-
+			]
+		});
 });
 
 
 function ConfirmDeletion(deleteID) {
 	$('.custom-modal_delete').modal();
     var id = deleteID;
-	var url = '{{ route("ratemasters.destroy", ":id") }}';
+	var url = '{{ route("mooring_masters.destroy", ":id") }}';
 	url = url.replace(':id', id);
 	$("#deleteForm").attr('action', url);
 	
@@ -158,25 +161,5 @@ function formSubmit()
  {
 	 $("#deleteForm").submit();
  }
-
-function showeditForm(ratemasterID) {
-    //$('.edit_hide').hide();
-    $('.add_hide').hide();
-    $('.edit_hide_btn').show();
-    $('.modal').modal();
-    var url = "{{ url('/get_ratemaster_detail') }}" + '?id=' + ratemasterID;
-    $.ajax({
-        url: url,
-        type: "GET",
-        success: function(result) {
-            //console.log(result);
-            $('#updateid').val(result.id);
-			$('#user_id').val(result.user_id);
-            $('#cat_id').val(result.cat_id);
-            $('#rate_id').val(result.rate_id);
-            $('#price').val(result.price);
-        }
-    });
-}
 
 </script>

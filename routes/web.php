@@ -86,7 +86,17 @@ Route::get('get_mooringmaster_detail', 'MooringMasterController@get_mooringmaste
 //Route::get('findMooringMasterNameExists', 'MooringMasterController@findNameExists');
 Route::get('get-rate-list', 'MooringMasterController@getRateList');
 
+Route::get('pilotage_summary', 'ReportController@pilotage_summary')->name('reports.pilotage_summary');
+Route::post('store_refno', 'ReportController@store_refno')->name('reports.store_refno');
+Route::get('findReferenceNumberExists', 'ReportController@findReferenceNumberExists');
+
+Route::get('sts_approvedstatusUpdate/{parameter}', 'ReportController@sts_approvedstatusUpdate');
+Route::get('sts_rejectedstatusUpdate/{parameter}', 'ReportController@sts_rejectedstatusUpdate');
 
 Route::resource('timesheet', 'TimesheetController');
 
 Route::get('timesheet_pdf/{parameter}','PdfgenerateController@timesheet_pdf');
+
+Route::get('add_jobsheet', 'JobController@add')->name('add_jobsheet');
+//Route::post('save_jobsheet', 'JobController@save_jobsheet')->name('save_jobsheet');
+Route::get('get_transaction_amt', 'JobController@get_transaction_amt');

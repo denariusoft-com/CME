@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Category;
 use Illuminate\Http\Request;
+use App\Helpers\CommonHelper;
 
 class CategoryController extends Controller
 {
@@ -88,12 +89,8 @@ class CategoryController extends Controller
 				$autoid = $category['id'];
                 $nestedData['category_name'] = $category['category_name'];
                 $nestedData['status'] = $category['status'] ? '<span class="text-success text-bold text-center">Active</span>' : '<span class="text-danger text-bold text-center">Deactive</span>';
-                $nestedData['options'] = "&emsp;<a style='float: left;' href='{$edit}' title='EDIT' id='#add_edit_modal' data-toggle='modal' class='btn btn-primary' onClick='showeditForm($autoid);'><i class='fa fa-pencil'></i></a>";
-                $nestedData['options'] .="<form style='float: left;margin-left: 10px;' action='{$delete}' method='POST'>".method_field('DELETE').csrf_field();
-                $nestedData['options'] .="<button type='submit' class='btn btn-danger'  onclick='return ConfirmDeletion()'><i class='fa fa-trash'></i></button> </form>
-										";
+                $nestedData['options'] = CommonHelper::get_action($edit, $autoid, "modal");
                 $data[] = $nestedData;
-
             }
         }
 		$json_data = array(
@@ -160,7 +157,7 @@ class CategoryController extends Controller
         $data = $request->all();
         $request->validate(
             [
-                'category_name' => 'required|alpha'
+                'category_name' => 'required'
             ], 
             [
                 'category_name.required' => 'please enter category name'

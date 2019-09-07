@@ -99,7 +99,7 @@ class RatemasterController extends Controller
         {
             foreach ($ratemasters as $ratemaster)
             {
-                $delete =  route('ratemasters.destroy',$ratemaster['id']);
+                //$delete =  route('ratemasters.destroy',$ratemaster['id']);
                 $autoid = $ratemaster['id'];
                 $enc_id = Crypt::encrypt($autoid);
                 $edit =  route('ratemaster.add-edit',$enc_id); 
@@ -112,10 +112,7 @@ class RatemasterController extends Controller
                 $nestedData['rate_id'] = Rate::where('id','=', $ratemaster['rate_id'])->first()->rate_name;
                 $nestedData['timing'] = $ratemaster['timing'];
                 $nestedData['price'] = $ratemaster['price'];
-                $nestedData['options'] = "&emsp;<a style='float: left;' href='{$edit}' title='EDIT'  class='btn btn-primary' onClick='showeditForm($autoid);'><i class='fa fa-pencil'></i></a>";
-                $nestedData['options'] .="<form style='float: left;margin-left: 10px;' action='{$delete}' method='POST'>".method_field('DELETE').csrf_field();
-                $nestedData['options'] .="<button type='submit' class='btn btn-danger'  onclick='return ConfirmDeletion()'><i class='fa fa-trash'></i></button> </form>
-										";
+                $nestedData['options'] = CommonHelper::get_action($edit, $autoid, "page");
                 $data[] = $nestedData;
 
             }
